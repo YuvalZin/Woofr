@@ -15,9 +15,10 @@ export const saveUser = async (userData) => {
 
         if (!response.ok) {
             throw new Error('Failed to register user');
-        }
 
-        const data = await response.json();
+        }
+        console.log("zona");
+        const data = await response.text();
         console.log('User registered successfully:', data);
         // Navigate to next screen or perform other actions
         return data;

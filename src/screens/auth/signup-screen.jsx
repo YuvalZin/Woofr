@@ -107,6 +107,7 @@ const SignupScreen = () => {
     const isUserSaved = await saveUser(userData);
 
     if (isUserSaved) {
+     // SecureStore.setItem("token");
       navigation.navigate("Image");
     }
     else{
