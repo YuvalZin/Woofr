@@ -20,9 +20,6 @@ import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Snackbar } from "react-native-paper";
 
-//User id generator
-import uuid from "react-native-uuid";
-
 //Store user data handler
 import * as SecureStore from "expo-secure-store";
 
@@ -35,7 +32,7 @@ import GoBackButton from "../../components/buttons/go-back/go-back-button";
 //Import data and validators
 import { signupValidator } from "../../utils/scripts/formValidate";
 import { genders } from "../../utils/data/gender";
-import { fakeRegister } from "../../utils/api/fake";
+import { saveUser } from "../../utils/api/UserApi";
 
 const isIos = Platform.OS === "ios";
 
@@ -57,9 +54,9 @@ const SignupScreen = () => {
 
   // State object to manage user data
   const [userData, setUserData] = useState({
-    id: "", // User ID
     firstName: "בני", // User's first name
     lastName: "חנונוב", // User's last name
+    username: "username", // User's last name
     gender: "male", // User's gender
     birthday: new Date(), // User's birthday (initialized to current date)
     email: "benyx13@gmail.com", // User's email address
@@ -107,27 +104,25 @@ const SignupScreen = () => {
     }
 
     // Generate a unique ID for the user data and Save user data
-    setUserData({ ...userData, id: uuid.v4() });
-    const isUserSaved = await saveUser();
+    const isUserSaved = await saveUser(userData);
+
     if (isUserSaved) {
       navigation.navigate("Image");
     }
-  };
-
-  // Function to save user data (supposed to interact with an API)
-  const saveUser = async () => {
-    try {
-      const tokenData = fakeRegister(userData);
-      const token = tokenData._j;
-      if (token.status) {
-        SecureStore.setItem("token", JSON.stringify(token.value));
-      }
-      return true;
-    } catch (error) {
-      console.error("Error saving user data:", error);
-      return false;
+    else{
+       // Set snackbar text to display the error message
+       setSnackBarText("שגיאה בהרשמה");
+       // Open the snackbar
+       setSnackbarOpen(true);
+ 
+       // Close the snackbar after 3 seconds
+       setTimeout(() => {
+         setSnackbarOpen(false);
+       }, 3000);
+       return;
     }
   };
+
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -165,7 +160,14 @@ const SignupScreen = () => {
                 setUserData({ ...userData, lastName: value });
               }}
             />
-
+            <TextInput
+              value={userData.username}
+              placeholder="שם משתמש"
+              style={styles.input}
+              onChangeText={(value) => {
+                setUserData({ ...userData, username: value });
+              }}
+            />
             <TextInput
               value={userData.email}
               placeholder="איימל"
@@ -202,9 +204,8 @@ const SignupScreen = () => {
             }}
           >
             <RegularText
-              text={`${userData.birthday.getUTCFullYear()}-${
-                userData.birthday.getMonth() + 1
-              }-${userData.birthday.getDate()}`}
+              text={`${userData.birthday.getUTCFullYear()}-${userData.birthday.getMonth() + 1
+                }-${userData.birthday.getDate()}`}
             />
           </TouchableOpacity>
         )}
@@ -233,7 +234,7 @@ const SignupScreen = () => {
 
       <Snackbar
         visible={snackbarOpen}
-        onDismiss={() => {}}
+        onDismiss={() => { }}
         action={{
           label: "סגור",
           onPress: () => {
