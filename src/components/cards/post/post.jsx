@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
 //Custom Components
 import RegularText from "../../texts/regular-text/regular-text";
@@ -9,26 +9,26 @@ const Post = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.avatarContainer}>
+        <View style={styles.userInfo}>
+          <RegularText text={"בני חנונוב"} style={styles.username} />
+          <SmallText text={"בעלים של 4 כלבים"} style={styles.infoText} />
+          <SmallText text={"לפני 3 דקות"} style={styles.infoText} />
+        </View>
+        <TouchableOpacity style={styles.avatarContainer}>
           <Image
             source={{
               uri: "https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg",
             }}
             style={styles.avatar}
           />
-        </View>
-        <View style={styles.userInfo}>
-          <RegularText text={"בני חנונוב"} style={styles.username} />
-          <SmallText text={"בעלים של 4 כלבים"} style={styles.infoText} />
-          <SmallText text={"לפני 3 דקות"} style={styles.infoText} />
-        </View>
+        </TouchableOpacity>
       </View>
 
       <RegularText
         text={
           "עשינו חוויה בלה בלה בלה אנחנו פה עם כלבים עושים חיים בלה בלה בלההכ נצשיך למלא מידע בלה בלה בלה איזה כיף פוסט ארוך "
         }
-        style={styles.postText}
+        english={true}
       />
     </View>
   );
@@ -39,14 +39,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     marginBottom: 10,
     margin: 5,
-    borderRadius: 10,
+    borderRadius: 12,
     borderWidth: 1,
     borderColor: "grey",
+    padding: 4,
   },
   header: {
     padding: 6,
-    flexDirection: "row",
     marginBottom: 10,
+    flexDirection: "row",
   },
   avatarContainer: {
     marginRight: 10,
@@ -54,12 +55,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 90,
+    height: 90,
+    borderRadius: 45,
   },
   userInfo: {
     flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+    marginRight: 10,
   },
   username: {
     fontWeight: "bold",
@@ -68,9 +72,7 @@ const styles = StyleSheet.create({
   infoText: {
     color: "#888",
     fontSize: 12,
-  },
-  postText: {
-    lineHeight: 20,
+    marginRight: 3,
   },
 });
 

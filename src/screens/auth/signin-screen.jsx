@@ -40,8 +40,9 @@ const SigninScreen = () => {
 
   const handleLoginEvent = async () => {
     try {
-      const token = await fakeLogin(loginData.email, loginData.password);
+      const token = { status: true, value: "someToken" };
       if (token.status) {
+        console.log("hey");
         SecureStore.setItem("token5", token.value);
         dispatch(login(token));
       } else {
@@ -94,9 +95,13 @@ const SigninScreen = () => {
         </View>
 
         <View>
-          <RegularButton text={"התחבר"} onPress={handleLoginEvent} />
+          <View style={{ width: 200 }}>
+            <RegularButton text={"התחבר"} onPress={handleLoginEvent} />
+          </View>
           <View style={styles.divider}></View>
-          <RegularButton text={"הירשם"} onPress={moveToSignup} />
+          <View style={{ width: 200 }}>
+            <RegularButton text={"הירשם"} onPress={moveToSignup} />
+          </View>
         </View>
       </View>
 

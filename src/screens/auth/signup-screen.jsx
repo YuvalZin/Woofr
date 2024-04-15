@@ -107,23 +107,21 @@ const SignupScreen = () => {
     const isUserSaved = await saveUser(userData);
 
     if (isUserSaved) {
-     // SecureStore.setItem("token");
+      // SecureStore.setItem("token");
       navigation.navigate("Image");
-    }
-    else{
-       // Set snackbar text to display the error message
-       setSnackBarText("שגיאה בהרשמה");
-       // Open the snackbar
-       setSnackbarOpen(true);
- 
-       // Close the snackbar after 3 seconds
-       setTimeout(() => {
-         setSnackbarOpen(false);
-       }, 3000);
-       return;
+    } else {
+      // Set snackbar text to display the error message
+      setSnackBarText("שגיאה בהרשמה");
+      // Open the snackbar
+      setSnackbarOpen(true);
+
+      // Close the snackbar after 3 seconds
+      setTimeout(() => {
+        setSnackbarOpen(false);
+      }, 3000);
+      return;
     }
   };
-
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -205,8 +203,9 @@ const SignupScreen = () => {
             }}
           >
             <RegularText
-              text={`${userData.birthday.getUTCFullYear()}-${userData.birthday.getMonth() + 1
-                }-${userData.birthday.getDate()}`}
+              text={`${userData.birthday.getUTCFullYear()}-${
+                userData.birthday.getMonth() + 1
+              }-${userData.birthday.getDate()}`}
             />
           </TouchableOpacity>
         )}
@@ -230,12 +229,14 @@ const SignupScreen = () => {
           />
         </View>
 
-        <RegularButton text={"הירשם"} onPress={handleSubmit} />
+        <View style={{ width: 200 }}>
+          <RegularButton text={"הירשם"} onPress={handleSubmit} />
+        </View>
       </View>
 
       <Snackbar
         visible={snackbarOpen}
-        onDismiss={() => { }}
+        onDismiss={() => {}}
         action={{
           label: "סגור",
           onPress: () => {

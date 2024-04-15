@@ -26,12 +26,15 @@ const WelcomeScreen = () => {
       <View style={styles.container}>
         <BigText text={"WOOFR"} />
         <FeatureSlider index={index} setIndex={setIndex} scrollX={scrollX} />
-        <RegularButton
-          text={"בוא נתחיל"}
-          onPress={() => {
-            navigation.navigate("Signin");
-          }}
-        />
+
+        <View style={{ width: 200 }}>
+          <RegularButton
+            text={"בוא נתחיל"}
+            onPress={() => {
+              navigation.navigate("Signin");
+            }}
+          />
+        </View>
         <Pagination data={features} scrollX={scrollX} index={index} />
       </View>
     </SafeAreaView>

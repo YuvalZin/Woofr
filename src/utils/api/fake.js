@@ -1,13 +1,3 @@
-export const fakeLogin = (email, password) => {
-  for (const user of users) {
-    if (user.email === email && user.password === password) {
-      const token = JWT.encode({ userId: user.id }, JWT_SECRET);
-      return { status: true, value: token };
-    }
-  }
-  return null;
-};
-
 export const fakeLoginWithToken = (token) => {
   return Promise.resolve({
     status: true,

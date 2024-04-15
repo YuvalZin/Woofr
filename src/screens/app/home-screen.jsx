@@ -1,7 +1,6 @@
 // HomeScreen.js
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet, View, SafeAreaView } from "react-native";
 
 //Custom Component
 import BigText from "../../components/texts/big-text/big-text";
@@ -20,9 +19,6 @@ const HomeScreen = () => {
           <SmallText text="היי בני, מה אתה מחפש ?" />
         </View>
         <PostFilter index={filterIndex} setIndex={setFilterIndex} />
-      </View>
-
-      <View style={{ flex: 2 }}>
         <PostSlider />
       </View>
     </SafeAreaView>

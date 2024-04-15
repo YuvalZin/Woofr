@@ -25,7 +25,7 @@ const RootNavigation = () => {
     // Fetch user data from SecureStore
     const fetchUserFromSecureStore = () => {
       try {
-        const token = SecureStore.getItem("token10");
+        const token = SecureStore.getItem("token11");
         if (token) {
           // If user data exists, dispatch login action with that data
           dispatch(login(token));
