@@ -19,6 +19,7 @@ import * as SecureStore from "expo-secure-store";
 //Redux handler state management
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/authSlice";
+import { uploadImage } from "../../utils/api/ProfilePicAPI";
 
 //Custom components
 import BigText from "../../components/texts/big-text/big-text";
@@ -31,11 +32,12 @@ const ImageScreen = ({}) => {
   //State to save the image
   const [image, setImage] = useState(null);
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
-      const token = SecureStore.getItem("token");
+      setToken(SecureStore.getItem("token"));
       const req = await fakeLoginWithToken(token);
       if (req.status) {
         setUser(req.value);
@@ -61,25 +63,6 @@ const ImageScreen = ({}) => {
     }
   };
 
-  const uploadImage = async () => {
-    if (!image) return;
-
-    try {
-      // Fetch the image data
-      const response = await fetch(image);
-      const blob = await response.blob();
-
-      // Convert blob to base64 string
-      const reader = new FileReader();
-      reader.readAsDataURL(blob);
-      reader.onloadend = async () => {
-        const base64data = reader.result;
-        // Save base64 data to SQL table
-      };
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
-  };
 
   const skipImageUpload = () => {
     dispatch(login(user));
@@ -107,7 +90,7 @@ const ImageScreen = ({}) => {
         )}
 
         <View style={styles.buttonContainer}>
-          <RegularButton text={"הוסף"} onPress={uploadImage} />
+          <RegularButton text={"הוסף"} onPress={() => uploadImage(image,token)} />
           <TouchableOpacity onPress={skipImageUpload} style={styles.skip}>
             <SmallText text={"דלג"} />
           </TouchableOpacity>
