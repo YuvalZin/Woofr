@@ -1,35 +1,69 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
 //Custom Components
 import RegularText from "../../texts/regular-text/regular-text";
 import SmallText from "../../texts/small-text/small-text";
 
-const Post = () => {
+import { users } from "../../../utils/data/users";
+
+const Post = ({ data }) => {
+  const [fullName, setFullName] = useState("");
+  const [img, setImg] = useState(null);
+  const [timeStr, setTimeStr] = useState("");
+
+  useEffect(() => {
+    if (users) {
+      users.forEach((user) => {
+        if (user.email === data.ownerEmail) {
+          setFullName(`${user.firstName} ${user.lastName}`);
+          setImg(user.img);
+          setTimeStr(calculateTimeAgo(data.timestamp));
+        }
+      });
+    }
+  }, [data, users]);
+
+  const calculateTimeAgo = (timestamp) => {
+    const now = new Date();
+    const postTime = new Date(timestamp);
+    const diff = now - postTime;
+    const seconds = Math.floor(diff / 1000);
+
+    if (seconds < 60) {
+      return "just now";
+    } else if (seconds < 3600) {
+      const minutes = Math.floor(seconds / 60);
+      return `${minutes} דקות`;
+    } else if (seconds < 86400) {
+      const hours = Math.floor(seconds / 3600);
+      return `${hours} שעות`;
+    } else {
+      const day = postTime.getDate();
+      const month = postTime.getMonth() + 1;
+      const year = postTime.getFullYear().toString().slice(-2);
+      return `${day}/${month}/${year}`;
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.userInfo}>
-          <RegularText text={"בני חנונוב"} style={styles.username} />
-          <SmallText text={"בעלים של 4 כלבים"} style={styles.infoText} />
-          <SmallText text={"לפני 3 דקות"} style={styles.infoText} />
+          <RegularText text={fullName} style={styles.username} />
+          <SmallText text={timeStr} style={styles.infoText} />
         </View>
         <TouchableOpacity style={styles.avatarContainer}>
           <Image
             source={{
-              uri: "https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg",
+              uri: img,
             }}
             style={styles.avatar}
           />
         </TouchableOpacity>
       </View>
 
-      <RegularText
-        text={
-          "עשינו חוויה בלה בלה בלה אנחנו פה עם כלבים עושים חיים בלה בלה בלההכ נצשיך למלא מידע בלה בלה בלה איזה כיף פוסט ארוך "
-        }
-        english={true}
-      />
+      <RegularText text={data.postText} english={true} />
     </View>
   );
 };
@@ -55,9 +89,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   avatar: {
-    width: 90,
-    height: 90,
-    borderRadius: 45,
+    width: 70,
+    height: 70,
+    borderRadius: 35,
   },
   userInfo: {
     flex: 1,

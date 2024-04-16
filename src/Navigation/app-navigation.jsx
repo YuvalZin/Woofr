@@ -9,13 +9,14 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 //Screens
 import HomeScreen from "../screens/app/home-screen";
 import ProfileScreen from "../screens/app/profile-screen";
-import ChatScreen from "../screens/app/chat-screen";
+
+//Stack navigation
+import ChatsNavigation from "./chat-navigation";
 
 //Create Bottom tab navigation
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
-  const iconColor = "#565AC8";
   const iconSize = 26;
 
   return (
@@ -25,7 +26,7 @@ const TabNavigation = () => {
         headerShown: false,
         tabBarLabelStyle: {
           color: "black",
-          fontSize: 14,
+          fontSize: 15,
         },
       }}
     >
@@ -33,26 +34,22 @@ const TabNavigation = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarLabel: "Home",
-          tabBarIcon: () => (
-            <MaterialCommunityIcons
-              name="home"
-              color={iconColor}
-              size={iconSize}
-            />
+          tabBarLabel: "בית",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home" size={iconSize} color={color} />
           ),
         }}
       />
       <Tab.Screen
-        name="Chats"
-        component={ChatScreen}
+        name="ChatsStack"
+        component={ChatsNavigation}
         options={{
-          tabBarLabel: "Chats",
-          tabBarIcon: () => (
+          tabBarLabel: "שיחות",
+          tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="message"
-              color={iconColor}
               size={iconSize}
+              color={color}
             />
           ),
         }}
@@ -61,12 +58,12 @@ const TabNavigation = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
-          tabBarLabel: "Profile",
-          tabBarIcon: () => (
+          tabBarLabel: "פרופיל",
+          tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="account"
-              color={iconColor}
               size={iconSize}
+              color={color}
             />
           ),
         }}

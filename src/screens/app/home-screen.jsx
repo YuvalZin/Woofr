@@ -9,7 +9,7 @@ import PostFilter from "../../components/scroll/posts-filter/post-filter";
 import PostSlider from "../../components/scroll/posts-slider/post-slider";
 
 const HomeScreen = () => {
-  const [filterIndex, setFilterIndex] = useState(0);
+  const [filterIndex, setFilterIndex] = useState(3);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -19,7 +19,7 @@ const HomeScreen = () => {
           <SmallText text="היי בני, מה אתה מחפש ?" />
         </View>
         <PostFilter index={filterIndex} setIndex={setFilterIndex} />
-        <PostSlider />
+        <PostSlider type={filterIndex} />
       </View>
     </SafeAreaView>
   );
