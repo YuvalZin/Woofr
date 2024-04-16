@@ -103,11 +103,11 @@ const SignupScreen = () => {
       return;
     }
 
-    // Generate a unique ID for the user data and Save user data
     const isUserSaved = await saveUser(userData);
-
+    console.log(isUserSaved);
     if (isUserSaved) {
-      // SecureStore.setItem("token");
+      const tokenString = JSON.stringify(isUserSaved); // Convert token object to JSON string
+      SecureStore.setItem("token", tokenString); // Store the JSON string
       navigation.navigate("Image");
     } else {
       // Set snackbar text to display the error message

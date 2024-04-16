@@ -7,24 +7,20 @@ import {
   TextInput,
   View,
 } from "react-native";
-
 //Navigation handler
 import { useNavigation } from "@react-navigation/native";
-
 //Store package for react native expo
 import * as SecureStore from "expo-secure-store";
-
 //Custom components
 import BigText from "../../components/texts/big-text/big-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import RegularText from "../../components/texts/regular-text/regular-text";
-
 //Redux handler state management
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/authSlice";
-
-import { fakeLogin } from "../../utils/api/fake";
 import { Snackbar } from "react-native-paper";
+import { loginUser } from "../../utils/api/LoginApi";
+
 
 const SigninScreen = () => {
   const navigation = useNavigation();
@@ -40,11 +36,15 @@ const SigninScreen = () => {
 
   const handleLoginEvent = async () => {
     try {
-      const token = { status: true, value: "someToken" };
+      const isLoggedIn = loginUser(loginData)
+      let token = { status: false };
+      if (isLoggedIn) {
+        token = { status: true, value: isLoggedIn };
+      }
       if (token.status) {
-        console.log("hey");
-        SecureStore.setItem("token5", token.value);
-        dispatch(login(token));
+        const tokenString = JSON.stringify(token); // Convert token object to JSON string
+        SecureStore.setItem("token", tokenString); // Store the JSON string
+        dispatch(login(tokenString));
       } else {
         // Close the snackbar after 3 seconds
         setSnackbarOpen(true);
@@ -107,7 +107,7 @@ const SigninScreen = () => {
 
       <Snackbar
         visible={snackbarOpen}
-        onDismiss={() => {}}
+        onDismiss={() => { }}
         action={{
           label: "סגור",
           onPress: () => {
