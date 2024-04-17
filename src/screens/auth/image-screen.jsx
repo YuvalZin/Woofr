@@ -52,23 +52,24 @@ const ImageScreen = ({}) => {
   const pickImage = async () => {
     // Launch the image library and await the result
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images, // Specify that only images are allowed
-      allowsEditing: true, // Allow the user to edit the selected image
-      aspect: [4, 3], // Set the aspect ratio for the cropped image
-      quality: 1, // Set the quality of the selected image
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
 
     // Check if the user canceled the image selection
     if (!result.canceled) {
-      // If the image selection was not canceled, set the image URI in state
       setImage(result.assets[0].uri);
     }
   };
 
   const uploadImage = async () => {
     if (image) {
+      const userEmail = SecureStore.getItem("email");
+      SecureStore.deleteItemAsync("email");
       // Create a reference to the Firebase Storage location where you want to store the image
-      const storageRef = ref(imageDB, `profile/benyx13@gmail.com`);
+      const storageRef = ref(imageDB, `profile/${userEmail}`);
 
       try {
         // Convert the image URI to a Blob

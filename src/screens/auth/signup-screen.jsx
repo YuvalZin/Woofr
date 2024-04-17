@@ -106,8 +106,9 @@ const SignupScreen = () => {
     const isUserSaved = await saveUser(userData);
     console.log(isUserSaved);
     if (isUserSaved) {
-      const tokenString = JSON.stringify(isUserSaved); // Convert token object to JSON string
-      SecureStore.setItem("token", tokenString); // Store the JSON string
+      const tokenString = JSON.stringify(isUserSaved);
+      SecureStore.setItem("token", tokenString);
+      SecureStore.setItem("email", userData.email);
       navigation.navigate("Image");
     } else {
       // Set snackbar text to display the error message
