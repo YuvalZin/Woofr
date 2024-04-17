@@ -22,10 +22,6 @@ const ProfileScreen = () => {
   const profileImage =
     "https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg";
 
-  const array = Array(9).fill(
-    "https://media.istockphoto.com/id/1652227141/photo/running-fluffy-pembroke-welsh-corgi-puppy.webp?b=1&s=170667a&w=0&k=20&c=FY12EvcIs6H0lZm4WL_uOps9_vDLsIaK5Mp2LF2szNI="
-  );
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -61,8 +57,6 @@ const ProfileScreen = () => {
             <SmallText text={"Pets"} />
           </View>
         </View>
-
-        <ProfileGrid images={array} />
       </View>
     </SafeAreaView>
   );
