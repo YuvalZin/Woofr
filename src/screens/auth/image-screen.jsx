@@ -83,6 +83,8 @@ const ImageScreen = ({}) => {
 
         if (downloadURL) {
           //Push to db this url
+          //after success in api call use if and do
+          dispatch(login(user));
         }
       } catch (error) {
         console.error("Error uploading image: ", error);

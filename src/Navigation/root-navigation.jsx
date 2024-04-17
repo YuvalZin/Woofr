@@ -15,6 +15,7 @@ import { selectAuth, login } from "../redux/authSlice";
 
 // Store package for react native expo
 import * as SecureStore from "expo-secure-store";
+import { users } from "../utils/data/users";
 
 const RootNavigation = () => {
   const { isAuthenticated } = useSelector(selectAuth);
@@ -25,10 +26,18 @@ const RootNavigation = () => {
     // Fetch user data from SecureStore
     const fetchUserFromSecureStore = () => {
       try {
-        const token = SecureStore.getItem("token11");
+        const token = SecureStore.getItem("token");
         if (token) {
-          // If user data exists, dispatch login action with that data
-          dispatch(login(token));
+          var userData;
+
+          //Need to replace with api call for login with session token
+          users.forEach((user) => {
+            if (user.token === token) {
+              userData = user;
+              // If user data exists, dispatch login action with that data
+              dispatch(login(JSON.stringify(userData)));
+            }
+          });
         }
       } catch (error) {
         console.error("Error fetching user data from SecureStore:", error);
