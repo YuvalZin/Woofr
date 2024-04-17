@@ -10,6 +10,9 @@ import {
   StatusBar,
 } from "react-native";
 
+import { imageDB } from "../../utils/api/firebase-config";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 //Import image picker
 import * as ImagePicker from "expo-image-picker";
 
@@ -19,7 +22,6 @@ import * as SecureStore from "expo-secure-store";
 //Redux handler state management
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/authSlice";
-import { uploadImage } from "../../utils/api/ProfilePicAPI";
 
 //Custom components
 import BigText from "../../components/texts/big-text/big-text";
@@ -63,6 +65,31 @@ const ImageScreen = ({}) => {
     }
   };
 
+  const uploadImage = async () => {
+    if (image) {
+      // Create a reference to the Firebase Storage location where you want to store the image
+      const storageRef = ref(imageDB, `profile/benyx13@gmail.com`);
+
+      try {
+        // Convert the image URI to a Blob
+        const response = await fetch(image);
+        const blob = await response.blob();
+
+        // Upload the image blob to Firebase Storage
+        await uploadBytes(storageRef, blob);
+
+        // Get the download URL of the uploaded image
+        const downloadURL = await getDownloadURL(storageRef);
+
+        if (downloadURL) {
+          //Push to db this url
+        }
+      } catch (error) {
+        console.error("Error uploading image: ", error);
+        // Handle any errors that occur during the upload process
+      }
+    }
+  };
 
   const skipImageUpload = () => {
     dispatch(login(user));
@@ -90,7 +117,7 @@ const ImageScreen = ({}) => {
         )}
 
         <View style={styles.buttonContainer}>
-          <RegularButton text={"הוסף"} onPress={() => uploadImage(image,token)} />
+          <RegularButton text={"הוסף"} onPress={uploadImage} />
           <TouchableOpacity onPress={skipImageUpload} style={styles.skip}>
             <SmallText text={"דלג"} />
           </TouchableOpacity>
@@ -132,6 +159,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     justifyContent: "center",
     alignItems: "center",
+    width: 200,
   },
   skip: {
     marginVertical: 13,
