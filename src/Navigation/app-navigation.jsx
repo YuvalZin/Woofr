@@ -11,7 +11,7 @@ import HomeScreen from "../screens/app/home-screen";
 import ProfileScreen from "../screens/app/profile-screen";
 
 //Stack navigation
-import ChatsNavigation from "./chat-navigation";
+import chatStack from "./chat-stack";
 
 //Create Bottom tab navigation
 const Tab = createBottomTabNavigator();
@@ -42,7 +42,7 @@ const TabNavigation = () => {
       />
       <Tab.Screen
         name="ChatsStack"
-        component={ChatsNavigation}
+        component={chatStack}
         options={{
           tabBarLabel: "שיחות",
           tabBarIcon: ({ color }) => (

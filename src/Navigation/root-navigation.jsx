@@ -26,7 +26,7 @@ const RootNavigation = () => {
     // Fetch user data from SecureStore
     const fetchUserFromSecureStore = () => {
       try {
-        const token = SecureStore.getItem("token12");
+        const token = SecureStore.getItem("token");
         if (token) {
           var userData;
 

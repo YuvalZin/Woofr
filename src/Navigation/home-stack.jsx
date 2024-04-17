@@ -2,26 +2,26 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 // Screens
-import ChatsScreen from "../screens/app/chats-screen";
-import ChatScreen from "../screens/app/chat-screen";
+import HomeScreen from "../screens/app/home-screen";
+import ProfileScreen from "../screens/app/profile-screen";
 
 const Stack = createStackNavigator();
 
-const ChatsNavigation = () => {
+const ChatsStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Chats"
-        component={ChatsScreen}
+        name="home-index"
+        component={HomeScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Chat"
-        component={ChatScreen}
+        name="home-profile"
+        component={ProfileScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
 };
 
-export default ChatsNavigation;
+export default ChatsStack;

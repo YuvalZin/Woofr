@@ -27,7 +27,7 @@ const PostSlider = ({ type }) => {
         setIsLoading(false);
       }, 1000);
     }, 1000);
-  }, [type]); // Include 'type' in the dependency array
+  }, [type]);
 
   const renderPostItem = ({ item, index }) => {
     return <Post key={`post num:${index}`} data={item} />;
@@ -35,7 +35,7 @@ const PostSlider = ({ type }) => {
 
   return (
     <View style={styles.container}>
-      {isLoading ? ( // Show loading indicator if isLoading is true
+      {isLoading ? (
         <View style={[styles.container, styles.loadingContainer]}>
           <ActivityIndicator size="large" color="#565AC8" />
         </View>
