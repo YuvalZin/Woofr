@@ -29,8 +29,9 @@ import RegularText from "../../components/texts/regular-text/regular-text";
 import SmallText from "../../components/texts/small-text/small-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import { fakeLoginWithToken } from "../../utils/api/fake";
+import { uploadImageURL } from "../../utils/api/ProfilePicAPI";
 
-const ImageScreen = ({}) => {
+const ImageScreen = ({ }) => {
   //State to save the image
   const [image, setImage] = useState(null);
   const [user, setUser] = useState(null);
@@ -83,9 +84,14 @@ const ImageScreen = ({}) => {
         const downloadURL = await getDownloadURL(storageRef);
 
         if (downloadURL) {
-          //Push to db this url
-          //after success in api call use if and do
-          dispatch(login(user));
+          const updatedProfile = await uploadImageURL(userEmail, downloadURL);
+
+          if (updatedProfile) {
+            console.log("Updated profile:", updatedProfile);
+            SecureStore.setItem("user", JSON.stringify(updatedProfile));
+            dispatch(login(updatedProfile)); // Update user state in Redux
+          }
+
         }
       } catch (error) {
         console.error("Error uploading image: ", error);

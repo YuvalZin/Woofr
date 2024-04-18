@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
+import * as SecureStore from "expo-secure-store";
+
 //Custom components
 import BigText from "../../components/texts/big-text/big-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
@@ -29,9 +31,21 @@ const ProfileScreen = () => {
     setProfileData(filteredUser);
   }, [profileEmail]);
 
+<<<<<<< HEAD
   const moveBack = () => {
     navigation.goBack();
   };
+=======
+    // Simulate fetching posts from API
+    setTimeout(() => {
+      // Filter users based on email
+      const filteredUser = users.find((user) => user.email === profileEmail);
+      const data = JSON.parse(SecureStore.getItem("user"));
+      setProfileData(data);
+      console.log("PARSOS"+data);
+      console.log("hey");
+      console.log(profileData);
+>>>>>>> ed004bfd70e0b6d04db0b6b0a15325801287f90f
 
   const moveToChat = (email) => {
     navigation.navigate("home-chat", { email: email });
@@ -44,7 +58,7 @@ const ProfileScreen = () => {
         <View style={styles.container}>
           <View>
             <Image
-              source={{ uri: profileData.img }}
+              source={{ uri: profileData.profilePictureUrl }}
               style={styles.profileImage}
             />
           </View>

@@ -54,15 +54,18 @@ const SignupScreen = () => {
 
   // State object to manage user data
   const [userData, setUserData] = useState({
+
     firstName: "בני", // User's first name
     lastName: "חנונוב", // User's last name
-    username: "username", // User's last name
     gender: "male", // User's gender
     birthday: new Date(), // User's birthday (initialized to current date)
     email: "benyx13@gmail.com", // User's email address
     password: "Aa123456", // User's password
-    confirm: "Aa123456", // Confirmation of user's password
+    //confirm: "Aa123456", // Confirmation of user's password
   });
+
+
+  const [confirmPass,setConfirm] = useState("Aa123456");
 
   // Check if the app runs on iPhone
   useEffect(() => {
@@ -86,8 +89,10 @@ const SignupScreen = () => {
 
   // Function to handle form submission
   const handleSubmit = async () => {
+    console.log(confirmPass);
     // Validate the user data using signupValidator
-    const formCheck = signupValidator(userData);
+    const formCheck = signupValidator(userData,confirmPass);
+    console.log(userData.birthday.toString());
 
     // If the form validation fails
     if (formCheck.isValid === false) {
@@ -160,14 +165,7 @@ const SignupScreen = () => {
                 setUserData({ ...userData, lastName: value });
               }}
             />
-            <TextInput
-              value={userData.username}
-              placeholder="שם משתמש"
-              style={styles.input}
-              onChangeText={(value) => {
-                setUserData({ ...userData, username: value });
-              }}
-            />
+           
             <TextInput
               value={userData.email}
               placeholder="איימל"
@@ -187,11 +185,11 @@ const SignupScreen = () => {
             />
 
             <TextInput
-              value={userData.confirm}
+              value={confirmPass}
               placeholder="אימות סיסמא"
               style={styles.input}
               onChangeText={(value) => {
-                setUserData({ ...userData, confirm: value });
+                setConfirm(value);
               }}
             />
           </ScrollView>
