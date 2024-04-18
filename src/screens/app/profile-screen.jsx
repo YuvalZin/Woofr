@@ -6,10 +6,10 @@ import {
   StyleSheet,
   View,
 } from "react-native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 //Custom components
 import BigText from "../../components/texts/big-text/big-text";
-import SmallText from "../../components/texts/small-text/small-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import EmptyCard from "../../components/cards/empty-card/empty-card";
@@ -18,37 +18,29 @@ import EmptyCard from "../../components/cards/empty-card/empty-card";
 import { users } from "../../utils/data/users";
 
 const ProfileScreen = () => {
-  const profileEmail = "example1@example.com";
-
+  const navigation = useNavigation();
+  const route = useRoute();
+  const profileEmail = route.params?.email;
   const [profileData, setProfileData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // Set loading state to true when fetching new posts
-    setIsLoading(true);
-
-    // Simulate fetching posts from API
-    setTimeout(() => {
-      // Filter users based on email
-      const filteredUser = users.find((user) => user.email === profileEmail);
-      setProfileData(filteredUser);
-
-      // Set loading state back to false after 2 seconds
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-    }, 1000);
+    // Filter users based on email
+    const filteredUser = users.find((user) => user.email === profileEmail);
+    setProfileData(filteredUser);
   }, [profileEmail]);
+
+  const moveBack = () => {
+    navigation.goBack();
+  };
+
+  const moveToChat = (email) => {
+    navigation.navigate("home-chat", { email: email });
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <GoBackButton onPress={() => {}} />
-
-      {isLoading ? (
-        <View style={[styles.container, styles.loadingContainer]}>
-          <ActivityIndicator size="large" color="#565AC8" />
-        </View>
-      ) : profileData ? (
+      <GoBackButton onPress={moveBack} />
+      {profileData ? (
         <View style={styles.container}>
           <View>
             <Image
@@ -61,7 +53,7 @@ const ProfileScreen = () => {
           <View style={styles.buttonContainer}>
             <View style={styles.buttonView}>
               <RegularButton
-                text={"הוסף לחברים"}
+                text={`כפתור למשהו`}
                 width={120}
                 onPress={() => {}}
               />
@@ -70,23 +62,10 @@ const ProfileScreen = () => {
               <RegularButton
                 text={"שלח הודעה"}
                 width={120}
-                onPress={() => {}}
+                onPress={() => {
+                  moveToChat(profileData.email);
+                }}
               />
-            </View>
-          </View>
-
-          <View style={styles.buttonContainer}>
-            <View style={styles.buttonItem}>
-              <BigText text={"1.2K"} />
-              <SmallText text={"Photos"} />
-            </View>
-            <View style={styles.buttonItem}>
-              <BigText text={"210"} />
-              <SmallText text={"Friends"} />
-            </View>
-            <View style={styles.buttonItem}>
-              <BigText text={"5"} />
-              <SmallText text={"Pets"} />
             </View>
           </View>
         </View>

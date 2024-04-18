@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, FlatList, View, ActivityIndicator } from "react-native";
+import { StyleSheet, FlatList, View } from "react-native";
 
 // Custom components
 import Post from "../../cards/post/post";
 import EmptyCard from "../../cards/empty-card/empty-card";
+import LoadingIndicator from "../../animation/loading-indicator/loading-indicator";
 
 // Fake api fetch
 import { posts } from "../../../utils/data/posts";
 
-const PostSlider = ({ type }) => {
+const PostSlider = ({ type, onImgPress }) => {
   const [postsFiltered, setPostsFiltered] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,15 +31,15 @@ const PostSlider = ({ type }) => {
   }, [type]);
 
   const renderPostItem = ({ item, index }) => {
-    return <Post key={`post num:${index}`} data={item} />;
+    return (
+      <Post key={`post num:${index}`} data={item} onImgPress={onImgPress} />
+    );
   };
 
   return (
     <View style={styles.container}>
       {isLoading ? (
-        <View style={[styles.container, styles.loadingContainer]}>
-          <ActivityIndicator size="large" color="#565AC8" />
-        </View>
+        <LoadingIndicator />
       ) : postsFiltered.length > 0 ? (
         <FlatList
           data={postsFiltered}

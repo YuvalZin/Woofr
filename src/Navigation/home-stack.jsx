@@ -4,10 +4,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 // Screens
 import HomeScreen from "../screens/app/home-screen";
 import ProfileScreen from "../screens/app/profile-screen";
+import ChatScreen from "../screens/app/chat-screen";
 
 const Stack = createStackNavigator();
 
-const ChatsStack = () => {
+const HomeStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -20,8 +21,13 @@ const ChatsStack = () => {
         component={ProfileScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="home-chat"
+        component={ChatScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
 
-export default ChatsStack;
+export default HomeStack;

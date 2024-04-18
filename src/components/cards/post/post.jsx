@@ -7,17 +7,15 @@ import SmallText from "../../texts/small-text/small-text";
 
 import { users } from "../../../utils/data/users";
 
-const Post = ({ data }) => {
-  const [fullName, setFullName] = useState("");
-  const [img, setImg] = useState(null);
+const Post = ({ data, onImgPress }) => {
+  const [userData, setUserData] = useState("");
   const [timeStr, setTimeStr] = useState("");
 
   useEffect(() => {
     if (users) {
       users.forEach((user) => {
         if (user.email === data.ownerEmail) {
-          setFullName(`${user.firstName} ${user.lastName}`);
-          setImg(user.img);
+          setUserData(user);
           setTimeStr(calculateTimeAgo(data.timestamp));
         }
       });
@@ -50,13 +48,19 @@ const Post = ({ data }) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.userInfo}>
-          <RegularText text={fullName} style={styles.username} />
+          <RegularText
+            text={`${userData.firstName} ${userData.lastName}`}
+            style={styles.username}
+          />
           <SmallText text={timeStr} style={styles.infoText} />
         </View>
-        <TouchableOpacity style={styles.avatarContainer}>
+        <TouchableOpacity
+          style={styles.avatarContainer}
+          onPress={() => onImgPress(userData.email)}
+        >
           <Image
             source={{
-              uri: img,
+              uri: userData.img,
             }}
             style={styles.avatar}
           />
