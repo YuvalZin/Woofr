@@ -7,6 +7,8 @@ import {
   View,
 } from "react-native";
 
+import * as SecureStore from "expo-secure-store";
+
 //Custom components
 import BigText from "../../components/texts/big-text/big-text";
 import SmallText from "../../components/texts/small-text/small-text";
@@ -31,7 +33,11 @@ const ProfileScreen = () => {
     setTimeout(() => {
       // Filter users based on email
       const filteredUser = users.find((user) => user.email === profileEmail);
-      setProfileData(filteredUser);
+      const data = JSON.parse(SecureStore.getItem("user"));
+      setProfileData(data);
+      console.log("PARSOS"+data);
+      console.log("hey");
+      console.log(profileData);
 
       // Set loading state back to false after 2 seconds
       setTimeout(() => {
@@ -52,7 +58,7 @@ const ProfileScreen = () => {
         <View style={styles.container}>
           <View>
             <Image
-              source={{ uri: profileData.img }}
+              source={{ uri: profileData.profilePictureUrl }}
               style={styles.profileImage}
             />
           </View>

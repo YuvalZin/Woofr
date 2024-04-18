@@ -1,3 +1,6 @@
 {
-  "urlRandomness": "OW2ytvk"
+  "urlRandomness": "OW2ytvk",
+  "dev": true,
+  "minify": false,
+  "https": false
 }

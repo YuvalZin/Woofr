@@ -1,8 +1,12 @@
-const apiUrl = 'http://192.168.1.16:7207/api/Users';
 
 //register user
 export const saveUser = async (userData) => {
     try {
+        console.log(userData);
+        userData.profilePictureUrl = "none";
+        userData.token = "string";
+        userData.userId = 0;
+        console.log(userData);
         // Make API request to register user
         const apiUrl = 'http://192.168.1.16:7207/api/Users';
         const response = await fetch(apiUrl, {
@@ -16,6 +20,7 @@ export const saveUser = async (userData) => {
         if (!response.ok) {
             throw new Error('Failed to register user');
         }
+        console.log("heyy");
         const token = await response.text();
         console.log(token);
         console.log('User registered successfully:', token);
