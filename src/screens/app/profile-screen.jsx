@@ -21,32 +21,21 @@ import { users } from "../../utils/data/users";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
-  const route = useRoute();
-  const profileEmail = route.params?.email;
+  //const route = useRoute();
+  //const profileEmail = route.params?.email;
   const [profileData, setProfileData] = useState(null);
 
   useEffect(() => {
-    // Filter users based on email
-    const filteredUser = users.find((user) => user.email === profileEmail);
-    setProfileData(filteredUser);
-  }, [profileEmail]);
-
-<<<<<<< HEAD
-  const moveBack = () => {
-    navigation.goBack();
-  };
-=======
-    // Simulate fetching posts from API
-    setTimeout(() => {
-      // Filter users based on email
-      const filteredUser = users.find((user) => user.email === profileEmail);
-      const data = JSON.parse(SecureStore.getItem("user"));
+    const data = JSON.parse(SecureStore.getItem("user"));
       setProfileData(data);
       console.log("PARSOS"+data);
       console.log("hey");
       console.log(profileData);
->>>>>>> ed004bfd70e0b6d04db0b6b0a15325801287f90f
+  }, []);
 
+  const moveBack = () => {
+    navigation.goBack();
+  };
   const moveToChat = (email) => {
     navigation.navigate("home-chat", { email: email });
   };

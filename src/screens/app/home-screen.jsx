@@ -1,6 +1,6 @@
 // HomeScreen.js
 import React, { useState } from "react";
-import { StyleSheet, View, SafeAreaView } from "react-native";
+import { StyleSheet, View, SafeAreaView, ScrollView ,Image} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 //Custom Component
@@ -9,6 +9,7 @@ import SmallText from "../../components/texts/small-text/small-text";
 import PostFilter from "../../components/scroll/posts-filter/post-filter";
 import PostSlider from "../../components/scroll/posts-slider/post-slider";
 import AddPost from "../../components/buttons/add-post/add-post";
+
 
 const HomeScreen = () => {
   const [filterIndex, setFilterIndex] = useState(3);
@@ -23,14 +24,23 @@ const HomeScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <BigText text={"WOOFR"} />
+        <Image
+              source={require("../assets/logo-wofer2.png")}
+              style={styles.logo}
+              resizeMode="contain"
+            />
           <SmallText text="היי בני, מה אתה מחפש ?" />
         </View>
-        <PostFilter index={filterIndex} setIndex={setFilterIndex} />
-        <AddPost />
-        <PostSlider type={filterIndex} onImgPress={moveToProfile} />
+        <ScrollView style={{ flex: 1 }}>
+
+          <PostFilter index={filterIndex} setIndex={setFilterIndex} />
+          <AddPost />
+          <PostSlider type={filterIndex} onImgPress={moveToProfile} />
+        </ScrollView>
       </View>
-    </SafeAreaView>
+
+
+    </SafeAreaView >
   );
 };
 
