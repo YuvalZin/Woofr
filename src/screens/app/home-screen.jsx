@@ -9,6 +9,7 @@ import SmallText from "../../components/texts/small-text/small-text";
 import PostFilter from "../../components/scroll/posts-filter/post-filter";
 import PostSlider from "../../components/scroll/posts-slider/post-slider";
 import AddPost from "../../components/buttons/add-post/add-post";
+import LogoImage from "../../assets/logo-wofer2.png";
 
 
 const HomeScreen = () => {
@@ -24,11 +25,8 @@ const HomeScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <View style={styles.header}>
-        <Image
-              source={require("../assets/logo-wofer2.png")}
-              style={styles.logo}
-              resizeMode="contain"
-            />
+        <Image source={LogoImage} style={styles.logo} />
+
           <SmallText text="היי בני, מה אתה מחפש ?" />
         </View>
         <ScrollView style={{ flex: 1 }}>
@@ -53,6 +51,11 @@ const styles = StyleSheet.create({
     padding: 8,
     width: "100%",
     alignItems: "flex-end",
+  },
+  logo: {
+    width: 100, // Adjust the width and height as needed
+    height: 50,
+    resizeMode: "contain", // Make sure the image fits its container
   },
 });
 
