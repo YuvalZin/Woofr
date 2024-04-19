@@ -53,8 +53,9 @@ const PostFilter = ({ index, setIndex }) => {
 
 const styles = StyleSheet.create({
   rowContainer: {
+    
     width: "100%",
-    flexDirection: "row",
+    flexDirection: "row-reverse",
     justifyContent: "space-evenly",
     padding: 4,
   },
