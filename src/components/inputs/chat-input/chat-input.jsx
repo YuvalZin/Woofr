@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Text,
 } from "react-native";
+import { colorPalate } from "../../../utils/ui/colors";
 
 const ChatInput = ({ value, setValue }) => {
   return (
@@ -48,9 +49,11 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 16,
+    textAlign: "right",
+    padding: 8,
   },
   button: {
-    backgroundColor: "#2196F3",
+    backgroundColor: colorPalate.secondary,
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,

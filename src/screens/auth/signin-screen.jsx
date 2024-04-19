@@ -20,6 +20,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../../redux/authSlice";
 import { Snackbar } from "react-native-paper";
 import { loginUser } from "../../utils/api/user";
+import { colorPalate } from "../../utils/ui/colors";
 
 const SigninScreen = () => {
   const navigation = useNavigation();
@@ -95,11 +96,21 @@ const SigninScreen = () => {
 
         <View>
           <View style={{ width: 200 }}>
-            <RegularButton text={"התחבר"} onPress={handleLoginEvent} />
+            <RegularButton
+              text={"התחבר"}
+              onPress={handleLoginEvent}
+              color={colorPalate.primary}
+              iconName={"log-in-outline"}
+            />
           </View>
           <View style={styles.divider}></View>
           <View style={{ width: 200 }}>
-            <RegularButton text={"הירשם"} onPress={moveToSignup} />
+            <RegularButton
+              text={"הירשם"}
+              onPress={moveToSignup}
+              color={colorPalate.primary}
+              iconName={"person-add-outline"}
+            />
           </View>
         </View>
       </View>

@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
+//
+import { useSelector } from "react-redux";
+import { selectAuth } from "../../../redux/authSlice";
+
 //Custom Components
 import RegularText from "../../texts/regular-text/regular-text";
 import SmallText from "../../texts/small-text/small-text";
+import IconButton from "../../buttons/icon-button/icon-button";
 
 import { users } from "../../../utils/data/users";
+import { colorPalate } from "../../../utils/ui/colors";
 
 const Post = ({ data, onImgPress }) => {
   const [userData, setUserData] = useState("");
   const [timeStr, setTimeStr] = useState("");
+
+  // Use useSelector to access the Redux store state
+  const auth = useSelector(selectAuth);
+  const myUser = JSON.parse(auth.user);
 
   useEffect(() => {
     if (users) {
@@ -68,6 +78,16 @@ const Post = ({ data, onImgPress }) => {
       </View>
 
       <RegularText text={data.postText} english={true} />
+
+      {data.ownerEmail === myUser.email && (
+        <View style={styles.buttonContainer}>
+          <IconButton
+            iconName={"trash-outline"}
+            color={colorPalate.warning}
+            iconSize={22}
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -76,11 +96,11 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
     marginBottom: 10,
-    margin: 5,
+    margin: 7,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: "grey",
-    padding: 4,
+    padding: 8,
   },
   header: {
     padding: 6,
@@ -111,6 +131,10 @@ const styles = StyleSheet.create({
     color: "#888",
     fontSize: 12,
     marginRight: 3,
+  },
+  buttonContainer: {
+    padding: 6,
+    width: 120,
   },
 });
 

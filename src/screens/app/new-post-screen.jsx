@@ -21,6 +21,8 @@ import BigText from "../../components/texts/big-text/big-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 
+import { colorPalate } from "../../utils/ui/colors";
+
 const NewPostScreen = () => {
   //Navigation handler
   const navigation = useNavigation();
@@ -111,6 +113,12 @@ const NewPostScreen = () => {
     const req = true;
 
     if (req) {
+      setSnackBarText("הפוסט עלה בהצלחה");
+      setSnackbarOpen(true);
+      // Close the snackbar after 3 seconds
+      setTimeout(() => {
+        setSnackbarOpen(false);
+      }, 1500);
       moveBack();
     } else {
       setLoading(false);
@@ -156,11 +164,21 @@ const NewPostScreen = () => {
 
             <View style={styles.buttonsContainer}>
               <View style={styles.buttonContainer}>
-                <RegularButton text={"בחר תמונה"} onPress={pickImage} />
+                <RegularButton
+                  text={"בחר תמונה"}
+                  onPress={pickImage}
+                  color={colorPalate.primary}
+                  iconName={"camera-outline"}
+                />
               </View>
 
               <View style={styles.buttonContainer}>
-                <RegularButton text={"העלאה"} onPress={uploadPost} />
+                <RegularButton
+                  text={"העלאה"}
+                  onPress={uploadPost}
+                  color={colorPalate.primary}
+                  iconName={"cloud-upload-outline"}
+                />
               </View>
             </View>
 
@@ -211,11 +229,12 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: "row",
-    gap: 20,
+    gap: 30,
     padding: 12,
+    marginTop: 10,
   },
   buttonContainer: {
-    width: 140,
+    width: 180,
   },
   previewImage: {
     width: 200,

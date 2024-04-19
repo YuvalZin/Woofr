@@ -33,6 +33,7 @@ import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import { signupValidator } from "../../utils/scripts/formValidate";
 import { genders } from "../../utils/data/gender";
 import { saveUser } from "../../utils/api/user";
+import { colorPalate } from "../../utils/ui/colors";
 
 const isIos = Platform.OS === "ios";
 
@@ -87,10 +88,8 @@ const SignupScreen = () => {
 
   // Function to handle form submission
   const handleSubmit = async () => {
-    console.log(confirmPass);
     // Validate the user data using signupValidator
     const formCheck = signupValidator(userData, confirmPass);
-    console.log(userData.birthday.toString());
 
     // If the form validation fails
     if (formCheck.isValid === false) {
@@ -229,7 +228,12 @@ const SignupScreen = () => {
         </View>
 
         <View style={{ width: 200 }}>
-          <RegularButton text={"הירשם"} onPress={handleSubmit} />
+          <RegularButton
+            text={"הירשם"}
+            onPress={handleSubmit}
+            color={colorPalate.primary}
+            iconName={"checkmark-circle-outline"}
+          />
         </View>
       </View>
 

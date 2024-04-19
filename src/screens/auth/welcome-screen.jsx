@@ -1,6 +1,6 @@
 // WelcomeScreen.js
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Animated, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -15,6 +15,7 @@ import RegularButton from "../../components/buttons/regular-button/regular-butto
 
 //Navigation handler
 import { useNavigation } from "@react-navigation/native";
+import { colorPalate } from "../../utils/ui/colors";
 
 const WelcomeScreen = () => {
   const [index, setIndex] = useState(0); // State variable to store the current index
@@ -27,12 +28,13 @@ const WelcomeScreen = () => {
         <BigText text={"WOOFR"} />
         <FeatureSlider index={index} setIndex={setIndex} scrollX={scrollX} />
 
-        <View style={{ width: 200 }}>
+        <View style={styles.buttonContainer}>
           <RegularButton
             text={"בוא נתחיל"}
             onPress={() => {
               navigation.navigate("Signin");
             }}
+            color={colorPalate.primary}
           />
         </View>
         <Pagination data={features} scrollX={scrollX} index={index} />
@@ -49,6 +51,10 @@ const styles = StyleSheet.create({
   },
   flatListContainer: {
     flex: 0.3,
+  },
+  buttonContainer: {
+    width: 300,
+    padding: 12,
   },
 });
 

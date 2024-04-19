@@ -25,6 +25,7 @@ import { getFollowData } from "../../utils/api/user";
 //Fake data
 import { users } from "../../utils/data/users";
 import { posts } from "../../utils/data/posts";
+import { colorPalate } from "../../utils/ui/colors";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -70,6 +71,7 @@ const ProfileScreen = () => {
               <View style={styles.buttonView}>
                 <RegularButton
                   text={`הוספת פוסט`}
+                  color={colorPalate.primary}
                   onPress={() => {
                     navigation.navigate("profile-post");
                   }}
@@ -78,6 +80,7 @@ const ProfileScreen = () => {
               <View style={styles.buttonView}>
                 <RegularButton
                   text={"עריכת פרופיל"}
+                  color={colorPalate.primary}
                   onPress={() => {
                     navigation.navigate("profile-edit");
                   }}
@@ -99,7 +102,7 @@ const ProfileScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
+    marginTop: 20,
     flex: 1,
     alignItems: "center",
   },

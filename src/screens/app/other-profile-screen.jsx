@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 //Custom components
 import BigText from "../../components/texts/big-text/big-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
+import PostSlider from "../../components/scroll/posts-slider/post-slider";
 
 import { users } from "../../utils/data/users";
+import { posts } from "../../utils/data/posts";
+import { colorPalate } from "../../utils/ui/colors";
+import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 
 // Example user data
 const userData = {
@@ -61,33 +72,43 @@ const UserProfileScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <GoBackButton onPress={moveBack} />
       {userProfile ? (
-        <View style={styles.container}>
-          <View>
+        <ScrollView style={styles.container}>
+          <View style={styles.imageContainer}>
             <Image
               source={{ uri: userProfile.img }}
               style={styles.profileImage}
             />
+            <BigText
+              text={`${userProfile.firstName} ${userProfile.lastName}`}
+            />
           </View>
-          <BigText text={`${userProfile.firstName} ${userProfile.lastName}`} />
-          <Text style={styles.bio}>{userProfile.bio}</Text>
 
-          <View style={styles.buttonContainer}>
-            <View style={styles.buttonView}>
-              <RegularButton text={`עקוב`} width={120} onPress={() => {}} />
+          <View style={styles.buttonsContainer}>
+            <View style={styles.buttonContainer}>
+              <RegularButton
+                text={`עקוב`}
+                width={120}
+                color={colorPalate.primary}
+                iconName={"person-add-outline"}
+                onPress={() => {}}
+              />
             </View>
-            <View style={styles.buttonView}>
+            <View style={styles.buttonContainer}>
               <RegularButton
                 text={"שלח הודעה"}
                 width={120}
+                color={colorPalate.primary}
+                iconName={"mail-outline"}
                 onPress={() => {
                   moveToChat(userProfile.email);
                 }}
               />
             </View>
           </View>
-        </View>
+          <PostSlider arr={posts} onImgPress={() => {}} />
+        </ScrollView>
       ) : (
-        <Text>Loading...</Text> // Add a loading indicator or placeholder
+        <LoadingIndicator />
       )}
     </SafeAreaView>
   );
@@ -95,11 +116,13 @@ const UserProfileScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
     flex: 1,
-    alignItems: "center",
   },
   loadingContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  imageContainer: {
     justifyContent: "center",
     alignItems: "center",
   },
@@ -109,14 +132,14 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     borderRadius: 80,
   },
-  buttonContainer: {
+  buttonsContainer: {
     padding: 8,
     flexDirection: "row",
     justifyContent: "space-evenly",
     width: "100%",
   },
-  buttonView: {
-    width: 160,
+  buttonContainer: {
+    width: 180,
   },
   buttonItem: {
     flex: 1,

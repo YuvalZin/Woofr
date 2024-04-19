@@ -1,7 +1,6 @@
-//pagination.jsx
-
 import { StyleSheet, Animated, View, Dimensions } from "react-native";
 import React from "react";
+import { colorPalate } from "../../../utils/ui/colors";
 
 // Destructuring 'width' from Dimensions
 const { width } = Dimensions.get("screen");
@@ -54,6 +53,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#ccc",
   },
   dotActive: {
-    backgroundColor: "#000",
+    backgroundColor: colorPalate.primary,
   },
 });

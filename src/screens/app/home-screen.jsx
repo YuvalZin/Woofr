@@ -9,6 +9,10 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
+//
+import { useSelector } from "react-redux";
+import { selectAuth } from "../../redux/authSlice";
+
 //Custom Component
 import PostFilter from "../../components/scroll/posts-filter/post-filter";
 import PostSlider from "../../components/scroll/posts-slider/post-slider";
@@ -19,10 +23,19 @@ import SmallText from "../../components/texts/small-text/small-text";
 import { posts } from "../../utils/data/posts";
 
 const HomeScreen = () => {
+  //Navigation handler
   const navigation = useNavigation();
 
+  // Use useSelector to access the Redux store state
+  const auth = useSelector(selectAuth);
+  const myUser = JSON.parse(auth.user);
+
   const moveToProfile = (email) => {
-    navigation.navigate("home-profile", { email: email });
+    if (myUser.email !== email) {
+      navigation.navigate("home-profile", { email: email });
+    } else {
+      navigation.navigate("profile-stack");
+    }
   };
 
   return (

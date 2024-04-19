@@ -10,7 +10,7 @@ const ChatsScreen = () => {
   const navigation = useNavigation();
 
   const moveToChat = () => {
-    navigation.navigate("Chat");
+    navigation.navigate("chats-chat");
   };
 
   return (
@@ -30,9 +30,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    padding: 4,
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+    padding: 8,
     width: "100%",
   },
 });

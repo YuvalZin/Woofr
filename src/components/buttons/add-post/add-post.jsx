@@ -1,9 +1,8 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-//Custom components
-import RegularText from "../../texts/regular-text/regular-text";
+import { colorPalate } from "../../../utils/ui/colors";
 
 const AddPost = ({ onPress }) => {
   return (
@@ -11,7 +10,7 @@ const AddPost = ({ onPress }) => {
       <TouchableOpacity style={styles.button} onPress={onPress}>
         <View style={styles.row}>
           <Ionicons name="cloud-upload" size={24} color="white" />
-          <RegularText text={"הוסף פוסט"} />
+          <Text style={styles.text}>{"הוסף פוסט"}</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -24,7 +23,7 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   button: {
-    backgroundColor: "#007AFF",
+    backgroundColor: colorPalate.primary,
     padding: 6,
     borderRadius: 10,
     width: "100%",
@@ -42,6 +41,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 8,
     alignItems: "center",
+  },
+  text: {
+    color: colorPalate.white,
+    fontSize: 20,
+    padding: 8,
   },
 });
 

@@ -1,11 +1,11 @@
 // regular-button.tsx
 
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-// Import custom components
-import RegularText from "../../texts/regular-text/regular-text";
+//App color palate
+import { colorPalate } from "../../../utils/ui/colors";
 
 const RegularButton = ({ text, onPress, color, iconName }) => {
   return (
@@ -13,10 +13,8 @@ const RegularButton = ({ text, onPress, color, iconName }) => {
       style={[styles.button, { backgroundColor: color }]}
       onPress={onPress}
     >
-      {iconName && (
-        <Ionicons name={iconName} size={24} color="white" style={styles.icon} />
-      )}
-      <RegularText text={text} />
+      <Text style={styles.text}>{text}</Text>
+      {iconName && <Ionicons name={iconName} size={24} color="white" />}
     </TouchableOpacity>
   );
 };
@@ -29,9 +27,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     elevation: 5,
+    flexDirection: "row",
+    gap: 5,
   },
-  icon: {
-    marginRight: 10,
+  text: {
+    fontSize: 21,
+    fontWeight: 500,
+    textAlign: "left",
+    padding: 4,
+    color: colorPalate.white,
   },
 });
 
