@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, FlatList, View } from "react-native";
+import { StyleSheet, FlatList, View, ScrollView } from "react-native";
 
 // Custom components
 import Post from "../../cards/post/post";
 import EmptyCard from "../../cards/empty-card/empty-card";
 import LoadingIndicator from "../../animation/loading-indicator/loading-indicator";
+import AddPost from "../../../components/buttons/add-post/add-post";
+import PostFilter from "../../../components/scroll/posts-filter/post-filter";
+import SmallText from "../../../components/texts/small-text/small-text";
+
 
 // Fake api fetch
 import { posts } from "../../../utils/data/posts";
 
 const PostSlider = ({ type, onImgPress }) => {
-  const [postsFiltered, setPostsFiltered] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -20,8 +23,6 @@ const PostSlider = ({ type, onImgPress }) => {
     // Simulate fetching posts from API
     setTimeout(() => {
       // Filter posts based on type
-      const filteredPosts = posts.filter((post) => post.type === type);
-      setPostsFiltered(filteredPosts);
 
       // Set loading state back to false after 2 seconds
       setTimeout(() => {
@@ -37,19 +38,21 @@ const PostSlider = ({ type, onImgPress }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      <SmallText text="היי בני, מה אתה מחפש ?" />
+      <PostFilter />
       {isLoading ? (
         <LoadingIndicator />
-      ) : postsFiltered.length > 0 ? (
-        <FlatList
-          data={postsFiltered}
-          renderItem={renderPostItem}
-          keyExtractor={(item) => item.id}
-        />
+      ) : posts.length == 0 ? (
+        posts.map((post, index) => (
+          <Post key={`post-${index}`} data={post} onImgPress={onImgPress} />
+        ))
       ) : (
         <EmptyCard text={"אין פוסטים שניתן להציג כרגע..."} iconName="bug" />
       )}
-    </View>
+      {/* AddPost component if needed */}
+      {/* Additional components can go here */}
+    </ScrollView>
   );
 };
 

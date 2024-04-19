@@ -31,7 +31,7 @@ const ProfileScreen = () => {
       console.log("PARSOS"+data);
       console.log("hey");
       console.log(profileData);
-  }, []);
+  }, []); //מחקתי פה כמה דברים צריך לדעת אם הם קריטים
 
   const moveBack = () => {
     navigation.goBack();
