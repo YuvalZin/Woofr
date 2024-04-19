@@ -19,8 +19,7 @@ import RegularText from "../../components/texts/regular-text/regular-text";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/authSlice";
 import { Snackbar } from "react-native-paper";
-import { loginUser } from "../../utils/api/LoginApi";
-
+import { loginUser } from "../../utils/api/user";
 
 const SigninScreen = () => {
   const navigation = useNavigation();
@@ -37,7 +36,7 @@ const SigninScreen = () => {
 
   const handleLoginEvent = async () => {
     try {
-      const isLoggedIn = await loginUser(loginData)
+      const isLoggedIn = await loginUser(loginData);
       let token = { status: false };
       if (isLoggedIn) {
         token = { status: true, value: isLoggedIn };
@@ -107,7 +106,7 @@ const SigninScreen = () => {
 
       <Snackbar
         visible={snackbarOpen}
-        onDismiss={() => { }}
+        onDismiss={() => {}}
         action={{
           label: "סגור",
           onPress: () => {

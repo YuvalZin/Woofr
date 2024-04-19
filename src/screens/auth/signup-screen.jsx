@@ -32,7 +32,7 @@ import GoBackButton from "../../components/buttons/go-back/go-back-button";
 //Import data and validators
 import { signupValidator } from "../../utils/scripts/formValidate";
 import { genders } from "../../utils/data/gender";
-import { saveUser } from "../../utils/api/UserApi";
+import { saveUser } from "../../utils/api/user";
 
 const isIos = Platform.OS === "ios";
 
@@ -54,7 +54,6 @@ const SignupScreen = () => {
 
   // State object to manage user data
   const [userData, setUserData] = useState({
-
     firstName: "בני", // User's first name
     lastName: "חנונוב", // User's last name
     gender: "male", // User's gender
@@ -64,8 +63,7 @@ const SignupScreen = () => {
     //confirm: "Aa123456", // Confirmation of user's password
   });
 
-
-  const [confirmPass,setConfirm] = useState("Aa123456");
+  const [confirmPass, setConfirm] = useState("Aa123456");
 
   // Check if the app runs on iPhone
   useEffect(() => {
@@ -91,7 +89,7 @@ const SignupScreen = () => {
   const handleSubmit = async () => {
     console.log(confirmPass);
     // Validate the user data using signupValidator
-    const formCheck = signupValidator(userData,confirmPass);
+    const formCheck = signupValidator(userData, confirmPass);
     console.log(userData.birthday.toString());
 
     // If the form validation fails
@@ -130,12 +128,12 @@ const SignupScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar />
-      <View style={{alignItems:"flex-end"}}>
-      <GoBackButton
-        onPress={() => {
-          navigation.navigate("Signin");
-        }}
-      />
+      <View style={{ alignItems: "flex-end" }}>
+        <GoBackButton
+          onPress={() => {
+            navigation.navigate("Signin");
+          }}
+        />
       </View>
       <View style={styles.container}>
         <View style={styles.header}>
@@ -165,7 +163,7 @@ const SignupScreen = () => {
                 setUserData({ ...userData, lastName: value });
               }}
             />
-           
+
             <TextInput
               value={userData.email}
               placeholder="איימל"
@@ -217,9 +215,9 @@ const SignupScreen = () => {
         )}
 
         <View style={styles.input}>
-          <DropDownPicker 
-          rtl={true}
-          style={styles.picker}
+          <DropDownPicker
+            rtl={true}
+            style={styles.picker}
             open={openGender}
             value={userData.gender}
             items={genders}
@@ -227,7 +225,6 @@ const SignupScreen = () => {
             onSelectItem={(value) => {
               setUserData({ ...userData, gender: value["value"] });
             }}
-            
           />
         </View>
 
@@ -269,23 +266,22 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   input: {
-    textAlign:"right",
+    textAlign: "right",
     borderWidth: 1,
     borderColor: "black",
     borderRadius: 5,
     padding: 10,
     marginVertical: 5,
     width: 300,
-    
   },
   formScroll: {
     height: 300,
   },
-  picker:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  }
+  picker: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
 });
 
 export default SignupScreen;

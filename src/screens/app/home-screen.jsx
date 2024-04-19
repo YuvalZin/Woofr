@@ -1,6 +1,12 @@
 // HomeScreen.js
 import React, { useState } from "react";
-import { StyleSheet, View, SafeAreaView, ScrollView, Image } from "react-native";
+import {
+  StyleSheet,
+  View,
+  SafeAreaView,
+  ScrollView,
+  Image,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 //Custom Component
 import BigText from "../../components/texts/big-text/big-text";
@@ -10,11 +16,8 @@ import PostSlider from "../../components/scroll/posts-slider/post-slider";
 import AddPost from "../../components/buttons/add-post/add-post";
 import LogoImage from "../../../assets/logo-wofer2.png";
 
-
-
 const HomeScreen = () => {
-
-  //const [filterIndex, setFilterIndex] = useState(3);
+  const [filterIndex, setFilterIndex] = useState(3);
 
   const navigation = useNavigation();
 
@@ -30,7 +33,7 @@ const HomeScreen = () => {
         </View>
         <PostSlider onImgPress={moveToProfile} />
       </View>
-    </SafeAreaView >
+    </SafeAreaView>
   );
 };
 

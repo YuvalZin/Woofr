@@ -29,9 +29,9 @@ import RegularText from "../../components/texts/regular-text/regular-text";
 import SmallText from "../../components/texts/small-text/small-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import { fakeLoginWithToken } from "../../utils/api/fake";
-import { uploadImageURL } from "../../utils/api/ProfilePicAPI";
+import { uploadImageURL } from "../../utils/api/user";
 
-const ImageScreen = ({ }) => {
+const ImageScreen = ({}) => {
   //State to save the image
   const [image, setImage] = useState(null);
   const [user, setUser] = useState(null);
@@ -91,7 +91,6 @@ const ImageScreen = ({ }) => {
             SecureStore.setItem("user", JSON.stringify(updatedProfile));
             dispatch(login(updatedProfile)); // Update user state in Redux
           }
-
         }
       } catch (error) {
         console.error("Error uploading image: ", error);

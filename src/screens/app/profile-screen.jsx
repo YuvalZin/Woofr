@@ -16,11 +16,11 @@ import SmallText from "../../components/texts/small-text/small-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import EmptyCard from "../../components/cards/empty-card/empty-card";
-import { getFollowData } from "../../utils/api/getFollowData";
+import { getFollowData } from "../../utils/api/user";
 
 //Fake user
 import { users } from "../../utils/data/users";
-import { GetUserData } from "../../utils/api/GetUserData";
+import { GetUserData } from "../../utils/api/user";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
