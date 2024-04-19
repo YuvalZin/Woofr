@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     paddingLeft: 10,
     marginTop: 10,
+    width: "100%",
   },
   button: {
     padding: 10,

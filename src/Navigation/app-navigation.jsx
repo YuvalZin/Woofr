@@ -6,12 +6,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // Import icons from Expo
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-//Screens
-import ProfileScreen from "../screens/app/profile-screen";
-
 //Stack navigation
 import chatStack from "./chat-stack";
 import HomeStack from "./home-stack";
+import ProfileStack from "./profile-stack";
 
 //Create Bottom tab navigation
 const Tab = createBottomTabNavigator();
@@ -31,7 +29,7 @@ const TabNavigation = () => {
       }}
     >
       <Tab.Screen
-        name="Home"
+        name="home-stack"
         component={HomeStack}
         options={{
           tabBarLabel: "בית",
@@ -41,7 +39,7 @@ const TabNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="ChatsStack"
+        name="chat-stack"
         component={chatStack}
         options={{
           tabBarLabel: "שיחות",
@@ -55,8 +53,8 @@ const TabNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
+        name="profile-stack"
+        component={ProfileStack}
         options={{
           tabBarLabel: "פרופיל",
           tabBarIcon: ({ color }) => (

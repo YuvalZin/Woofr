@@ -2,33 +2,27 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 // Screens
-import HomeScreen from "../screens/app/home-screen";
-import ProfileScreen from "../screens/app/other-profile-screen";
-import ChatScreen from "../screens/app/chat-screen";
+import MyProfileScreen from "../screens/app/my-profile-screen";
+import EditInformation from "../screens/app/edit-information";
 import NewPostScreen from "../screens/app/new-post-screen";
 
 const Stack = createStackNavigator();
 
-const HomeStack = () => {
+const ProfileStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="home-index"
-        component={HomeScreen}
+        name="profile-index"
+        component={MyProfileScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="home-profile"
-        component={ProfileScreen}
+        name="profile-edit"
+        component={EditInformation}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="home-chat"
-        component={ChatScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="home-post"
+        name="profile-post"
         component={NewPostScreen}
         options={{ headerShown: false }}
       />
@@ -36,4 +30,4 @@ const HomeStack = () => {
   );
 };
 
-export default HomeStack;
+export default ProfileStack;

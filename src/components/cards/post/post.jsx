@@ -29,7 +29,7 @@ const Post = ({ data, onImgPress }) => {
     const seconds = Math.floor(diff / 1000);
 
     if (seconds < 60) {
-      return "just now";
+      return "כרגע";
     } else if (seconds < 3600) {
       const minutes = Math.floor(seconds / 60);
       return `${minutes} דקות`;

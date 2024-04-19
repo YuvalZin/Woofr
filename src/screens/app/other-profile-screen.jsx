@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import * as SecureStore from "expo-secure-store";
 
 //Custom components
 import BigText from "../../components/texts/big-text/big-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
+
+import { users } from "../../utils/data/users";
 
 // Example user data
 const userData = {
@@ -21,25 +22,33 @@ const userData = {
 const UserProfileScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { userId } = route.params; // Assuming you pass the userId in navigation params
+  const { email } = route.params; // Assuming you pass the userId in navigation params
 
   const [userProfile, setUserProfile] = useState(null);
 
+  // useEffect(() => {
+  //   // Simulate fetching user data based on the userId
+  //   // Replace this with your actual API call or data retrieval method
+  //   const fetchUserData = async () => {
+  //     // Example fetch from API
+  //     // const response = await fetch(`https://api.example.com/users/${userId}`);
+  //     // const data = await response.json();
+
+  //     // Simulated data for testing
+  //     const data = userData; // Replace with actual fetched data
+  //     setUserProfile(data);
+  //   };
+
+  //   fetchUserData();
+  // }, [userId]);
+
   useEffect(() => {
-    // Simulate fetching user data based on the userId
-    // Replace this with your actual API call or data retrieval method
-    const fetchUserData = async () => {
-      // Example fetch from API
-      // const response = await fetch(`https://api.example.com/users/${userId}`);
-      // const data = await response.json();
-
-      // Simulated data for testing
-      const data = userData; // Replace with actual fetched data
-      setUserProfile(data);
-    };
-
-    fetchUserData();
-  }, [userId]);
+    users.forEach((user) => {
+      if (user.email === email) {
+        setUserProfile(user);
+      }
+    });
+  }, []);
 
   const moveBack = () => {
     navigation.goBack();
@@ -52,37 +61,31 @@ const UserProfileScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <GoBackButton onPress={moveBack} />
       {userProfile ? (
-        <>
-          <View style={styles.container}>
-            <View>
-              <Image
-                source={{ uri: userProfile.profilePictureUrl }}
-                style={styles.profileImage}
+        <View style={styles.container}>
+          <View>
+            <Image
+              source={{ uri: userProfile.img }}
+              style={styles.profileImage}
+            />
+          </View>
+          <BigText text={`${userProfile.firstName} ${userProfile.lastName}`} />
+          <Text style={styles.bio}>{userProfile.bio}</Text>
+
+          <View style={styles.buttonContainer}>
+            <View style={styles.buttonView}>
+              <RegularButton text={`עקוב`} width={120} onPress={() => {}} />
+            </View>
+            <View style={styles.buttonView}>
+              <RegularButton
+                text={"שלח הודעה"}
+                width={120}
+                onPress={() => {
+                  moveToChat(userProfile.email);
+                }}
               />
             </View>
-            <BigText text={`${userProfile.firstName} ${userProfile.lastName}`} />
-            <Text style={styles.bio}>{userProfile.bio}</Text>
-
-            <View style={styles.buttonContainer}>
-              <View style={styles.buttonView}>
-                <RegularButton
-                  text={`עקוב`}
-                  width={120}
-                  onPress={() => { }}
-                />
-              </View>
-              <View style={styles.buttonView}>
-                <RegularButton
-                  text={"שלח הודעה"}
-                  width={120}
-                  onPress={() => {
-                    moveToChat(profileData.email);
-                  }}
-                />
-              </View>
-            </View>
           </View>
-        </>
+        </View>
       ) : (
         <Text>Loading...</Text> // Add a loading indicator or placeholder
       )}

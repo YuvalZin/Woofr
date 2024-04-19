@@ -1,5 +1,5 @@
 // HomeScreen.js
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   View,
@@ -8,17 +8,17 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+
 //Custom Component
-import BigText from "../../components/texts/big-text/big-text";
-import SmallText from "../../components/texts/small-text/small-text";
 import PostFilter from "../../components/scroll/posts-filter/post-filter";
 import PostSlider from "../../components/scroll/posts-slider/post-slider";
 import AddPost from "../../components/buttons/add-post/add-post";
 import LogoImage from "../../../assets/logo-wofer2.png";
+import SmallText from "../../components/texts/small-text/small-text";
+
+import { posts } from "../../utils/data/posts";
 
 const HomeScreen = () => {
-  const [filterIndex, setFilterIndex] = useState(3);
-
   const navigation = useNavigation();
 
   const moveToProfile = (email) => {
@@ -27,12 +27,20 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
+      <ScrollView nestedScrollEnabled={true} style={styles.container}>
         <View style={styles.header}>
           <Image source={LogoImage} style={styles.logo} />
+          <SmallText text="היי בני, מה אתה מחפש ?" english={true} />
         </View>
-        <PostSlider onImgPress={moveToProfile} />
-      </View>
+
+        <PostFilter />
+        <AddPost
+          onPress={() => {
+            navigation.navigate("home-post");
+          }}
+        />
+        <PostSlider arr={posts} onImgPress={moveToProfile} />
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -40,17 +48,16 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
   },
   header: {
     padding: 8,
     width: "100%",
-    alignItems: "flex-start",
+    alignItems: "flex-end",
   },
   logo: {
-    width: 100, // Adjust the width and height as needed
+    width: 100,
     height: 50,
-    resizeMode: "contain", // Make sure the image fits its container
+    resizeMode: "contain",
   },
 });
 
