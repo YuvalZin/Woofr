@@ -108,11 +108,9 @@ const SignupScreen = () => {
       return;
     }
 
-    const isUserSaved = await saveUser(userData);
-    console.log(isUserSaved);
-    if (isUserSaved) {
-      const tokenString = JSON.stringify(isUserSaved);
-      SecureStore.setItem("token", tokenString);
+    const token = await saveUser(userData);
+    if (token) {
+      SecureStore.setItem("token", token);
       SecureStore.setItem("email", userData.email);
       navigation.navigate("Image");
     } else {
@@ -132,11 +130,13 @@ const SignupScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar />
+      <View style={{alignItems:"flex-end"}}>
       <GoBackButton
         onPress={() => {
           navigation.navigate("Signin");
         }}
       />
+      </View>
       <View style={styles.container}>
         <View style={styles.header}>
           <BigText text={"הצטרף לחוויה שלנו"} />
@@ -217,7 +217,9 @@ const SignupScreen = () => {
         )}
 
         <View style={styles.input}>
-          <DropDownPicker
+          <DropDownPicker 
+          rtl={true}
+          style={styles.picker}
             open={openGender}
             value={userData.gender}
             items={genders}
@@ -225,6 +227,7 @@ const SignupScreen = () => {
             onSelectItem={(value) => {
               setUserData({ ...userData, gender: value["value"] });
             }}
+            
           />
         </View>
 
@@ -266,16 +269,23 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   input: {
+    textAlign:"right",
     borderWidth: 1,
     borderColor: "black",
     borderRadius: 5,
     padding: 10,
     marginVertical: 5,
     width: 300,
+    
   },
   formScroll: {
     height: 300,
   },
+  picker:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  }
 });
 
 export default SignupScreen;

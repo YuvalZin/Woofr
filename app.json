@@ -11,6 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -27,7 +28,11 @@
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
-    "sdkVersion": "50.0.0"
+    "sdkVersion": "50.0.0",
+    "extra": {
+      "supportsRTL": true
+    },
+    "plugins": ["expo-localization"]
   },
   "name": "woofr"
 }

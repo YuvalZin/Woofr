@@ -22,7 +22,6 @@ export const saveUser = async (userData) => {
         }
         console.log("heyy");
         const token = await response.text();
-        console.log(token);
         console.log('User registered successfully:', token);
 
         // Navigate to next screen or perform other actions

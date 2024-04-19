@@ -15,17 +15,19 @@ const ChatCard = ({ onClick }) => {
   return (
     <TouchableOpacity onPress={onClick}>
       <View style={styles.container}>
-        <View style={styles.iconContainer}>
-          <Ionicons name="arrow-back" size={28} color="black" />
-        </View>
+
         <View style={styles.contentContainer}>
+          <View style={styles.imgContainer}>
+            <Image source={{ uri: profileImage }} style={styles.img} />
+          </View>
           <View style={styles.infoContainer}>
             <RegularText text={"בני חנונוב"} />
             <SmallText text={"של הכלבים היום ?"} />
           </View>
-          <View style={styles.imgContainer}>
-            <Image source={{ uri: profileImage }} style={styles.img} />
-          </View>
+
+        </View>
+        <View style={styles.iconContainer}>
+          <Ionicons name="arrow-back" size={28} color="black" />
         </View>
       </View>
     </TouchableOpacity>
@@ -45,13 +47,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   iconContainer: {
+    paddingHorizontal:10,
     justifyContent: "center",
     alignItems: "center",
   },
   infoContainer: {
-    justifyContent: "flex-end",
+    justifyContent: "flex-start",
     padding: 6,
-    alignItems: "flex-end",
+    alignItems: "flex-start",
   },
   imgContainer: {
     justifyContent: "center",

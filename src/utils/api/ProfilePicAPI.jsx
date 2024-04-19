@@ -21,8 +21,6 @@ export const uploadImageURL = async (email, imageURL) => {
         console.log(responseData);
         return responseData;
 
-        // Navigate to next screen or perform other actions
-        return response;
 
     } catch (error) {
         console.error('Error:', error);

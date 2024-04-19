@@ -27,24 +27,24 @@ const SigninScreen = () => {
   const dispatch = useDispatch();
   const [loginData, setLoginData] = useState({
     email: "amandawilson@example.com",
-    password: "world123",
+    password: "world123A",
   });
 
   // State for managing the snackbar: storing text content to be displayed and controlling visibility
   const [snackBarText, setSnackBarText] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [userData, setUserData] = useState("");
 
   const handleLoginEvent = async () => {
     try {
-      const isLoggedIn = loginUser(loginData)
+      const isLoggedIn = await loginUser(loginData)
       let token = { status: false };
       if (isLoggedIn) {
         token = { status: true, value: isLoggedIn };
       }
       if (token.status) {
-        const tokenString = JSON.stringify(token); // Convert token object to JSON string
-        SecureStore.setItem("token", tokenString); // Store the JSON string
-        dispatch(login(tokenString));
+        SecureStore.setItem("token", token.value); // Store the JSON string
+        dispatch(login(token.value));
       } else {
         // Close the snackbar after 3 seconds
         setSnackbarOpen(true);

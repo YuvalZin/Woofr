@@ -17,9 +17,9 @@ export const loginUser = async (loginData) => {
         }
         const token = await response.text();
         console.log('User logged in successfully:', token);
-
+        console.log(token.toString());
         // Navigate to next screen or perform other actions
-        return token.j;
+        return token.toString();
     } catch (error) {
         // Handle any errors that occur during the API request
         console.error('Error:', error);

@@ -12,24 +12,33 @@ import * as SecureStore from "expo-secure-store";
 
 //Custom components
 import BigText from "../../components/texts/big-text/big-text";
+import SmallText from "../../components/texts/small-text/small-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import EmptyCard from "../../components/cards/empty-card/empty-card";
+import { getFollowData } from "../../utils/api/getFollowData";
 
 //Fake user
 import { users } from "../../utils/data/users";
+import { GetUserData } from "../../utils/api/GetUserData";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
-  const route = useRoute();
-  const profileEmail = route.params?.email;
+  //const route = useRoute();
+  //const profileEmail = route.params?.email;
   const [profileData, setProfileData] = useState(null);
 
   useEffect(() => {
-    // Filter users based on email
-    const filteredUser = users.find((user) => user.email === profileEmail);
-    setProfileData(filteredUser);
-  }, [profileEmail]);
+    const fetchUserData = async () => {
+      const token = SecureStore.getItem("token");
+      const data = await GetUserData(token);
+      const followData = await getFollowData(token);
+      data.followers = followData.split(",")[0];
+      data.following = followData.split(",")[1];
+      setProfileData(data);
+    };
+    fetchUserData();
+  }, []); //מחקתי פה כמה דברים צריך לדעת אם הם קריטים
 
   const moveBack = () => {
     navigation.goBack();
@@ -41,7 +50,9 @@ const ProfileScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <GoBackButton onPress={moveBack} />
+      <View style={{ alignItems: "flex-end" }}>
+        <GoBackButton onPress={moveBack} />
+      </View>
       {profileData ? (
         <View style={styles.container}>
           <View>
@@ -51,18 +62,21 @@ const ProfileScreen = () => {
             />
           </View>
           <BigText text={`${profileData.firstName} ${profileData.lastName}`} />
-
+          <View style={{ flexDirection: "row" }}>
+            <SmallText text={`${profileData.followers} עוקבים` + "  |  "} />
+            <SmallText text={`${profileData.following} במעקב`} />
+          </View>
           <View style={styles.buttonContainer}>
             <View style={styles.buttonView}>
               <RegularButton
-                text={`כפתור למשהו`}
+                text={`הוספת תמונה`}
                 width={120}
                 onPress={() => {}}
               />
             </View>
             <View style={styles.buttonView}>
               <RegularButton
-                text={"שלח הודעה"}
+                text={"עריכת פרופיל"}
                 width={120}
                 onPress={() => {
                   moveToChat(profileData.email);
