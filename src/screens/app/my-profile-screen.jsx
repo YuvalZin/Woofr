@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import {
-  ActivityIndicator,
   Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   View,
 } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
-import * as SecureStore from "expo-secure-store";
+//Redux state management
+import { useSelector } from "react-redux";
+import { selectAuth } from "../../redux/authSlice";
 
 //Custom components
 import BigText from "../../components/texts/big-text/big-text";
@@ -19,59 +20,47 @@ import EmptyCard from "../../components/cards/empty-card/empty-card";
 import PostSlider from "../../components//scroll/posts-slider/post-slider";
 
 //Api handler
-import { GetUserData } from "../../utils/api/user";
 import { getFollowData } from "../../utils/api/user";
 
 //Fake data
-import { users } from "../../utils/data/users";
 import { posts } from "../../utils/data/posts";
 import { colorPalate } from "../../utils/ui/colors";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
-  const [profileData, setProfileData] = useState(null);
 
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     const token = SecureStore.getItem("token");
-  //     const data = await GetUserData(token);
-  //     const followData = await getFollowData(token);
-  //     data.followers = followData.split(",")[0];
-  //     data.following = followData.split(",")[1];
-  //     setProfileData(data);
-  //   };
-  //   fetchUserData();
-  // }, []);
+  // Use useSelector to access the Redux store state
+  const auth = useSelector(selectAuth);
+  const myUser = JSON.parse(auth.user);
 
   useEffect(() => {
-    users.forEach((user) => {
-      setProfileData(user);
-    });
+    const fetchUserData = async () => {
+      const followData = await getFollowData(myUser.token);
+      data.followers = followData.split(",")[0];
+      data.following = followData.split(",")[1];
+    };
+    fetchUserData();
   }, []);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
-        {profileData ? (
+        {myUser ? (
           <View style={styles.container}>
             <View>
-              <Image
-                source={{ uri: profileData.img }}
-                style={styles.profileImage}
-              />
+              <Image source={{ uri: myUser.img }} style={styles.profileImage} />
             </View>
-            <BigText
-              text={`${profileData.firstName} ${profileData.lastName}`}
-            />
+            <BigText text={`${myUser.firstName} ${myUser.lastName}`} />
             <View style={styles.followingContainer}>
-              <SmallText text={`עוקב אחרי${profileData.followers}`} />
-              <SmallText text={`עוקב אחרי ${profileData.following} `} />
+              <SmallText text={`עוקב אחרי${myUser.followers}`} />
+              <SmallText text={`עוקב אחרי ${myUser.following} `} />
             </View>
             <View style={styles.buttonContainer}>
               <View style={styles.buttonView}>
                 <RegularButton
                   text={`הוספת פוסט`}
                   color={colorPalate.primary}
+                  iconName={"add-outline"}
                   onPress={() => {
                     navigation.navigate("profile-post");
                   }}
@@ -81,6 +70,7 @@ const ProfileScreen = () => {
                 <RegularButton
                   text={"עריכת פרופיל"}
                   color={colorPalate.primary}
+                  iconName={"create-outline"}
                   onPress={() => {
                     navigation.navigate("profile-edit");
                   }}
@@ -127,7 +117,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   buttonView: {
-    width: 160,
+    width: 180,
   },
   buttonItem: {
     flex: 1,
