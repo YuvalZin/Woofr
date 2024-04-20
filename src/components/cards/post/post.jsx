@@ -79,15 +79,24 @@ const Post = ({ data, onImgPress }) => {
 
       <RegularText text={data.postText} english={true} />
 
-      {data.ownerEmail === myUser.email && (
+      <View style={styles.buttonsContainer}>
+        {data.ownerEmail === myUser.email && (
+          <View style={styles.buttonContainer}>
+            <IconButton
+              iconName={"trash-outline"}
+              color={colorPalate.warning}
+              iconSize={22}
+            />
+          </View>
+        )}
         <View style={styles.buttonContainer}>
           <IconButton
-            iconName={"trash-outline"}
-            color={colorPalate.warning}
+            iconName={"heart"}
+            color={colorPalate.primary}
             iconSize={22}
           />
         </View>
-      )}
+      </View>
     </View>
   );
 };
@@ -132,9 +141,12 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginRight: 3,
   },
+  buttonsContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+  },
   buttonContainer: {
     padding: 6,
-    width: 120,
   },
 });
 

@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, View, SafeAreaView, TextInput, Image } from "react-native";
+import {
+  StyleSheet,
+  View,
+  SafeAreaView,
+  TextInput,
+  Image,
+  Keyboard,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 //Create a random UUID
@@ -94,6 +101,7 @@ const NewPostScreen = () => {
   };
 
   const uploadPost = async () => {
+    Keyboard.dismiss();
     if (post.text.length < 10) {
       setSnackBarText("פוסט חייב להכיל לפחות 10 תווים");
       setSnackbarOpen(true);

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, FlatList, View, ScrollView } from "react-native";
+import React from "react";
+import { StyleSheet, FlatList, View } from "react-native";
 
 // Custom components
 import Post from "../../cards/post/post";

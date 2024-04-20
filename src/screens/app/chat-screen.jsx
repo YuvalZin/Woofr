@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Image, SafeAreaView, StyleSheet, View } from "react-native";
+import {
+  Image,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  View,
+} from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
+
+//Snack bar to show user information
+import { Snackbar } from "react-native-paper";
 
 //Custom components
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
@@ -16,6 +27,9 @@ import { selectAuth } from "../../redux/authSlice";
 import { users } from "../../utils/data/users";
 import { messages } from "../../utils/data/message";
 
+//Create a random UUID
+import uuid from "react-native-uuid";
+
 const ChatScreen = () => {
   //Navigation object to navigate and to get prop
   const navigation = useNavigation();
@@ -26,13 +40,49 @@ const ChatScreen = () => {
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
 
+  console.log(`myUser ${myUser.email}`);
+
+  console.log(data);
+
   //State to mange screen
   const [otherUser, setOtherUser] = useState(null);
   const [messageArray, setMessageArray] = useState([]);
   const [msg, setMsg] = useState("");
 
+  // State for storing text to be displayed in the and visibility of the snackbar
+  const [snackBarText, setSnackBarText] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
   const moveBack = () => {
     navigation.goBack();
+  };
+
+  const sendMessage = () => {
+    //Hide the keyboard
+    Keyboard.dismiss();
+
+    //Check if message has text inside
+    if (msg === "") {
+      setSnackBarText("אין בהודעה תוכן");
+      setSnackbarOpen(true);
+      // Close the snackbar after 3 seconds
+      setTimeout(() => {
+        setSnackbarOpen(false);
+      }, 3000);
+      return;
+    }
+
+    var newMessage = {
+      id: uuid.v4().toString(),
+      chatId: data.id,
+      from: myUser.email,
+      to: otherUser.email,
+      text: msg,
+      timestamp: new Date(),
+    };
+
+    setMessageArray((prevMessages) => [...prevMessages, newMessage]);
+    setMsg("");
   };
 
   //Use effect to load other user
@@ -59,14 +109,16 @@ const ChatScreen = () => {
 
     // Update the state with the filtered messages
     setMessageArray(currentMessages);
-    console.log(currentMessages);
   }, [data, messages]);
 
   return (
     <SafeAreaView style={styles.container}>
       <GoBackButton onPress={moveBack} />
       {otherUser ? (
-        <View style={styles.container}>
+        <KeyboardAvoidingView
+          style={styles.container}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
           <View style={styles.infoRow}>
             <RegularText
               text={`${otherUser.firstName} ${otherUser.lastName}`}
@@ -79,8 +131,21 @@ const ChatScreen = () => {
           <View style={styles.container}>
             <Messages arr={messageArray} myUser={myUser} />
           </View>
-          <ChatInput setValue={setMsg} value={msg} />
-        </View>
+          <ChatInput setValue={setMsg} value={msg} onClick={sendMessage} />
+
+          <Snackbar
+            visible={snackbarOpen}
+            onDismiss={() => {}}
+            action={{
+              label: "סגור",
+              onPress: () => {
+                setSnackbarOpen(false);
+              },
+            }}
+          >
+            {snackBarText}
+          </Snackbar>
+        </KeyboardAvoidingView>
       ) : (
         <EmptyCard
           text={"הייתה בעיה למצוא את הפרופיל לצערנו"}

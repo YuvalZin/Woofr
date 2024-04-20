@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   View,
+  RefreshControl,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -32,6 +33,7 @@ const ProfileScreen = () => {
   // Use useSelector to access the Redux store state
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -42,9 +44,26 @@ const ProfileScreen = () => {
     fetchUserData();
   }, []);
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    // Perform data fetching or any other asynchronous tasks
+    // Once tasks are complete, set refreshing to false
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000); // Simulating a delay for demonstration purposes
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            colors={[colorPalate.primary]} // Customize the loading spinner color
+          />
+        }
+      >
         {myUser ? (
           <View style={styles.container}>
             <View>

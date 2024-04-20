@@ -20,10 +20,21 @@ import { posts } from "../../utils/data/posts";
 import { colorPalate } from "../../utils/ui/colors";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 
+//Create a random UUID
+import uuid from "react-native-uuid";
+
+//Redux state management
+import { useSelector } from "react-redux";
+import { selectAuth } from "../../redux/authSlice";
+
 const UserProfileScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { email } = route.params; // Assuming you pass the userId in navigation params
+  const { email } = route.params;
+
+  // Use useSelector to access the Redux store state
+  const auth = useSelector(selectAuth);
+  const myUser = JSON.parse(auth.user);
 
   const [userProfile, setUserProfile] = useState(null);
 
@@ -54,8 +65,20 @@ const UserProfileScreen = () => {
   const moveBack = () => {
     navigation.goBack();
   };
-  const moveToChat = (email) => {
-    navigation.navigate("home-chat", { email: email });
+  const moveToChat = async () => {
+    var chatData;
+
+    //Do api read to see if there is chat already if use give it and skip the creation of new chat object
+
+    const newId = await uuid.v4().toString();
+    chatData = {
+      id: newId,
+      lastMessage: "",
+      user1: userProfile.email,
+      user2: myUser.email,
+    };
+
+    navigation.navigate("home-chat", { data: chatData });
   };
 
   return (

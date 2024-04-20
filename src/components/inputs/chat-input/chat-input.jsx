@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { colorPalate } from "../../../utils/ui/colors";
 
-const ChatInput = ({ value, setValue }) => {
+const ChatInput = ({ value, setValue, onClick }) => {
   return (
     <View style={styles.container}>
       <TextInput
@@ -20,7 +20,7 @@ const ChatInput = ({ value, setValue }) => {
         placeholder="כתוב פה את ההודעה שלך..."
         placeholderTextColor="#A9A9A9"
       />
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={onClick}>
         <Text style={styles.buttonText}>שלח</Text>
       </TouchableOpacity>
     </View>
@@ -31,10 +31,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#F5F5F5",
     borderRadius: 10,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    marginHorizontal: 10,
-    marginTop: 10,
+    marginBottom: 3,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -45,12 +42,13 @@ const styles = StyleSheet.create({
     elevation: 5,
     flexDirection: "row",
     alignItems: "center",
+    margin: 3,
   },
   input: {
     flex: 1,
     fontSize: 16,
     textAlign: "right",
-    padding: 8,
+    padding: 14,
   },
   button: {
     backgroundColor: colorPalate.secondary,

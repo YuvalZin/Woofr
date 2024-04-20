@@ -1,11 +1,11 @@
-// HomeScreen.js
-import React from "react";
+import React, { useState, useCallback } from "react";
 import {
   StyleSheet,
   View,
   SafeAreaView,
   ScrollView,
   Image,
+  RefreshControl,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -30,6 +30,20 @@ const HomeScreen = () => {
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
 
+  // State to control refreshing
+  const [refreshing, setRefreshing] = useState(false);
+
+  // Function to handle refresh
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    // Perform any data fetching or refreshing actions here
+    // For example, refetch posts data or any other necessary data
+    // After fetching data, setRefreshing(false) to stop refreshing indicator
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000); // Simulating data fetching with a delay of 1 second
+  }, []);
+
   const moveToProfile = (email) => {
     if (myUser.email !== email) {
       navigation.navigate("home-profile", { email: email });
@@ -40,7 +54,13 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView nestedScrollEnabled={true} style={styles.container}>
+      <ScrollView
+        nestedScrollEnabled={true}
+        style={styles.container}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <View style={styles.header}>
           <Image source={LogoImage} style={styles.logo} />
           <SmallText text="היי בני, מה אתה מחפש ?" english={true} />
