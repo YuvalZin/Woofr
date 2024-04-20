@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
 //import expo icons
@@ -7,24 +7,55 @@ import { Ionicons } from "@expo/vector-icons";
 //Custom components
 import RegularText from "../../texts/regular-text/regular-text";
 import SmallText from "../../texts/small-text/small-text";
+import ChatCardSkeleton from "../chat-card-skeleton/chat-card-skeleton";
 
-const ChatCard = ({ onClick }) => {
-  const profileImage =
-    "https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg";
+//Fake data
+import { users } from "../../../utils/data/users";
+
+const ChatCard = ({ onClick, chat }) => {
+  const [otherUser, setOtherUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading delay
+    const timer = setTimeout(() => {
+      users.forEach((user) => {
+        if (user.email === chat.user1) {
+          // Fix condition
+          setOtherUser(user);
+          setIsLoading(false);
+        }
+        if (user.email === chat.user1) {
+          // Fix condition
+          setOtherUser(user);
+          setIsLoading(false);
+        }
+      });
+    }, 1000);
+
+    return () => clearTimeout(timer); // Cleanup timeout
+  }, [chat.email]);
+
+  // If still loading, show skeleton
+  if (isLoading) {
+    return <ChatCardSkeleton />;
+  }
 
   return (
-    <TouchableOpacity onPress={onClick}>
+    <TouchableOpacity onPress={() => onClick(chat)}>
       <View style={styles.container}>
         <View style={styles.iconContainer}>
           <Ionicons name="arrow-back" size={28} color="black" />
         </View>
         <View style={styles.contentContainer}>
           <View style={styles.infoContainer}>
-            <RegularText text={"בני חנונוב"} />
-            <SmallText text={"של הכלבים היום ?"} />
+            <RegularText
+              text={`${otherUser.firstName} ${otherUser.lastName}`}
+            />
+            <SmallText text={chat.lastMessage} />
           </View>
           <View style={styles.imgContainer}>
-            <Image source={{ uri: profileImage }} style={styles.img} />
+            <Image source={{ uri: otherUser.img }} style={styles.img} />
           </View>
         </View>
       </View>

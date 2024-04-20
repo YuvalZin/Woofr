@@ -3,23 +3,26 @@ import { StyleSheet, View, FlatList } from "react-native";
 
 //Custom components
 import ChatCard from "../../cards/chat-card/chat-card";
+import EmptyCard from "../../cards/empty-card/empty-card";
 
-const Chats = ({ onClick }) => {
-  // Sample data for 12 posts
-  const chatsData = Array.from({ length: 12 }, (_, index) => ({
-    id: index.toString(),
-  }));
-
+const Chats = ({ arr, onClick }) => {
   const renderPostItem = ({ item }) => {
-    return <ChatCard key={item.id} onClick={onClick} />;
+    return <ChatCard key={item.id} onClick={onClick} chat={item} />;
   };
   return (
     <View style={styles.container}>
-      <FlatList
-        data={chatsData}
-        renderItem={renderPostItem}
-        keyExtractor={(item) => item.id}
-      />
+      {arr.length > 0 ? (
+        <FlatList
+          data={arr}
+          renderItem={renderPostItem}
+          keyExtractor={(item) => item.id}
+        />
+      ) : (
+        <EmptyCard
+          text={"אין שיחות שלך עם אף אחד לצערנו"}
+          iconName={"chatbubble-ellipses-outline"}
+        />
+      )}
     </View>
   );
 };

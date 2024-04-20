@@ -20,16 +20,6 @@ import { posts } from "../../utils/data/posts";
 import { colorPalate } from "../../utils/ui/colors";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 
-// Example user data
-const userData = {
-  firstName: "John",
-  lastName: "Doe",
-  profilePictureUrl: "https://example.com/profile.jpg",
-  bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  following: 18,
-  followers: 19,
-};
-
 const UserProfileScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();

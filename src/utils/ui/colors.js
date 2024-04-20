@@ -5,4 +5,5 @@ export const colorPalate = {
   accent: "#32CD32",
   white: "#FAF9F6",
   warning: "#f02c2c",
+  grey: "#888888",
 };

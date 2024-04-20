@@ -1,5 +1,6 @@
 export const messages = [
   {
+    id: "0",
     chatId: "0",
     from: "example1@example.com",
     to: "example2@example.com",
@@ -7,6 +8,7 @@ export const messages = [
     timestamp: new Date("2024-04-20T08:00:00"),
   },
   {
+    id: "1",
     chatId: "0",
     from: "example1@example.com",
     to: "example2@example.com",
@@ -14,6 +16,7 @@ export const messages = [
     timestamp: new Date("2024-04-20T08:15:00"),
   },
   {
+    id: "2",
     chatId: "0",
     from: "example2@example.com",
     to: "example1@example.com",
@@ -21,6 +24,7 @@ export const messages = [
     timestamp: new Date("2024-04-20T08:30:00"),
   },
   {
+    id: "3",
     chatId: "0",
     from: "example1@example.com",
     to: "example2@example.com",
@@ -28,6 +32,7 @@ export const messages = [
     timestamp: new Date("2024-04-20T08:45:00"),
   },
   {
+    id: "4",
     chatId: "0",
     from: "example2@example.com",
     to: "example1@example.com",
@@ -35,6 +40,7 @@ export const messages = [
     timestamp: new Date("2024-04-20T09:00:00"),
   },
   {
+    id: "5",
     chatId: "0",
     from: "example1@example.com",
     to: "example2@example.com",
@@ -42,6 +48,7 @@ export const messages = [
     timestamp: new Date("2024-04-20T09:15:00"),
   },
   {
+    id: "6",
     chatId: "0",
     from: "example2@example.com",
     to: "example1@example.com",
@@ -49,6 +56,7 @@ export const messages = [
     timestamp: new Date("2024-04-20T09:30:00"),
   },
   {
+    id: "7",
     chatId: "0",
     from: "example1@example.com",
     to: "example2@example.com",
@@ -56,6 +64,7 @@ export const messages = [
     timestamp: new Date("2024-04-20T09:45:00"),
   },
   {
+    id: "8",
     chatId: "0",
     from: "example2@example.com",
     to: "example1@example.com",
@@ -63,6 +72,7 @@ export const messages = [
     timestamp: new Date("2024-04-20T10:00:00"),
   },
   {
+    id: "9",
     chatId: "1",
     from: "example2@example.com",
     to: "example3@example.com",
@@ -70,6 +80,7 @@ export const messages = [
     timestamp: new Date("2024-04-20T10:15:00"),
   },
   {
+    id: "10",
     chatId: "1",
     from: "example3@example.com",
     to: "example2@example.com",
@@ -77,6 +88,7 @@ export const messages = [
     timestamp: new Date("2024-04-20T10:30:00"),
   },
   {
+    id: "11",
     chatId: "1",
     from: "example2@example.com",
     to: "example3@example.com",
@@ -84,6 +96,7 @@ export const messages = [
     timestamp: new Date("2024-04-20T10:45:00"),
   },
   {
+    id: "12",
     chatId: "1",
     from: "example3@example.com",
     to: "example2@example.com",
@@ -91,6 +104,7 @@ export const messages = [
     timestamp: new Date("2024-04-20T11:00:00"),
   },
   {
+    id: "13",
     chatId: "1",
     from: "example2@example.com",
     to: "example3@example.com",
@@ -98,6 +112,7 @@ export const messages = [
     timestamp: new Date("2024-04-20T11:15:00"),
   },
   {
+    id: "14",
     chatId: "2",
     from: "example1@example.com",
     to: "example3@example.com",
@@ -105,6 +120,7 @@ export const messages = [
     timestamp: new Date("2024-04-20T11:30:00"),
   },
   {
+    id: "15",
     chatId: "2",
     from: "example3@example.com",
     to: "example1@example.com",
@@ -112,6 +128,7 @@ export const messages = [
     timestamp: new Date("2024-04-20T11:45:00"),
   },
   {
+    id: "16",
     chatId: "2",
     from: "example1@example.com",
     to: "example3@example.com",
@@ -119,6 +136,7 @@ export const messages = [
     timestamp: new Date("2024-04-20T12:00:00"),
   },
   {
+    id: "17",
     chatId: "2",
     from: "example3@example.com",
     to: "example1@example.com",
@@ -126,6 +144,7 @@ export const messages = [
     timestamp: new Date("2024-04-20T12:15:00"),
   },
   {
+    id: "18",
     chatId: "2",
     from: "example1@example.com",
     to: "example3@example.com",
