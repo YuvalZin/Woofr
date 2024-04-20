@@ -11,6 +11,7 @@ export const posts = [
     ownerEmail: "example2@example.com",
     postText: "מצאתי חנות חדשה למזון לחיות מחירים פגז",
     timestamp: new Date(),
+    img: "https://firebasestorage.googleapis.com/v0/b/woofr-c79ab.appspot.com/o/posts%2F64ba4a49-0bcf-4ff7-9cfe-d577e1f1bfd6?alt=media&token=de13a10f-6b48-46ff-bf16-dd6b913d1ad9",
   },
   {
     id: 3,

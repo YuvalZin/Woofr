@@ -77,6 +77,12 @@ const Post = ({ data, onImgPress }) => {
         </TouchableOpacity>
       </View>
 
+      {data.img && (
+        <View style={styles.postImageContainer}>
+          <Image source={{ uri: data.img }} style={styles.postImage} />
+        </View>
+      )}
+
       <RegularText text={data.postText} english={true} />
 
       <View style={styles.buttonsContainer}>
@@ -125,6 +131,17 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 35,
+  },
+  postImageContainer: {
+    overflow: "hidden",
+    borderRadius: 8,
+    alignItems: "flex-end",
+    padding: 8,
+  },
+  postImage: {
+    width: 160,
+    height: 160,
+    resizeMode: "cover",
   },
   userInfo: {
     flex: 1,

@@ -26,6 +26,7 @@ import { getFollowData } from "../../utils/api/user";
 //Fake data
 import { posts } from "../../utils/data/posts";
 import { colorPalate } from "../../utils/ui/colors";
+import AddPost from "../../components/buttons/add-post/add-post";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -74,15 +75,13 @@ const ProfileScreen = () => {
               <SmallText text={`עוקב אחרי${myUser.followers}`} />
               <SmallText text={`עוקב אחרי ${myUser.following} `} />
             </View>
-            <View style={styles.buttonContainer}>
+
+            <View style={styles.buttonsContainer}>
               <View style={styles.buttonView}>
                 <RegularButton
-                  text={`הוספת פוסט`}
-                  color={colorPalate.primary}
-                  iconName={"add-outline"}
-                  onPress={() => {
-                    navigation.navigate("profile-post");
-                  }}
+                  text={`התנתק`}
+                  color={colorPalate.warning}
+                  iconName={"log-out-outline"}
                 />
               </View>
               <View style={styles.buttonView}>
@@ -96,6 +95,11 @@ const ProfileScreen = () => {
                 />
               </View>
             </View>
+            <AddPost
+              onPress={() => {
+                navigation.navigate("profile-post");
+              }}
+            />
             <PostSlider arr={posts} />
           </View>
         ) : (
@@ -129,14 +133,14 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     borderRadius: 80,
   },
-  buttonContainer: {
-    padding: 12,
+  buttonsContainer: {
     flexDirection: "row",
     justifyContent: "space-evenly",
     width: "100%",
   },
   buttonView: {
-    width: 180,
+    flex: 1,
+    padding: 8,
   },
   buttonItem: {
     flex: 1,

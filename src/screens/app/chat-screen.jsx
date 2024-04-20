@@ -40,10 +40,6 @@ const ChatScreen = () => {
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
 
-  console.log(`myUser ${myUser.email}`);
-
-  console.log(data);
-
   //State to mange screen
   const [otherUser, setOtherUser] = useState(null);
   const [messageArray, setMessageArray] = useState([]);
