@@ -1,10 +1,10 @@
 //small-text.jsx
 
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 
 const SmallText = ({ text, english = false }) => {
-  const textAlign = english ? "right" : "left";
+  const textAlign = !english ? "right" : "left";
   return <Text style={[styles.text, { textAlign }]}>{text}</Text>;
 };
 

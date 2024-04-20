@@ -4,7 +4,7 @@ import React from "react";
 import { StyleSheet, Text } from "react-native";
 
 const RegularText = ({ text, english = false }) => {
-  const textAlign = english ? "right" : "left";
+  const textAlign = !english ? "right" : "left";
   return <Text style={[styles.text, { textAlign }]}>{text}</Text>;
 };
 
