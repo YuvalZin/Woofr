@@ -3,7 +3,7 @@ import React from "react";
 import { SafeAreaView, View } from "react-native-safe-area-context";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
-import user1 from "../../../assets/user1.jpg"
+import LogoImage from "../../../assets/logo-wofer2.png";
 
 const Dating = () => {
 
@@ -12,7 +12,7 @@ const Dating = () => {
             <View className="w-full flex-row justify-between items-center px-4 mb-8">
                 <View className="rounded-full items-center justify-center">
                     <Image
-                        source={user1}
+                        source={LogoImage}
                         style={{
                             width: hp(4.5),
                             height: hp(4.5),
