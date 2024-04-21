@@ -2,15 +2,21 @@ import React, { useState } from "react";
 import {
   StyleSheet,
   View,
+  KeyboardAvoidingView,
   SafeAreaView,
   TextInput,
   Image,
   Keyboard,
+  Platform,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 //Create a random UUID
 import uuid from "react-native-uuid";
+
+import { useSelector } from "react-redux";
+import { selectAuth } from "../../redux/authSlice";
 
 //Import image picker
 import * as ImagePicker from "expo-image-picker";
@@ -29,18 +35,22 @@ import RegularButton from "../../components/buttons/regular-button/regular-butto
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 
 import { colorPalate } from "../../utils/ui/colors";
+import { insertNewPost } from "../../utils/api/posts";
 
 const NewPostScreen = () => {
   //Navigation handler
   const navigation = useNavigation();
 
+  // Use useSelector to access the Redux store state
+  const auth = useSelector(selectAuth);
+  const myUser = JSON.parse(auth.user);
+
   //State to store post data
   const [post, setPost] = useState({
     id: uuid.v4().toString(),
-    ownerEmail: "",
-    text: "",
-    img: "",
-    timestamp: new Date(),
+    userId: myUser.id,
+    content: "",
+    createdAt: new Date(),
   });
 
   //State to store image
@@ -102,7 +112,7 @@ const NewPostScreen = () => {
 
   const uploadPost = async () => {
     Keyboard.dismiss();
-    if (post.text.length < 10) {
+    if (post.content.length < 10) {
       setSnackBarText("פוסט חייב להכיל לפחות 10 תווים");
       setSnackbarOpen(true);
       // Close the snackbar after 3 seconds
@@ -114,19 +124,27 @@ const NewPostScreen = () => {
 
     setLoading(true);
     const imgLink = await uploadImage();
+    let newPost;
     if (imgLink) {
-      setPost({ ...post, img: imgLink });
+      newPost = {
+        id:post.id,
+        content:post.content,
+        userId: post.userId,
+        mediaUrl: imgLink,
+        createdAt:post.createdAt,
+      }
     }
     //Some api post method to upload the image
-    const req = true;
+    const res = await insertNewPost(newPost);
 
-    if (req) {
+    if (res) {
       setSnackBarText("הפוסט עלה בהצלחה");
       setSnackbarOpen(true);
       // Close the snackbar after 3 seconds
       setTimeout(() => {
         setSnackbarOpen(false);
       }, 1500);
+
       moveBack();
     } else {
       setLoading(false);
@@ -138,75 +156,82 @@ const NewPostScreen = () => {
       }, 3000);
       return;
     }
+
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <GoBackButton onPress={moveBack} />
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={{ flex: 1 }}>
+            <GoBackButton onPress={moveBack} />
+            <View style={styles.header}>
+              <BigText text={"צור פוסט חדש"} />
+            </View>
 
-        <View style={styles.header}>
-          <BigText text={"צור פוסט חדש"} />
-        </View>
+            {!loading ? (
+              <>
+                <View style={styles.textInputContainer}>
+                  {selectedImage && (
+                    <View style={styles.imagePreview}>
+                      <Image
+                        source={{ uri: selectedImage }}
+                        style={styles.previewImage}
+                      />
+                    </View>
+                  )}
 
-        {!loading ? (
-          <>
-            <View style={styles.textInputContainer}>
-              {selectedImage && (
-                <View style={styles.imagePreview}>
-                  <Image
-                    source={{ uri: selectedImage }}
-                    style={styles.previewImage}
+                  <TextInput
+                    style={styles.textInput}
+                    multiline
+                    placeholder="הזן תוכן לפוסט..."
+                    value={post.content}
+                    onChangeText={(value) => setPost({ ...post, content: value })}
                   />
                 </View>
-              )}
 
-              <TextInput
-                style={styles.textInput}
-                multiline
-                placeholder="הזן תוכן לפוסט..."
-                value={post.text}
-                onChangeText={(value) => setPost({ ...post, text: value })}
-              />
-            </View>
+                <View style={styles.buttonsContainer}>
+                  <View style={styles.buttonContainer}>
+                    <RegularButton
+                      text={"בחר תמונה"}
+                      onPress={pickImage}
+                      color={colorPalate.primary}
+                      iconName={"camera-outline"}
+                    />
+                  </View>
 
-            <View style={styles.buttonsContainer}>
-              <View style={styles.buttonContainer}>
-                <RegularButton
-                  text={"בחר תמונה"}
-                  onPress={pickImage}
-                  color={colorPalate.primary}
-                  iconName={"camera-outline"}
-                />
-              </View>
+                  <View style={styles.buttonContainer}>
+                    <RegularButton
+                      text={"העלאה"}
+                      onPress={uploadPost}
+                      color={colorPalate.primary}
+                      iconName={"cloud-upload-outline"}
+                    />
+                  </View>
+                </View>
 
-              <View style={styles.buttonContainer}>
-                <RegularButton
-                  text={"העלאה"}
-                  onPress={uploadPost}
-                  color={colorPalate.primary}
-                  iconName={"cloud-upload-outline"}
-                />
-              </View>
-            </View>
-
-            <Snackbar
-              visible={snackbarOpen}
-              onDismiss={() => {}}
-              action={{
-                label: "סגור",
-                onPress: () => {
-                  setSnackbarOpen(false);
-                },
-              }}
-            >
-              {snackBarText}
-            </Snackbar>
-          </>
-        ) : (
-          <LoadingIndicator />
-        )}
-      </View>
+                <Snackbar
+                  visible={snackbarOpen}
+                  onDismiss={() => {}}
+                  action={{
+                    label: "סגור",
+                    onPress: () => {
+                      setSnackbarOpen(false);
+                    },
+                  }}
+                >
+                  {snackBarText}
+                </Snackbar>
+              </>
+            ) : (
+              <LoadingIndicator />
+            )}
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -230,7 +255,6 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 100,
-    fontSize: 16,
     textAlign: "right",
     padding: 3,
     fontSize: 16,

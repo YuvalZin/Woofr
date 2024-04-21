@@ -27,15 +27,13 @@ const RootNavigation = () => {
     // Fetch user data from SecureStore
     const fetchUserFromSecureStore = async () => {
       try {
-        // SecureStore.deleteItemAsync("token");
-        // const token = SecureStore.getItem("token");
-        // if (token) {
-        //   const userData = await GetUserData(token);
-        //   console.log(userData);
-        // //  dispatch(login((userData)));
-        // }
+        const token = SecureStore.getItem("token");
+        if (token) {
+          const userData = await GetUserData(token);
+        //  dispatch(login((userData)));
+        }
 
-        dispatch(login(JSON.stringify(users[0])));
+        //dispatch(login(JSON.stringify(users[0])));
       } catch (error) {
         console.error("Error fetching user data from SecureStore:", error);
       }

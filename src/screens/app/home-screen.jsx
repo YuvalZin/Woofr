@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -21,8 +21,9 @@ import PostSlider from "../../components/scroll/posts-slider/post-slider";
 import AddPost from "../../components/buttons/add-post/add-post";
 import LogoImage from "../../../assets/logo-wofer2.png";
 import SmallText from "../../components/texts/small-text/small-text";
+import { getHomePagePosts } from "../../utils/api/posts";
 
-import { posts } from "../../utils/data/posts";
+//import { posts } from "../../utils/data/posts";
 
 const HomeScreen = () => {
   //Navigation handler
@@ -34,12 +35,22 @@ const HomeScreen = () => {
   // State to control refreshing
   const [refreshing, setRefreshing] = useState(false);
 
+  const [posts, setPosts] = useState([]);
+
+  //fetch posts to display on homepage
+  const fetchPosts = async () => {
+    const res = await getHomePagePosts(myUser.id);
+    setPosts(res);
+  }
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
   // Function to handle refresh
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    // Perform any data fetching or refreshing actions here
-    // For example, refetch posts data or any other necessary data
-    // After fetching data, setRefreshing(false) to stop refreshing indicator
+    fetchPosts();
     setTimeout(() => {
       setRefreshing(false);
     }, 1000); // Simulating data fetching with a delay of 1 second
@@ -72,7 +83,9 @@ const HomeScreen = () => {
             navigation.navigate("home-post");
           }}
         />
-        <PostSlider arr={posts} onImgPress={moveToProfile} />
+        {posts.length > 0 && ( // Check if myPosts is not null before rendering
+          <PostSlider arr={posts} onImgPress={moveToProfile} />
+        )}
       </ScrollView>
     </SafeAreaView>
   );

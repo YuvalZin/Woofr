@@ -12,13 +12,15 @@ import { useNavigation } from "@react-navigation/native";
 //Redux state management
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
-
+import { logout } from "../../redux/authSlice";
 //Custom components
 import BigText from "../../components/texts/big-text/big-text";
 import SmallText from "../../components/texts/small-text/small-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import EmptyCard from "../../components/cards/empty-card/empty-card";
 import PostSlider from "../../components//scroll/posts-slider/post-slider";
+import * as SecureStore from "expo-secure-store";
+import { useDispatch } from "react-redux";
 
 //Api handler
 import { getFollowData } from "../../utils/api/user";
@@ -31,7 +33,7 @@ import { getUserPosts } from "../../utils/api/posts";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
-
+  const dispatch = useDispatch();
   // Use useSelector to access the Redux store state
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
@@ -39,28 +41,34 @@ const ProfileScreen = () => {
     following: 0,
     followers: 0,
   })
-  const [myPosts, setMyPosts] = useState(null);
+  const [myPosts, setMyPosts] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const posts = await getUserPosts(myUser.id);
-      setMyPosts(posts);
-      const res = await getFollowData(myUser.token);
-      const followData = res.toString().split(",");
-      setUsrFollows({
-        ...userFollows,
-        following: followData[1],
-        followers: followData[0],
-      });
-    };
+  const fetchUserData = async () => {
+    const posts = await getUserPosts(myUser.id);
+    setMyPosts(posts);
+    const res = await getFollowData(myUser.token);
+    const followData = res.toString().split(",");
+    setUsrFollows({
+      ...userFollows,
+      following: followData[1],
+      followers: followData[0],
+    });
+  };
+
+  const logoutUser = ()=>{
+    SecureStore.deleteItemAsync("token");
+    dispatch(logout());
+  }
+
+  useEffect(() => { 
     fetchUserData();
   }, []);
 
   const onRefresh = () => {
     setRefreshing(true);
-    // Perform data fetching or any other asynchronous tasks
-    // Once tasks are complete, set refreshing to false
+    fetchUserData();
+
     setTimeout(() => {
       setRefreshing(false);
     }, 2000); // Simulating a delay for demonstration purposes
@@ -95,6 +103,7 @@ const ProfileScreen = () => {
                   text={`התנתק`}
                   color={colorPalate.warning}
                   iconName={"log-out-outline"}
+                  onPress={() => logoutUser()}
                 />
               </View>
               <View style={styles.buttonView}>
@@ -113,7 +122,7 @@ const ProfileScreen = () => {
                 navigation.navigate("profile-post");
               }}
             />
-            {myPosts !== null && ( // Check if myPosts is not null before rendering
+            {myPosts.length > 0 && ( // Check if myPosts is not null before rendering
               <PostSlider arr={myPosts} />
             )}
           </View>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View, Text } from "react-native";
 
 //
 import { useSelector } from "react-redux";
@@ -10,28 +10,48 @@ import RegularText from "../../texts/regular-text/regular-text";
 import SmallText from "../../texts/small-text/small-text";
 import IconButton from "../../buttons/icon-button/icon-button";
 
-import { users } from "../../../utils/data/users";
 import { colorPalate } from "../../../utils/ui/colors";
+import { GetUserInfo } from "../../../utils/api/user";
+import { deletePost, getPostLikes, likePost } from "../../../utils/api/posts";
 
 const Post = ({ data, onImgPress }) => {
-  
+
   const [userData, setUserData] = useState("");
   const [timeStr, setTimeStr] = useState("");
+  const [isMyPost, setIsMyPost] = useState();
+  const [likesCount, setLikesCount] = useState(data.likeCount);
 
   // Use useSelector to access the Redux store state
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
 
-  // useEffect(() => {
-  //   if (users) {
-  //     users.forEach((user) => {
-  //       if (user.email === data.ownerEmail) {
-  //         setUserData(user);
-  //         setTimeStr(calculateTimeAgo(data.timestamp));
-  //       }
-  //     });
-  //   }
-  // }, [data, users]);
+  const likeHandle = async (post_id, user_id) => {
+    const res = await likePost(post_id, user_id);
+    setLikesCount(res);
+  }
+
+  const deletePostById = async (post_id) => {
+    console.log("dddjkdjd")
+
+    const res = await deletePost(post_id);
+    console.log(res);
+  }
+
+
+
+  const fetchUserInfo = async () => {
+    setIsMyPost(data.userId === (myUser && myUser.id));
+    if (!isMyPost) {
+      const res = await GetUserInfo(data.userId);
+      setUserData(res);
+    }
+    else {
+      setUserData(myUser);
+    }
+  }
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
 
 
   const calculateTimeAgo = (timestamp) => {
@@ -57,62 +77,66 @@ const Post = ({ data, onImgPress }) => {
   };
 
   return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <View style={styles.userInfo}>
-            <RegularText
-              text={`${myUser.firstName} ${myUser.lastName}`}
-              style={styles.username}
-            />
-            <SmallText text={timeStr} style={styles.infoText} />
-          </View>
-          <TouchableOpacity
-            style={styles.avatarContainer}
-            onPress={() => onImgPress(myUser.id)}
-          >
-            <Image
-              source={{
-                uri: myUser.profilePictureUrl,
-              }}
-              style={styles.avatar}
-            />
-          </TouchableOpacity>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <View style={styles.userInfo}>
+          <RegularText
+            text={`${userData.firstName} ${userData.lastName}`}
+            style={styles.username}
+          />
+          <SmallText text={timeStr} style={styles.infoText} />
         </View>
+        <TouchableOpacity
+          style={styles.avatarContainer}
+          onPress={() => onImgPress(userData.id)}
+        >
+          <Image
+            source={{
+              uri: userData.profilePictureUrl,
+            }}
+            style={styles.avatar}
+          />
+        </TouchableOpacity>
+      </View>
 
-        {data.img && (
-          <View style={styles.postImageContainer}>
-            <Image source={{ uri: data.img }} style={styles.postImage} />
-          </View>
-        )}
+      {data.mediaUrl && (
+        <View style={styles.postImageContainer}>
+          <Image source={{ uri: data.mediaUrl }} style={styles.postImage} />
+        </View>
+      )}
 
-        <RegularText text={data.content} english={true} />
+      <RegularText text={data.content} english={true} />
 
-        <View style={styles.buttonsContainer}>
-          {data.ownerEmail === myUser.email && (
-            <View style={styles.buttonContainer}>
-              <IconButton
-                iconName={"trash-outline"}
-                color={colorPalate.warning}
-                iconSize={22}
-              />
-            </View>
-          )}
+      <View style={styles.buttonsContainer}>
+        {isMyPost && (
           <View style={styles.buttonContainer}>
             <IconButton
-              iconName={"heart"}
-              color={colorPalate.primary}
+              iconName={"trash-outline"}
+              color={colorPalate.warning}
               iconSize={22}
+              onPress={() => deletePostById(data.id)}
+
             />
           </View>
+        )}
+        <View style={styles.buttonContainer}>
+          <IconButton
+            iconName={"heart"}
+            color={colorPalate.primary}
+            iconSize={22}
+            onPress={() => likeHandle(data.id, myUser.id)}
+          />
+          <Text>{likesCount}</Text>
         </View>
       </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  
+
   container: {
-    
+
     backgroundColor: "#fff",
     marginBottom: 10,
     borderRadius: 12,
@@ -136,14 +160,15 @@ const styles = StyleSheet.create({
     borderRadius: 35,
   },
   postImageContainer: {
+    flex: 1,
     overflow: "hidden",
     borderRadius: 8,
-    alignItems: "flex-end",
+    alignItems: "center",
     padding: 8,
   },
   postImage: {
-    width: 160,
-    height: 160,
+    width: 330,
+    height: 330,
     resizeMode: "cover",
   },
   userInfo: {
