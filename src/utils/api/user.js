@@ -11,12 +11,10 @@ export const getFollowData = async (token) => {
         "Content-Type": "application/json; charset=UTF-8",
       },
     });
-    console.log(response);
     if (!response.ok) {
       throw new Error("error while fetching user data");
     }
     const responseData = await response.text();
-    console.log("User deatils updated successfully:", responseData);
 
     // Navigate to next screen or perform other actions
     return responseData;
@@ -26,6 +24,7 @@ export const getFollowData = async (token) => {
   }
 };
 
+//to get logged in user data
 export const GetUserData = async (token) => {
   try {
     const apiUrl = `${baseUrl}/GetUserData/${token}`;
@@ -40,7 +39,27 @@ export const GetUserData = async (token) => {
       throw new Error("Failed get user data");
     }
     const responseData = await response.json();
-    console.log(responseData);
+    return responseData;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+//to get other users data
+export const GetUserInfo = async (id) => {
+  try {
+    const apiUrl = `${baseUrl}/GetUserInfo/${id}`;
+    const response = await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed get user data");
+    }
+    const responseData = await response.json();
     return responseData;
   } catch (error) {
     console.error("Error:", error);
@@ -59,13 +78,10 @@ export const loginUser = async (loginData) => {
       },
       body: JSON.stringify(loginData.password), // Pass user password as JSON
     });
-    console.log(response);
     if (!response.ok) {
       throw new Error("Incorrect Email or Password");
     }
     const token = await response.text();
-    console.log("User logged in successfully:", token);
-    console.log(token.toString());
     // Navigate to next screen or perform other actions
     return token.toString();
   } catch (error) {
@@ -79,7 +95,6 @@ export const uploadImageURL = async (id, imageURL) => {
     const formData = new FormData();
     formData.append("id", id);
     formData.append("imageURL", imageURL);
-    console.log(formData);
 
     const apiUrl = `${baseUrl}/UploadProfileImage`;
     const response = await fetch(apiUrl, {
@@ -103,11 +118,9 @@ export const uploadImageURL = async (id, imageURL) => {
 //register user
 export const saveUser = async (userData) => {
   try {
-    console.log(userData);
     userData.profilePictureUrl = "none";
     userData.token = "string";
     userData.userId = 0;
-    console.log(userData);
     // Make API request to register user
     const apiUrl = baseUrl;
     const response = await fetch(apiUrl, {
@@ -121,9 +134,7 @@ export const saveUser = async (userData) => {
     if (!response.ok) {
       throw new Error("Failed to register user");
     }
-    console.log("heyy");
     const token = await response.text();
-    console.log("User registered successfully:", token);
 
     // Navigate to next screen or perform other actions
     return token;
