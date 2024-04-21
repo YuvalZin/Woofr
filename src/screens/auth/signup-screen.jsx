@@ -35,6 +35,8 @@ import { genders } from "../../utils/data/gender";
 import { saveUser } from "../../utils/api/user";
 import { colorPalate } from "../../utils/ui/colors";
 
+import uuid from "react-native-uuid";
+
 const isIos = Platform.OS === "ios";
 
 const SignupScreen = () => {
@@ -55,6 +57,7 @@ const SignupScreen = () => {
 
   // State object to manage user data
   const [userData, setUserData] = useState({
+    id: uuid.v4().toString(),
     firstName: "בני", // User's first name
     lastName: "חנונוב", // User's last name
     gender: "male", // User's gender
@@ -108,7 +111,7 @@ const SignupScreen = () => {
     const token = await saveUser(userData);
     if (token) {
       SecureStore.setItem("token", token);
-      SecureStore.setItem("email", userData.email);
+      SecureStore.setItem("id", userData.id);
       navigation.navigate("Image");
     } else {
       // Set snackbar text to display the error message
@@ -199,9 +202,8 @@ const SignupScreen = () => {
             }}
           >
             <RegularText
-              text={`${userData.birthday.getUTCFullYear()}-${
-                userData.birthday.getMonth() + 1
-              }-${userData.birthday.getDate()}`}
+              text={`${userData.birthday.getUTCFullYear()}-${userData.birthday.getMonth() + 1
+                }-${userData.birthday.getDate()}`}
             />
           </TouchableOpacity>
         )}
@@ -239,7 +241,7 @@ const SignupScreen = () => {
 
       <Snackbar
         visible={snackbarOpen}
-        onDismiss={() => {}}
+        onDismiss={() => { }}
         action={{
           label: "סגור",
           onPress: () => {

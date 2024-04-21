@@ -34,21 +34,20 @@ import { uploadImageURL } from "../../utils/api/user";
 const ImageScreen = ({}) => {
   //State to save the image
   const [image, setImage] = useState(null);
-  const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setToken(SecureStore.getItem("token"));
-      const req = await fakeLoginWithToken(token);
-      if (req.status) {
-        setUser(req.value);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     setToken(SecureStore.getItem("token"));
+  //     const req = await fakeLoginWithToken(token);
+  //     if (req.status) {
+  //       setUser(req.value);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const pickImage = async () => {
     // Launch the image library and await the result
@@ -67,10 +66,10 @@ const ImageScreen = ({}) => {
 
   const uploadImage = async () => {
     if (image) {
-      const userEmail = SecureStore.getItem("email");
-      SecureStore.deleteItemAsync("email");
+      const id = SecureStore.getItem("id");
+      SecureStore.deleteItemAsync("id");
       // Create a reference to the Firebase Storage location where you want to store the image
-      const storageRef = ref(imageDB, `profile/${userEmail}`);
+      const storageRef = ref(imageDB, `profile/${id}`);
 
       try {
         // Convert the image URI to a Blob
@@ -84,12 +83,9 @@ const ImageScreen = ({}) => {
         const downloadURL = await getDownloadURL(storageRef);
 
         if (downloadURL) {
-          const updatedProfile = await uploadImageURL(userEmail, downloadURL);
-
+          const updatedProfile = await uploadImageURL(id, downloadURL);
           if (updatedProfile) {
-            console.log("Updated profile:", updatedProfile);
-            SecureStore.setItem("user", JSON.stringify(updatedProfile));
-            dispatch(login(updatedProfile)); // Update user state in Redux
+            dispatch(login(JSON.stringify(updatedProfile))); // Update user state in Redux
           }
         }
       } catch (error) {
@@ -99,8 +95,11 @@ const ImageScreen = ({}) => {
     }
   };
 
-  const skipImageUpload = () => {
-    dispatch(login(user));
+  const skipImageUpload = async () => {
+    const user = await uploadImageURL(id, null);
+    if (user) {
+      dispatch(login(user)); // Update user state in Redux
+    }
   };
 
   return (

@@ -27,6 +27,7 @@ import { getFollowData } from "../../utils/api/user";
 import { posts } from "../../utils/data/posts";
 import { colorPalate } from "../../utils/ui/colors";
 import AddPost from "../../components/buttons/add-post/add-post";
+import { getUserPosts } from "../../utils/api/posts";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -34,13 +35,24 @@ const ProfileScreen = () => {
   // Use useSelector to access the Redux store state
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
+  const [userFollows, setUsrFollows] = useState({
+    following: 0,
+    followers: 0,
+  })
+  const [myPosts, setMyPosts] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const followData = await getFollowData(myUser.token);
-      data.followers = followData.split(",")[0];
-      data.following = followData.split(",")[1];
+      const posts = await getUserPosts(myUser.id);
+      setMyPosts(posts);
+      const res = await getFollowData(myUser.token);
+      const followData = res.toString().split(",");
+      setUsrFollows({
+        ...userFollows,
+        following: followData[1],
+        followers: followData[0],
+      });
     };
     fetchUserData();
   }, []);
@@ -67,15 +79,16 @@ const ProfileScreen = () => {
       >
         {myUser ? (
           <View style={styles.container}>
-            <View>
-              <Image source={{ uri: myUser.img }} style={styles.profileImage} />
+            <View style={{alignItems:"center"}}>
+              <View>
+                <Image source={{ uri: myUser.profilePictureUrl }} style={styles.profileImage} />
+              </View>
+              <BigText text={`${myUser.firstName} ${myUser.lastName}`} />
+              <View style={styles.followingContainer}>
+                <SmallText text={`עוקב אחרי ${userFollows.followers}`} />
+                <SmallText text={`עוקב אחרי ${userFollows.following} `} />
+              </View>
             </View>
-            <BigText text={`${myUser.firstName} ${myUser.lastName}`} />
-            <View style={styles.followingContainer}>
-              <SmallText text={`עוקב אחרי${myUser.followers}`} />
-              <SmallText text={`עוקב אחרי ${myUser.following} `} />
-            </View>
-
             <View style={styles.buttonsContainer}>
               <View style={styles.buttonView}>
                 <RegularButton
@@ -100,7 +113,9 @@ const ProfileScreen = () => {
                 navigation.navigate("profile-post");
               }}
             />
-            <PostSlider arr={posts} />
+            {myPosts !== null && ( // Check if myPosts is not null before rendering
+              <PostSlider arr={myPosts} />
+            )}
           </View>
         ) : (
           <EmptyCard
@@ -117,7 +132,6 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 20,
     flex: 1,
-    alignItems: "center",
   },
   loadingContainer: {
     justifyContent: "center",

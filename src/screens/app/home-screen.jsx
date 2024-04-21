@@ -6,6 +6,8 @@ import {
   ScrollView,
   Image,
   RefreshControl,
+  Text,
+  TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -21,6 +23,7 @@ import LogoImage from "../../../assets/logo-wofer2.png";
 import SmallText from "../../components/texts/small-text/small-text";
 
 import { posts } from "../../utils/data/posts";
+import { FontAwesome } from '@expo/vector-icons';
 
 const HomeScreen = () => {
   //Navigation handler
@@ -29,7 +32,6 @@ const HomeScreen = () => {
   // Use useSelector to access the Redux store state
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
-
   // State to control refreshing
   const [refreshing, setRefreshing] = useState(false);
 
@@ -44,6 +46,11 @@ const HomeScreen = () => {
     }, 1000); // Simulating data fetching with a delay of 1 second
   }, []);
 
+  const handleSearchPress = () => {
+    // Handle the search icon press event here
+    console.log('Search icon pressed');
+  };
+
   const moveToProfile = (email) => {
     if (myUser.email !== email) {
       navigation.navigate("home-profile", { email: email });
@@ -53,7 +60,16 @@ const HomeScreen = () => {
   };
 
   return (
+
     <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.header}>
+        <Image source={LogoImage} style={styles.logo} />
+        <TouchableOpacity onPress={handleSearchPress} style={styles.searchIcon}>
+          <Text style={{marginRight:10}}>
+            <FontAwesome name="search" size={24} color="black" />
+          </Text>
+        </TouchableOpacity>
+      </View>
       <ScrollView
         nestedScrollEnabled={true}
         style={styles.container}
@@ -61,10 +77,8 @@ const HomeScreen = () => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <View style={styles.header}>
-          <Image source={LogoImage} style={styles.logo} />
-          <SmallText text="היי בני, מה אתה מחפש ?" english={true} />
-        </View>
+
+        <SmallText text="היי בני, מה אתה מחפש ?" english={true} />
 
         <PostFilter />
         <AddPost
@@ -83,15 +97,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     padding: 8,
     width: "100%",
-    alignItems: "flex-end",
   },
   logo: {
     width: 100,
     height: 50,
     resizeMode: "contain",
+    marginLeft:10,
   },
+
 });
 
 export default HomeScreen;

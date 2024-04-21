@@ -19,8 +19,9 @@ import RegularText from "../../components/texts/regular-text/regular-text";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/authSlice";
 import { Snackbar } from "react-native-paper";
-import { loginUser } from "../../utils/api/user";
+import { loginUser,GetUserData } from "../../utils/api/user";
 import { colorPalate } from "../../utils/ui/colors";
+
 
 const SigninScreen = () => {
   const navigation = useNavigation();
@@ -33,18 +34,14 @@ const SigninScreen = () => {
   // State for managing the snackbar: storing text content to be displayed and controlling visibility
   const [snackBarText, setSnackBarText] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [userData, setUserData] = useState("");
 
   const handleLoginEvent = async () => {
     try {
-      const isLoggedIn = await loginUser(loginData);
-      let token = { status: false };
-      if (isLoggedIn) {
-        token = { status: true, value: isLoggedIn };
-      }
-      if (token.status) {
-        SecureStore.setItem("token", token.value); // Store the JSON string
-        dispatch(login(token.value));
+      const token = await loginUser(loginData);
+      if (token) {
+        SecureStore.setItem("token", token); // Store the JSON string
+        const userData = await GetUserData(token);
+        dispatch(login(JSON.stringify(userData)));
       } else {
         // Close the snackbar after 3 seconds
         setSnackbarOpen(true);

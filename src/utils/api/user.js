@@ -15,7 +15,6 @@ export const getFollowData = async (token) => {
     if (!response.ok) {
       throw new Error("error while fetching user data");
     }
-    console.log("ddddddddddddddd" + response);
     const responseData = await response.text();
     console.log("User deatils updated successfully:", responseData);
 
@@ -75,12 +74,12 @@ export const loginUser = async (loginData) => {
   }
 };
 
-export const uploadImageURL = async (email, imageURL) => {
+export const uploadImageURL = async (id, imageURL) => {
   try {
-    console.log(email);
     const formData = new FormData();
-    formData.append("email", email);
+    formData.append("id", id);
     formData.append("imageURL", imageURL);
+    console.log(formData);
 
     const apiUrl = `${baseUrl}/UploadProfileImage`;
     const response = await fetch(apiUrl, {
@@ -95,7 +94,6 @@ export const uploadImageURL = async (email, imageURL) => {
       throw new Error("Failed to upload image");
     }
     const responseData = await response.json();
-    console.log(responseData);
     return responseData;
   } catch (error) {
     console.error("Error:", error);

@@ -14,6 +14,7 @@ import { users } from "../../../utils/data/users";
 import { colorPalate } from "../../../utils/ui/colors";
 
 const Post = ({ data, onImgPress }) => {
+  
   const [userData, setUserData] = useState("");
   const [timeStr, setTimeStr] = useState("");
 
@@ -21,16 +22,17 @@ const Post = ({ data, onImgPress }) => {
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
 
-  useEffect(() => {
-    if (users) {
-      users.forEach((user) => {
-        if (user.email === data.ownerEmail) {
-          setUserData(user);
-          setTimeStr(calculateTimeAgo(data.timestamp));
-        }
-      });
-    }
-  }, [data, users]);
+  // useEffect(() => {
+  //   if (users) {
+  //     users.forEach((user) => {
+  //       if (user.email === data.ownerEmail) {
+  //         setUserData(user);
+  //         setTimeStr(calculateTimeAgo(data.timestamp));
+  //       }
+  //     });
+  //   }
+  // }, [data, users]);
+
 
   const calculateTimeAgo = (timestamp) => {
     const now = new Date();
@@ -55,63 +57,64 @@ const Post = ({ data, onImgPress }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.userInfo}>
-          <RegularText
-            text={`${userData.firstName} ${userData.lastName}`}
-            style={styles.username}
-          />
-          <SmallText text={timeStr} style={styles.infoText} />
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <View style={styles.userInfo}>
+            <RegularText
+              text={`${myUser.firstName} ${myUser.lastName}`}
+              style={styles.username}
+            />
+            <SmallText text={timeStr} style={styles.infoText} />
+          </View>
+          <TouchableOpacity
+            style={styles.avatarContainer}
+            onPress={() => onImgPress(myUser.id)}
+          >
+            <Image
+              source={{
+                uri: myUser.profilePictureUrl,
+              }}
+              style={styles.avatar}
+            />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={styles.avatarContainer}
-          onPress={() => onImgPress(userData.email)}
-        >
-          <Image
-            source={{
-              uri: userData.img,
-            }}
-            style={styles.avatar}
-          />
-        </TouchableOpacity>
-      </View>
 
-      {data.img && (
-        <View style={styles.postImageContainer}>
-          <Image source={{ uri: data.img }} style={styles.postImage} />
-        </View>
-      )}
+        {data.img && (
+          <View style={styles.postImageContainer}>
+            <Image source={{ uri: data.img }} style={styles.postImage} />
+          </View>
+        )}
 
-      <RegularText text={data.postText} english={true} />
+        <RegularText text={data.content} english={true} />
 
-      <View style={styles.buttonsContainer}>
-        {data.ownerEmail === myUser.email && (
+        <View style={styles.buttonsContainer}>
+          {data.ownerEmail === myUser.email && (
+            <View style={styles.buttonContainer}>
+              <IconButton
+                iconName={"trash-outline"}
+                color={colorPalate.warning}
+                iconSize={22}
+              />
+            </View>
+          )}
           <View style={styles.buttonContainer}>
             <IconButton
-              iconName={"trash-outline"}
-              color={colorPalate.warning}
+              iconName={"heart"}
+              color={colorPalate.primary}
               iconSize={22}
             />
           </View>
-        )}
-        <View style={styles.buttonContainer}>
-          <IconButton
-            iconName={"heart"}
-            color={colorPalate.primary}
-            iconSize={22}
-          />
         </View>
       </View>
-    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  
   container: {
+    
     backgroundColor: "#fff",
     marginBottom: 10,
-    margin: 7,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: "grey",
