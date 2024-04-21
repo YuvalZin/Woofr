@@ -10,6 +10,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import chatStack from "./chat-stack";
 import HomeStack from "./home-stack";
 import ProfileStack from "./profile-stack";
+import SearchStack from "./search-stack";
 
 //Create Bottom tab navigation
 const Tab = createBottomTabNavigator();
@@ -29,15 +30,33 @@ const TabNavigation = () => {
       }}
     >
       <Tab.Screen
-        name="home-stack"
-        component={HomeStack}
+        name="profile-stack"
+        component={ProfileStack}
         options={{
-          tabBarLabel: "בית",
+          tabBarLabel: "פרופיל",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" size={iconSize} color={color} />
+            <MaterialCommunityIcons
+              name="account"
+              size={iconSize}
+              color={color}
+            />
           ),
         }}
       />
+      {/* <Tab.Screen
+        name="search-stack"
+        component={SearchStack}
+        options={{
+          tabBarLabel: "חיפוש",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="web-search"
+              size={iconSize}
+              color={color}
+            />
+          ),
+        }}
+      /> */}
       <Tab.Screen
         name="chat-stack"
         component={chatStack}
@@ -52,17 +71,14 @@ const TabNavigation = () => {
           ),
         }}
       />
+
       <Tab.Screen
-        name="profile-stack"
-        component={ProfileStack}
+        name="home-stack"
+        component={HomeStack}
         options={{
-          tabBarLabel: "פרופיל",
+          tabBarLabel: "בית",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              name="account"
-              size={iconSize}
-              color={color}
-            />
+            <MaterialCommunityIcons name="home" size={iconSize} color={color} />
           ),
         }}
       />

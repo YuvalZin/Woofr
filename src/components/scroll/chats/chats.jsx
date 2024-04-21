@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  RefreshControl,
+  ScrollView,
+} from "react-native";
 
 //Custom components
 import ChatCard from "../../cards/chat-card/chat-card";
@@ -17,9 +23,10 @@ const Chats = ({ arr, onClick }) => {
     }, 2000); // Simulating a delay for demonstration purposes
   };
 
-  const renderPostItem = ({ item }) => {
+  const renderChatItem = ({ item }) => {
     return <ChatCard key={item.id} onClick={onClick} chat={item} />;
   };
+
   return (
     <View style={styles.container}>
       {arr.length > 0 ? (
@@ -27,7 +34,7 @@ const Chats = ({ arr, onClick }) => {
           refreshing={refreshing}
           onRefresh={onRefresh}
           data={arr}
-          renderItem={renderPostItem}
+          renderItem={renderChatItem}
           keyExtractor={(item) => item.id}
         />
       ) : (
