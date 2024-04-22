@@ -1,4 +1,4 @@
-const baseUrl = "http://192.168.1.16:7207/api/Users";
+const baseUrl = "http://localhost:7207/api/Users";
 
 //get following / followers count for user by its token
 export const getFollowData = async (token) => {
