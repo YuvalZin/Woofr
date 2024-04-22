@@ -11,9 +11,9 @@ export default function App() {
   I18nManager.forceRTL(true);
   I18nManager.isRTL = true; // Ensure RTL direction is set
   return (
-    <Dating/>
-    // <Provider store={store}>
-    //   <RootNavigation />
-    // </Provider>
+
+    <Provider store={store}>
+      <RootNavigation />
+    </Provider>
   );
 }
