@@ -2,9 +2,5 @@
   "urlRandomness": "OW2ytvk",
   "dev": true,
   "minify": false,
-  "https": false,
-  "scheme": null,
-  "hostType": "lan",
-  "lanType": "ip",
-  "devClient": false
+  "https": false
 }
