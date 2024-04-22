@@ -1,7 +1,9 @@
 {
-  "packagerPort": 8081,
-  "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://ow2ytvk.nevoavisar97.woofrgit.exp.direct",
-  "packagerNgrokUrl": "https://packager.ow2ytvk.nevoavisar97.woofrgit.exp.direct",
-  "ngrokPid": 34112
+  "packagerPort": null,
+  "expoServerPort": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
+  "packagerPid": null,
+  "webpackServerPort": null
 }
