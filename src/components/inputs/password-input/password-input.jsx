@@ -41,6 +41,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   input: {
+    justifyContent:"flex-start",
+    textAlign:"right",
     borderWidth: 1,
     borderColor: colorPalate.grey,
     borderRadius: 5,

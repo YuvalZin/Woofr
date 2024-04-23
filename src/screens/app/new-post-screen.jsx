@@ -34,6 +34,7 @@ import RegularButton from "../../components/buttons/regular-button/regular-butto
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 
 import { colorPalate } from "../../utils/ui/colors";
+import { insertPost } from "../../utils/api/posts";
 
 const NewPostScreen = () => {
   //Navigation handler
@@ -104,7 +105,7 @@ const NewPostScreen = () => {
     }
 
     // Return null if no image is selected
-    return null;
+    return "null";
   };
 
   const moveBack = () => {
@@ -137,11 +138,12 @@ const NewPostScreen = () => {
       userId: post.userId,
       mediaUrl: imgLink,
       createdAt: post.createdAt,
+      likeCount: 0,
     };
-
+    console.log(newPost);
     // Some API post method to upload the image
-    // const res = await insertNewPost(newPost);
-    const res = true;
+    const res = await insertPost(newPost);
+    //const res = true;
 
     if (res) {
       setSnackBarText("הפוסט עלה בהצלחה");

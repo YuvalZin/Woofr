@@ -14,7 +14,7 @@ const CustomTextInput = ({
       <TextInput
         style={[
           styles.input,
-          { width: width, textAlign: !english ? "right" : "left" },
+          { width: width },
         ]}
         placeholder={placeholder}
         onChangeText={onChangeText}
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     borderColor: colorPalate.grey,
     borderRadius: 5,
     padding: 10,
+    justifyContent:"flex-start",
     textAlign: "right",
   },
 });

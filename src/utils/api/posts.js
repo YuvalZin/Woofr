@@ -1,6 +1,4 @@
-const baseUrl =
-  "https://c63d-2a06-c701-9c85-e100-5472-a1fb-38a5-10b5.ngrok-free.app/api/Woofs";
-
+const baseUrl = "http://192.168.1.16:7207/api/Woofs";
 export const getUserPosts = async (id) => {
   try {
     const apiUrl = `${baseUrl}/GetUserPosts/${id}`;
@@ -72,6 +70,28 @@ export const likePost = async (post_id, user_id) => {
 
     if (!response.ok) {
       throw new Error("Failed Like post");
+    }
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+
+export const insertPost = async (postData) => {
+  try {
+    const apiUrl = `${baseUrl}/InsertPost`;
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify(postData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to upload post");
     }
     const responseData = await response.json();
     return responseData;
