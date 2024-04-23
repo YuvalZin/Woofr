@@ -41,11 +41,9 @@ const EditInformation = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <GoBackButton onPress={moveBack} />
-
         <View style={styles.header}>
           <BigText text={"עדכן את הפרטים שלך"} />
         </View>
-
         <View style={styles.formScroll}>
           <ScrollView>
             <CustomTextInput
@@ -82,7 +80,7 @@ const EditInformation = () => {
             />
           </ScrollView>
         </View>
-
+        4
         <View style={styles.buttonContainer}>
           <RegularButton
             text={"עדכן"}

@@ -20,7 +20,7 @@ const TabNavigation = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="home-stack"
       screenOptions={{
         headerShown: false,
         tabBarLabelStyle: {
