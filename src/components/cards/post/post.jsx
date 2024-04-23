@@ -15,7 +15,6 @@ import { GetUserInfo } from "../../../utils/api/user";
 import { deletePost, getPostLikes, likePost } from "../../../utils/api/posts";
 
 const Post = ({ data, onImgPress }) => {
-
   const [userData, setUserData] = useState("");
   const [timeStr, setTimeStr] = useState("");
   const [isMyPost, setIsMyPost] = useState();
@@ -28,31 +27,25 @@ const Post = ({ data, onImgPress }) => {
   const likeHandle = async (post_id, user_id) => {
     const res = await likePost(post_id, user_id);
     setLikesCount(res);
-  }
+  };
 
   const deletePostById = async (post_id) => {
-    console.log("dddjkdjd")
-
     const res = await deletePost(post_id);
     console.log(res);
-  }
-
-
+  };
 
   const fetchUserInfo = async () => {
     setIsMyPost(data.userId === (myUser && myUser.id));
     if (!isMyPost) {
       const res = await GetUserInfo(data.userId);
       setUserData(res);
-    }
-    else {
+    } else {
       setUserData(myUser);
     }
-  }
+  };
   useEffect(() => {
     fetchUserInfo();
   }, []);
-
 
   const calculateTimeAgo = (timestamp) => {
     const now = new Date();
@@ -115,7 +108,6 @@ const Post = ({ data, onImgPress }) => {
               color={colorPalate.warning}
               iconSize={22}
               onPress={() => deletePostById(data.id)}
-
             />
           </View>
         )}
@@ -134,9 +126,7 @@ const Post = ({ data, onImgPress }) => {
 };
 
 const styles = StyleSheet.create({
-
   container: {
-
     backgroundColor: "#fff",
     marginBottom: 10,
     borderRadius: 12,

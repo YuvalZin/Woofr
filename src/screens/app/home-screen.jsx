@@ -41,7 +41,7 @@ const HomeScreen = () => {
   const fetchPosts = async () => {
     const res = await getHomePagePosts(myUser.id);
     setPosts(res);
-  }
+  };
 
   useEffect(() => {
     fetchPosts();
@@ -68,7 +68,10 @@ const HomeScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.header}>
         <Image source={LogoImage} style={styles.logo} />
-        <SmallText text="היי בני, מה אתה מחפש ?" english={true} />
+        <SmallText
+          text={`היי ${myUser.firstName} שמחים לראות שחזרת`}
+          english={true}
+        />
       </View>
       <ScrollView
         nestedScrollEnabled={true}

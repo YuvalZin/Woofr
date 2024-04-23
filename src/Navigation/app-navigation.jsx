@@ -1,5 +1,3 @@
-//app-navigation.jsx
-
 //Navigation handlers
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -20,7 +18,7 @@ const TabNavigation = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName="home-stack"
+      initialRouteName="search-stack"
       screenOptions={{
         headerShown: false,
         tabBarLabelStyle: {
@@ -43,20 +41,20 @@ const TabNavigation = () => {
           ),
         }}
       />
-      {/* <Tab.Screen
+      <Tab.Screen
         name="search-stack"
         component={SearchStack}
         options={{
           tabBarLabel: "חיפוש",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
-              name="web-search"
+              name="search-web"
               size={iconSize}
               color={color}
             />
           ),
         }}
-      /> */}
+      />
       <Tab.Screen
         name="chat-stack"
         component={chatStack}

@@ -7,27 +7,26 @@ import { colorPalate } from "../../../utils/ui/colors";
 //Custom components
 import IconButton from "../../buttons/icon-button/icon-button";
 
-const CustomSearchBar = () => {
+const CustomSearchBar = ({ onPress }) => {
   const [value, setValue] = useState("");
-
-  const onClick = () => {};
 
   return (
     <View style={styles.container}>
       <TextInput
-        style={styles.input}
-        autoFocus
         value={value}
         onChangeText={(event) => {
           setValue(event);
         }}
+        style={styles.input}
+        placeholder="כתוב פה את ההודעה שלך..."
+        placeholderTextColor="#A9A9A9"
       />
-      <View style={styles.iconContainer}>
+      <View style={styles.button}>
         <IconButton
-          color={colorPalate.secondary}
-          iconName={"search-outline"}
-          onPress={onClick}
-          iconSize={22}
+          onPress={onPress}
+          color={colorPalate.primary}
+          iconName={"search"}
+          iconSize={21}
         />
       </View>
     </View>
@@ -36,15 +35,33 @@ const CustomSearchBar = () => {
 
 const styles = StyleSheet.create({
   container: {
-    borderBottomWidth: 3,
-    padding: 4,
+    backgroundColor: "#F5F5F5",
+    borderRadius: 10,
+    marginBottom: 3,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
     flexDirection: "row",
+    alignItems: "center",
+    margin: 3,
   },
   input: {
-    padding: 6,
+    flex: 1,
+    fontSize: 16,
+    textAlign: "right",
+    padding: 14,
   },
-  iconContainer: {
-    backgroundColor: "red",
+  button: {
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    position: "absolute",
+    left: 10,
   },
 });
 
