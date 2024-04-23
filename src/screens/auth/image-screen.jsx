@@ -30,6 +30,7 @@ import SmallText from "../../components/texts/small-text/small-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import { fakeLoginWithToken } from "../../utils/api/fake";
 import { uploadImageURL } from "../../utils/api/user";
+import { colorPalate } from "../../utils/ui/colors";
 
 const ImageScreen = ({}) => {
   //State to save the image
@@ -124,7 +125,11 @@ const ImageScreen = ({}) => {
         )}
 
         <View style={styles.buttonContainer}>
-          <RegularButton text={"הוסף"} onPress={uploadImage} />
+          <RegularButton
+            color={colorPalate.primary}
+            text={"הוסף"}
+            onPress={uploadImage}
+          />
           <TouchableOpacity onPress={skipImageUpload} style={styles.skip}>
             <SmallText text={"דלג"} />
           </TouchableOpacity>

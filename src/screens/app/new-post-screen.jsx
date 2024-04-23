@@ -7,7 +7,6 @@ import {
   TextInput,
   Image,
   Keyboard,
-  Platform,
   TouchableWithoutFeedback,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -104,6 +103,9 @@ const NewPostScreen = () => {
         // Handle any errors that occur during the upload process
       }
     }
+
+    // Return null if no image is selected
+    return null;
   };
 
   const moveBack = () => {
@@ -112,35 +114,41 @@ const NewPostScreen = () => {
 
   const uploadPost = async () => {
     Keyboard.dismiss();
+
     if (post.content.length < 10) {
       setSnackBarText("פוסט חייב להכיל לפחות 10 תווים");
       setSnackbarOpen(true);
+
       // Close the snackbar after 3 seconds
       setTimeout(() => {
         setSnackbarOpen(false);
       }, 3000);
+
       return;
     }
 
+    // Set the screen to loading state
     setLoading(true);
+
+    // Load
     const imgLink = await uploadImage();
-    let newPost;
-    if (imgLink) {
-      newPost = {
-        id:post.id,
-        content:post.content,
-        userId: post.userId,
-        mediaUrl: imgLink,
-        createdAt:post.createdAt,
-      }
-    }
-    //Some api post method to upload the image
-    const res = await insertNewPost(newPost);
+    let newPost = {
+      id: post.id,
+      content: post.content,
+      userId: post.userId,
+      mediaUrl: imgLink,
+      createdAt: post.createdAt,
+    };
+
+    // Some API post method to upload the image
+    // const res = await insertNewPost(newPost);
+    const res = true;
 
     if (res) {
       setSnackBarText("הפוסט עלה בהצלחה");
       setSnackbarOpen(true);
-      // Close the snackbar after 3 seconds
+
+      // Close the snackbar after 1.5 seconds
       setTimeout(() => {
         setSnackbarOpen(false);
       }, 1500);
@@ -150,89 +158,85 @@ const NewPostScreen = () => {
       setLoading(false);
       setSnackBarText("משהו לא עבד נסה שוב");
       setSnackbarOpen(true);
+
       // Close the snackbar after 3 seconds
       setTimeout(() => {
         setSnackbarOpen(false);
       }, 3000);
+
       return;
     }
-
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={{ flex: 1 }}>
-            <GoBackButton onPress={moveBack} />
-            <View style={styles.header}>
-              <BigText text={"צור פוסט חדש"} />
-            </View>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <KeyboardAvoidingView style={styles.container}>
+          <GoBackButton onPress={moveBack} />
+          <View style={styles.header}>
+            <BigText text={"צור פוסט חדש"} />
+          </View>
 
-            {!loading ? (
-              <>
-                <View style={styles.textInputContainer}>
-                  {selectedImage && (
-                    <View style={styles.imagePreview}>
-                      <Image
-                        source={{ uri: selectedImage }}
-                        style={styles.previewImage}
-                      />
-                    </View>
-                  )}
+          {!loading ? (
+            <>
+              <View style={styles.textInputContainer}>
+                {selectedImage && (
+                  <View style={styles.imagePreview}>
+                    <Image
+                      source={{ uri: selectedImage }}
+                      style={styles.previewImage}
+                    />
+                  </View>
+                )}
 
-                  <TextInput
-                    style={styles.textInput}
-                    multiline
-                    placeholder="הזן תוכן לפוסט..."
-                    value={post.content}
-                    onChangeText={(value) => setPost({ ...post, content: value })}
+                <TextInput
+                  style={styles.textInput}
+                  multiline
+                  placeholder="הזן תוכן לפוסט..."
+                  value={post.content}
+                  onChangeText={(value) => setPost({ ...post, content: value })}
+                />
+              </View>
+
+              <View style={styles.buttonsContainer}>
+                <View style={styles.buttonContainer}>
+                  <RegularButton
+                    text={"בחר תמונה"}
+                    onPress={pickImage}
+                    color={colorPalate.primary}
+                    iconName={"camera-outline"}
                   />
                 </View>
 
-                <View style={styles.buttonsContainer}>
-                  <View style={styles.buttonContainer}>
-                    <RegularButton
-                      text={"בחר תמונה"}
-                      onPress={pickImage}
-                      color={colorPalate.primary}
-                      iconName={"camera-outline"}
-                    />
-                  </View>
-
-                  <View style={styles.buttonContainer}>
-                    <RegularButton
-                      text={"העלאה"}
-                      onPress={uploadPost}
-                      color={colorPalate.primary}
-                      iconName={"cloud-upload-outline"}
-                    />
-                  </View>
+                <View style={styles.buttonContainer}>
+                  <RegularButton
+                    text={"העלאה"}
+                    onPress={uploadPost}
+                    color={colorPalate.primary}
+                    iconName={"cloud-upload-outline"}
+                  />
                 </View>
+              </View>
 
-                <Snackbar
-                  visible={snackbarOpen}
-                  onDismiss={() => {}}
-                  action={{
-                    label: "סגור",
-                    onPress: () => {
-                      setSnackbarOpen(false);
-                    },
-                  }}
-                >
-                  {snackBarText}
-                </Snackbar>
-              </>
-            ) : (
-              <LoadingIndicator />
-            )}
-          </View>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+              <Snackbar
+                visible={snackbarOpen}
+                onDismiss={() => {}}
+                action={{
+                  label: "סגור",
+                  onPress: () => {
+                    setSnackbarOpen(false);
+                  },
+                }}
+              >
+                {snackBarText}
+              </Snackbar>
+            </>
+          ) : (
+            <LoadingIndicator />
+          )}
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 

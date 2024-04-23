@@ -19,16 +19,15 @@ import RegularText from "../../components/texts/regular-text/regular-text";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/authSlice";
 import { Snackbar } from "react-native-paper";
-import { loginUser,GetUserData } from "../../utils/api/user";
+import { loginUser, GetUserData } from "../../utils/api/user";
 import { colorPalate } from "../../utils/ui/colors";
-
 
 const SigninScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [loginData, setLoginData] = useState({
-    email: "amandawilson@example.com",
-    password: "world123A",
+    email: "benyyoulove@gmail.com",
+    password: "Aa123456",
   });
 
   // State for managing the snackbar: storing text content to be displayed and controlling visibility

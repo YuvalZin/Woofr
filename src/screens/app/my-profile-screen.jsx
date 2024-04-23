@@ -40,7 +40,7 @@ const ProfileScreen = () => {
   const [userFollows, setUsrFollows] = useState({
     following: 0,
     followers: 0,
-  })
+  });
   const [myPosts, setMyPosts] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -56,12 +56,12 @@ const ProfileScreen = () => {
     });
   };
 
-  const logoutUser = ()=>{
+  const logoutUser = () => {
     SecureStore.deleteItemAsync("token");
     dispatch(logout());
-  }
+  };
 
-  useEffect(() => { 
+  useEffect(() => {
     fetchUserData();
   }, []);
 
@@ -87,9 +87,12 @@ const ProfileScreen = () => {
       >
         {myUser ? (
           <View style={styles.container}>
-            <View style={{alignItems:"center"}}>
+            <View style={{ alignItems: "center" }}>
               <View>
-                <Image source={{ uri: myUser.profilePictureUrl }} style={styles.profileImage} />
+                <Image
+                  source={{ uri: myUser.profilePictureUrl }}
+                  style={styles.profileImage}
+                />
               </View>
               <BigText text={`${myUser.firstName} ${myUser.lastName}`} />
               <View style={styles.followingContainer}>

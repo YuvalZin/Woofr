@@ -15,7 +15,6 @@ import { selectAuth, login } from "../redux/authSlice";
 
 // Store package for react native expo
 import * as SecureStore from "expo-secure-store";
-import { users } from "../utils/data/users";
 import { GetUserData } from "../utils/api/user";
 
 const RootNavigation = () => {
@@ -27,13 +26,12 @@ const RootNavigation = () => {
     // Fetch user data from SecureStore
     const fetchUserFromSecureStore = async () => {
       try {
+        // SecureStore.deleteItemAsync("token");
         const token = SecureStore.getItem("token");
         if (token) {
           const userData = await GetUserData(token);
-        //  dispatch(login((userData)));
+          dispatch(login(JSON.stringify(userData)));
         }
-
-        //dispatch(login(JSON.stringify(users[0])));
       } catch (error) {
         console.error("Error fetching user data from SecureStore:", error);
       }
