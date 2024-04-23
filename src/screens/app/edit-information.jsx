@@ -20,13 +20,22 @@ const EditInformation = () => {
   // Use useSelector to access the Redux store state
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
-  const [userData, setUserData] = useState(myUser);
+  const [userData, setUserData] = useState({
+    firstName: myUser.firstName,
+    lastName: myUser.lastName,
+    email: myUser.email,
+    password: myUser.password,
+  });
 
   const moveBack = () => {
     navigation.goBack();
   };
 
   const formWidth = 290;
+
+  const handelUpdate = () => {
+    console.log(userData);
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -77,8 +86,8 @@ const EditInformation = () => {
         <View style={styles.buttonContainer}>
           <RegularButton
             text={"עדכן"}
-            onPress={() => {}}
             color={colorPalate.primary}
+            onPress={handelUpdate}
           />
         </View>
       </View>

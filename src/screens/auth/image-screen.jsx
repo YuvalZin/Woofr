@@ -19,36 +19,26 @@ import * as ImagePicker from "expo-image-picker";
 //Store user data handler
 import * as SecureStore from "expo-secure-store";
 
+//Importing app color palate
+import { colorPalate } from "../../utils/ui/colors";
+
 //Redux handler state management
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/authSlice";
+
+//Importing function from the user API file
+import { uploadImageURL } from "../../utils/api/user";
 
 //Custom components
 import BigText from "../../components/texts/big-text/big-text";
 import RegularText from "../../components/texts/regular-text/regular-text";
 import SmallText from "../../components/texts/small-text/small-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
-import { fakeLoginWithToken } from "../../utils/api/fake";
-import { uploadImageURL } from "../../utils/api/user";
-import { colorPalate } from "../../utils/ui/colors";
 
 const ImageScreen = ({}) => {
   //State to save the image
   const [image, setImage] = useState(null);
-  const [token, setToken] = useState(null);
   const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     setToken(SecureStore.getItem("token"));
-  //     const req = await fakeLoginWithToken(token);
-  //     if (req.status) {
-  //       setUser(req.value);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
 
   const pickImage = async () => {
     // Launch the image library and await the result
@@ -91,15 +81,17 @@ const ImageScreen = ({}) => {
         }
       } catch (error) {
         console.error("Error uploading image: ", error);
-        // Handle any errors that occur during the upload process
       }
     }
   };
 
+  // Function to skip image upload for a user
   const skipImageUpload = async () => {
+    // Uploads a null image URL for the user
     const user = await uploadImageURL(id, null);
+    // If user exists (image upload successful), dispatch login action
     if (user) {
-      dispatch(login(user)); // Update user state in Redux
+      dispatch(login(JSON.stringify(user)));
     }
   };
 
@@ -159,7 +151,9 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300,
     borderRadius: 150,
-    backgroundColor: "grey",
+    backgroundColor: colorPalate.white,
+    borderColor: colorPalate.primary,
+    borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -167,6 +161,8 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300,
     borderRadius: 150,
+    borderColor: colorPalate.primary,
+    borderWidth: 1,
   },
   buttonContainer: {
     justifyContent: "center",

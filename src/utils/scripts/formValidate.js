@@ -1,4 +1,4 @@
-export const signupValidator = (formData,confPass) => {
+export const signupValidator = (formData) => {
   // Validation for first name
   if (formData.firstName.length < 3) {
     return { isValid: false, errorMessage: "שם פרטי חייב להיות לפחות 3 תווים" };
@@ -18,7 +18,7 @@ export const signupValidator = (formData,confPass) => {
   }
 
   // Validation for password confirmation
-  if (formData.password !== confPass) {
+  if (formData.password !== formData.confirm) {
     return { isValid: false, errorMessage: "אימות הסיסמא לא תקין" };
   }
 

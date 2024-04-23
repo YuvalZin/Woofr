@@ -1,9 +1,6 @@
-//signup-screen.tsx
-
 import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
-  TextInput,
   View,
   SafeAreaView,
   TouchableOpacity,
@@ -15,28 +12,42 @@ import {
 //Navigation handler
 import { useNavigation } from "@react-navigation/native";
 
-//Packages to handel user input
-import DropDownPicker from "react-native-dropdown-picker";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import { Snackbar } from "react-native-paper";
-
 //Store user data handler
 import * as SecureStore from "expo-secure-store";
+
+//Importing the DropDownPicker component from the react-native-dropdown-picker library
+import DropDownPicker from "react-native-dropdown-picker";
+
+//Importing the DateTimePicker component from the @react-native-community/datetimepicker library
+import DateTimePicker from "@react-native-community/datetimepicker";
+
+//Importing the Snackbar component from the react-native-paper library
+import { Snackbar } from "react-native-paper";
+
+//Importing form validator
+import { signupValidator } from "../../utils/scripts/formValidate";
+
+//Importing genders data
+import { genders } from "../../utils/data/gender";
+
+// Importing  function from the user API file
+import { saveUser } from "../../utils/api/user";
+
+//Importing app color palate
+import { colorPalate } from "../../utils/ui/colors";
+
+// Importing uuid module from react-native-uuid
+import uuid from "react-native-uuid";
 
 //Custom components
 import BigText from "../../components/texts/big-text/big-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import RegularText from "../../components/texts/regular-text/regular-text";
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
+import CustomTextInput from "../../components/inputs/custom-text-input/custom-text-input";
+import PasswordInput from "../../components/inputs/password-input/password-input";
 
-//Import data and validators
-import { signupValidator } from "../../utils/scripts/formValidate";
-import { genders } from "../../utils/data/gender";
-import { saveUser } from "../../utils/api/user";
-import { colorPalate } from "../../utils/ui/colors";
-
-import uuid from "react-native-uuid";
-
+//Check the mobile device os
 const isIos = Platform.OS === "ios";
 
 const SignupScreen = () => {
@@ -49,25 +60,24 @@ const SignupScreen = () => {
   // State for managing the visibility of the date picker
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  // State for storing text to be displayed in the snackbar
+  // State for managing the snackbar: storing text content to be displayed and controlling visibility
   const [snackBarText, setSnackBarText] = useState("");
-
-  // State for managing the visibility of the snackbar
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  //Width for the form
+  const formWidth = 290;
 
   // State object to manage user data
   const [userData, setUserData] = useState({
     id: uuid.v4().toString(),
-    firstName: "בני", // User's first name
-    lastName: "חנונוב", // User's last name
-    gender: "male", // User's gender
-    birthday: new Date(), // User's birthday (initialized to current date)
-    email: "benyx13@gmail.com", // User's email address
-    password: "Aa123456", // User's password
-    //confirm: "Aa123456", // Confirmation of user's password
+    firstName: "בני",
+    lastName: "חנונוב",
+    gender: "male",
+    birthday: new Date(),
+    email: "benyx13@gmail.com",
+    password: "Aa123456",
+    confirm: "Aa123456",
   });
-
-  const [confirmPass, setConfirm] = useState("Aa123456");
 
   // Check if the app runs on iPhone
   useEffect(() => {
@@ -92,13 +102,12 @@ const SignupScreen = () => {
   // Function to handle form submission
   const handleSubmit = async () => {
     // Validate the user data using signupValidator
-    const formCheck = signupValidator(userData, confirmPass);
+    const formCheck = signupValidator(userData);
 
     // If the form validation fails
     if (formCheck.isValid === false) {
-      // Set snackbar text to display the error message
+      //Open and Set snackbar text to display the error message
       setSnackBarText(formCheck.errorMessage);
-      // Open the snackbar
       setSnackbarOpen(true);
 
       // Close the snackbar after 3 seconds
@@ -108,7 +117,12 @@ const SignupScreen = () => {
       return;
     }
 
+    // Remove the 'confirm' property from the 'userData' object
+    delete userData.confirm;
+
+    //Api call to signup the user into db
     const token = await saveUser(userData);
+
     if (token) {
       SecureStore.setItem("token", token);
       SecureStore.setItem("id", userData.id);
@@ -149,47 +163,52 @@ const SignupScreen = () => {
 
         <View style={styles.formScroll}>
           <ScrollView>
-            <TextInput
+            <CustomTextInput
               value={userData.firstName}
               placeholder="שם פרטי"
               style={styles.input}
+              width={formWidth}
               onChangeText={(value) => {
                 setUserData({ ...userData, firstName: value });
               }}
             />
-            <TextInput
+            <CustomTextInput
               value={userData.lastName}
               placeholder="שם משפחה"
               style={styles.input}
+              width={formWidth}
               onChangeText={(value) => {
                 setUserData({ ...userData, lastName: value });
               }}
             />
 
-            <TextInput
+            <CustomTextInput
               value={userData.email}
               placeholder="איימל"
               style={styles.input}
+              width={formWidth}
               onChangeText={(value) => {
                 setUserData({ ...userData, email: value });
               }}
             />
 
-            <TextInput
+            <PasswordInput
               value={userData.password}
               placeholder="סיסמא"
               style={styles.input}
+              width={formWidth}
               onChangeText={(value) => {
                 setUserData({ ...userData, password: value });
               }}
             />
 
-            <TextInput
-              value={confirmPass}
+            <PasswordInput
+              value={userData.confirm}
               placeholder="אימות סיסמא"
               style={styles.input}
+              width={formWidth}
               onChangeText={(value) => {
-                setConfirm(value);
+                setUserData({ ...userData, confirm: value });
               }}
             />
           </ScrollView>
@@ -202,8 +221,9 @@ const SignupScreen = () => {
             }}
           >
             <RegularText
-              text={`${userData.birthday.getUTCFullYear()}-${userData.birthday.getMonth() + 1
-                }-${userData.birthday.getDate()}`}
+              text={`${userData.birthday.getUTCFullYear()}-${
+                userData.birthday.getMonth() + 1
+              }-${userData.birthday.getDate()}`}
             />
           </TouchableOpacity>
         )}
@@ -241,7 +261,7 @@ const SignupScreen = () => {
 
       <Snackbar
         visible={snackbarOpen}
-        onDismiss={() => { }}
+        onDismiss={() => {}}
         action={{
           label: "סגור",
           onPress: () => {

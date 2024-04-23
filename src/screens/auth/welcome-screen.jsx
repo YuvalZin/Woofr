@@ -18,9 +18,16 @@ import { useNavigation } from "@react-navigation/native";
 import { colorPalate } from "../../utils/ui/colors";
 
 const WelcomeScreen = () => {
-  const [index, setIndex] = useState(0); // State variable to store the current index
-  const scrollX = useRef(new Animated.Value(0)).current; // Ref for tracking scroll position
-  const navigation = useNavigation(); // Navigation object for navigating between screens
+  //States to handel the page slider props
+  const [index, setIndex] = useState(0);
+  const scrollX = useRef(new Animated.Value(0)).current;
+
+  // Navigation object for navigating between screens
+  const navigation = useNavigation();
+
+  const moveToSignin = () => {
+    navigation.navigate("Signin");
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -31,9 +38,7 @@ const WelcomeScreen = () => {
         <View style={styles.buttonContainer}>
           <RegularButton
             text={"בוא נתחיל"}
-            onPress={() => {
-              navigation.navigate("Signin");
-            }}
+            onPress={moveToSignin}
             color={colorPalate.primary}
           />
         </View>

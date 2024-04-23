@@ -1,30 +1,40 @@
-// SigninScreen.js
 import React, { useState } from "react";
-import {
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  TextInput,
-  View,
-} from "react-native";
+import { SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
+
 //Navigation handler
 import { useNavigation } from "@react-navigation/native";
+
 //Store package for react native expo
 import * as SecureStore from "expo-secure-store";
+
+// Importing the Snackbar component from the react-native-paper library
+import { Snackbar } from "react-native-paper";
+
+//Redux handler state management
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/authSlice";
+
+//Importing functions from the user API file
+import { loginUser, GetUserData } from "../../utils/api/user";
+
+//Importing app color palate
+import { colorPalate } from "../../utils/ui/colors";
+
 //Custom components
 import BigText from "../../components/texts/big-text/big-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import RegularText from "../../components/texts/regular-text/regular-text";
-//Redux handler state management
-import { useDispatch } from "react-redux";
-import { login } from "../../redux/authSlice";
-import { Snackbar } from "react-native-paper";
-import { loginUser, GetUserData } from "../../utils/api/user";
-import { colorPalate } from "../../utils/ui/colors";
+import CustomTextInput from "../../components/inputs/custom-text-input/custom-text-input";
+import PasswordInput from "../../components/inputs/password-input/password-input";
 
 const SigninScreen = () => {
+  // Importing the useNavigation hook from React Navigation to access navigation prop
   const navigation = useNavigation();
+
+  // Importing the useDispatch hook from react-redux to dispatch actions
   const dispatch = useDispatch();
+
+  //State to store the login data
   const [loginData, setLoginData] = useState({
     email: "benyyoulove@gmail.com",
     password: "Aa123456",
@@ -34,26 +44,38 @@ const SigninScreen = () => {
   const [snackBarText, setSnackBarText] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
+  //Width for the form
+  const formWidth = 290;
+
+  // Function to handle the login event
   const handleLoginEvent = async () => {
     try {
+      // Attempt to authenticate the user and retrieve a token
       const token = await loginUser(loginData);
       if (token) {
-        SecureStore.setItem("token", token); // Store the JSON string
+        // If a token is received, store it securely
+        SecureStore.setItem("token", token);
+
+        // Retrieve user data using the token and dispatch login action
         const userData = await GetUserData(token);
         dispatch(login(JSON.stringify(userData)));
       } else {
-        // Close the snackbar after 3 seconds
+        // If authentication fails, display a snackbar with an error message
         setSnackbarOpen(true);
         setSnackBarText("סיסמא או איימל לא נכונים");
+
+        // Close the snackbar after 3 seconds
         setTimeout(() => {
           setSnackbarOpen(false);
         }, 3000);
       }
     } catch (error) {
+      // Log any errors that occur during the process
       console.error("Error saving token:", error);
     }
   };
 
+  // Function to navigate to the Signup screen
   const moveToSignup = () => {
     navigation.navigate("Signup");
   };
@@ -72,18 +94,20 @@ const SigninScreen = () => {
         </View>
 
         <View>
-          <TextInput
+          <CustomTextInput
             value={loginData.email}
             placeholder="איימל"
             style={styles.input}
+            english={true}
             onChangeText={(value) => {
               setLoginData({ ...loginData, email: value });
             }}
           />
-          <TextInput
+          <PasswordInput
             value={loginData.password}
             placeholder="סיסמא"
             style={styles.input}
+            width={formWidth}
             onChangeText={(value) => {
               setLoginData({ ...loginData, password: value });
             }}

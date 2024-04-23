@@ -1,5 +1,3 @@
-//feature-card.jsx
-
 import React from "react";
 import { StyleSheet, View, useWindowDimensions, Image } from "react-native";
 
@@ -34,9 +32,9 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   image: {
-    width: 130,
-    height: 130,
-    resizeMode: "cover",
+    width: 160,
+    height: 160,
+    objectFit: "contain",
   },
   header: {
     alignItems: "flex-start",

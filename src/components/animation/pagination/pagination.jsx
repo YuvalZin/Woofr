@@ -1,5 +1,5 @@
-import { StyleSheet, Animated, View, Dimensions } from "react-native";
 import React from "react";
+import { StyleSheet, Animated, View, Dimensions } from "react-native";
 import { colorPalate } from "../../../utils/ui/colors";
 
 // Destructuring 'width' from Dimensions

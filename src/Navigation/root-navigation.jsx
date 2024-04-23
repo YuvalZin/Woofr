@@ -26,7 +26,7 @@ const RootNavigation = () => {
     // Fetch user data from SecureStore
     const fetchUserFromSecureStore = async () => {
       try {
-        // SecureStore.deleteItemAsync("token");
+        SecureStore.deleteItemAsync("token");
         const token = SecureStore.getItem("token");
         if (token) {
           const userData = await GetUserData(token);
