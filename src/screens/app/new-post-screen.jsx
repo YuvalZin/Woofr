@@ -34,7 +34,6 @@ import RegularButton from "../../components/buttons/regular-button/regular-butto
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 
 import { colorPalate } from "../../utils/ui/colors";
-import { insertNewPost } from "../../utils/api/posts";
 
 const NewPostScreen = () => {
   //Navigation handler

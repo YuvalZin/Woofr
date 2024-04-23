@@ -9,27 +9,29 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
+//Store user data handler
+import * as SecureStore from "expo-secure-store";
+
 //Redux state management
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
+import { useDispatch } from "react-redux";
 import { logout } from "../../redux/authSlice";
+
+//Importing function from the user API file
+import { getFollowData } from "../../utils/api/user";
+import { getUserPosts } from "../../utils/api/posts";
+
+//App color palate
+import { colorPalate } from "../../utils/ui/colors";
+
 //Custom components
 import BigText from "../../components/texts/big-text/big-text";
 import SmallText from "../../components/texts/small-text/small-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import EmptyCard from "../../components/cards/empty-card/empty-card";
 import PostSlider from "../../components//scroll/posts-slider/post-slider";
-import * as SecureStore from "expo-secure-store";
-import { useDispatch } from "react-redux";
-
-//Api handler
-import { getFollowData } from "../../utils/api/user";
-
-//Fake data
-import { posts } from "../../utils/data/posts";
-import { colorPalate } from "../../utils/ui/colors";
 import AddPost from "../../components/buttons/add-post/add-post";
-import { getUserPosts } from "../../utils/api/posts";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -71,7 +73,7 @@ const ProfileScreen = () => {
 
     setTimeout(() => {
       setRefreshing(false);
-    }, 2000); // Simulating a delay for demonstration purposes
+    }, 2000);
   };
 
   return (
