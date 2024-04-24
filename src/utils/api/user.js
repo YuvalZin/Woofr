@@ -1,5 +1,5 @@
 const baseUrl =
-  "https://c63d-2a06-c701-9c85-e100-5472-a1fb-38a5-10b5.ngrok-free.app/api/Users";
+  "http://192.168.1.16:7207/api/Users";
 
 //get following / followers count for user by its token
 export const getFollowData = async (token) => {
@@ -38,6 +38,27 @@ export const GetUserData = async (token) => {
 
     if (!response.ok) {
       throw new Error("Failed get user data");
+    }
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+//to get logged in user data
+export const SearchUser = async (keyword) => {
+  try {
+    const apiUrl = `${baseUrl}/SearchUsers/${keyword}`;
+    const response = await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to get search result");
     }
     const responseData = await response.json();
     return responseData;
