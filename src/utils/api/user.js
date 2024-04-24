@@ -49,12 +49,13 @@ export const GetUserData = async (token) => {
 //to get logged in user data
 export const SearchUser = async (keyword) => {
   try {
-    const apiUrl = `${baseUrl}/SearchUsers/${keyword}`;
+    const apiUrl = `${baseUrl}/SearchUsers`;
     const response = await fetch(apiUrl, {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json; charset=UTF-8",
       },
+      body: JSON.stringify(keyword),
     });
 
     if (!response.ok) {

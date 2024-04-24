@@ -1,12 +1,13 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
 import RegularText from "../../texts/regular-text/regular-text";
 
 const UserCard = ({ data }) => {
+
   return (
     <TouchableOpacity style={styles.container}>
-      <Image source={{ uri: data.image }} style={styles.image} />
+      <Image source={{ uri: data.profilePictureUrl }} style={styles.image} />
       <View style={styles.textContainer}>
         <RegularText text={`${data.firstName} ${data.lastName}`} />
       </View>
@@ -19,15 +20,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#ffffff",
-    padding: 10,
+    padding: 8,
     borderRadius: 8,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
     elevation: 5,
     marginBottom: 10,
   },
