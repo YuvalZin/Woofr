@@ -1,37 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-
-//
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
-
-//Custom components
 import BigText from "../../components/texts/big-text/big-text";
 import Chats from "../../components/scroll/chats/chats";
+//import { chats } from "../../utils/data/chats";
 
-//Fake data
-import { chats } from "../../utils/data/chats";
-
-const ChatsScreen = () => {
-  const navigation = useNavigation();
-
-  // Use useSelector to access the Redux store state
+const ChatsScreen = ({ navigation }) => {
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
 
   const moveToChat = (chat) => {
-    navigation.navigate("chats-chat", { data: chat });
+    navigation.navigate("ChatScreen", { data: chat });
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <BigText text={"שיחות"} />
-        </View>
-        <Chats onClick={moveToChat} arr={chats} />
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <BigText text={"שיחות"} />
       </View>
+      <Chats onClick={moveToChat} arr={chats} />
     </SafeAreaView>
   );
 };

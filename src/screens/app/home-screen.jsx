@@ -56,9 +56,9 @@ const HomeScreen = () => {
     }, 1000); // Simulating data fetching with a delay of 1 second
   }, []);
 
-  const moveToProfile = (email) => {
-    if (myUser.email !== email) {
-      navigation.navigate("home-profile", { email: email });
+  const moveToProfile = (id) => {
+    if (myUser.id !== id) {
+      navigation.navigate("home-profile", { id: id });
     } else {
       navigation.navigate("profile-stack");
     }

@@ -15,7 +15,6 @@ import { GetUserInfo } from "../../../utils/api/user";
 import { deletePost, getPostLikes, likePost } from "../../../utils/api/posts";
 
 const Post = ({ data, onImgPress }) => {
-  console.log(data);
   const [userData, setUserData] = useState("");
   const [timeStr, setTimeStr] = useState("");
   const [isMyPost, setIsMyPost] = useState();

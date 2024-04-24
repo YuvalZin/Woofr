@@ -4,9 +4,12 @@ import BigText from "../../components/texts/big-text/big-text";
 import CustomSearchBar from "../../components/inputs/search-bar/custom-search-bar";
 import SearchList from "../../components/scroll/search-list/search-list";
 import { SearchUser } from "../../utils/api/user";
+//Navigation handler
+import { useNavigation } from "@react-navigation/native";
 
 const SearchScreen = () => {
   const [users, setUsers] = useState([]);
+  const navigation = useNavigation();
 
   const fetchSearchResult = async (text) => {
     if (text == "") setUsers([]);
@@ -15,6 +18,11 @@ const SearchScreen = () => {
       setUsers(res);
     }
   };
+  
+  const moveToUserProfile = (id) => {
+    navigation.navigate("search-profile", { id: id });
+  };
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -22,7 +30,7 @@ const SearchScreen = () => {
         <BigText text={"חיפוש"} />
       </View>
       <CustomSearchBar onPressSearch={fetchSearchResult} />
-      <SearchList users={users} />
+      <SearchList users={users} onClick={moveToUserProfile}/>
     </SafeAreaView>
   );
 };

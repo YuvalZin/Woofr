@@ -3,9 +3,9 @@ import { FlatList, StyleSheet, View } from "react-native";
 import UserCard from "../../cards/user-card/user-card";
 import EmptyCard from "../../cards/empty-card/empty-card";
 
-const SearchList = ({ users }) => {
+const SearchList = ({ users, onClick }) => {
   if(users == null) return null;
-  const renderUserItem = ({ item, index }) => <UserCard key={index} data={item} />;
+  const renderUserItem = ({ item, index }) => <UserCard key={index} data={item} onClick={onClick} />;
   return (
     <View style={styles.container}>
       {users.length > 0 ? (

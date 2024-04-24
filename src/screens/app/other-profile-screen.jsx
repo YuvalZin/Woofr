@@ -26,11 +26,12 @@ import uuid from "react-native-uuid";
 //Redux state management
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
+import { GetUserInfo } from "../../utils/api/user";
 
 const UserProfileScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { email } = route.params;
+  const { id } = route.params;
 
   // Use useSelector to access the Redux store state
   const auth = useSelector(selectAuth);
@@ -38,29 +39,17 @@ const UserProfileScreen = () => {
 
   const [userProfile, setUserProfile] = useState(null);
 
-  // useEffect(() => {
-  //   // Simulate fetching user data based on the userId
-  //   // Replace this with your actual API call or data retrieval method
-  //   const fetchUserData = async () => {
-  //     // Example fetch from API
-  //     // const response = await fetch(`https://api.example.com/users/${userId}`);
-  //     // const data = await response.json();
-
-  //     // Simulated data for testing
-  //     const data = userData; // Replace with actual fetched data
-  //     setUserProfile(data);
-  //   };
-
-  //   fetchUserData();
-  // }, [userId]);
-
   useEffect(() => {
-    users.forEach((user) => {
-      if (user.email === email) {
-        setUserProfile(user);
-      }
-    });
-  }, []);
+    // Simulate fetching user data based on the userId
+    // Replace this with your actual API call or data retrieval method
+    const fetchUserData = async () => {
+      // Example fetch from API
+      const response = await GetUserInfo(id);
+      setUserProfile(response);
+    };
+
+    fetchUserData();
+  }, [id]);
 
   const moveBack = () => {
     navigation.goBack();
@@ -88,7 +77,7 @@ const UserProfileScreen = () => {
         <ScrollView style={styles.container}>
           <View style={styles.imageContainer}>
             <Image
-              source={{ uri: userProfile.img }}
+              source={{ uri: userProfile.profilePictureUrl }}
               style={styles.profileImage}
             />
             <BigText
