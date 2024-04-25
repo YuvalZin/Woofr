@@ -23,10 +23,8 @@ const SearchList = ({ users, onClick }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
     backgroundColor: "#ffffff",
     borderRadius: 10,
-    alignItems: "flex-start",
     marginTop: 10,
   },
 });

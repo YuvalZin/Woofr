@@ -56,7 +56,7 @@ export const startChat = async (chatRequest) => {
     if (!response.ok) {
       throw new Error("Failed start new chat");
     }
-    const responseData = await response.json();
+    const responseData = await response;
     return responseData;
   } catch (error) {
     console.error("Error:", error);

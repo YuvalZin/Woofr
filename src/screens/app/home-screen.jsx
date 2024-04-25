@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
-//
+//Redux state management
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
 

@@ -1,6 +1,7 @@
 import { baseUrl } from "./baseUrl";
 
 const postUrl = `${baseUrl}/api/Woofs`;
+
 export const getUserPosts = async (id) => {
   try {
     const apiUrl = `${postUrl}/GetUserPosts/${id}`;

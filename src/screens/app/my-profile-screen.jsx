@@ -18,7 +18,7 @@ import { selectAuth } from "../../redux/authSlice";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/authSlice";
 
-//Importing function from the user API file
+//Importing function from the API file
 import { getFollowData } from "../../utils/api/user";
 import { getUserPosts } from "../../utils/api/posts";
 

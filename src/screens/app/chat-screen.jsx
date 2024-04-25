@@ -16,7 +16,6 @@ import { Snackbar } from "react-native-paper";
 //Custom components
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import RegularText from "../../components/texts/regular-text/regular-text";
-import EmptyCard from "../../components/cards/empty-card/empty-card";
 import ChatInput from "../../components/inputs/chat-input/chat-input";
 import Messages from "../../components/scroll/messages/messages";
 
@@ -30,12 +29,15 @@ import { messages } from "../../utils/data/message";
 import uuid from "react-native-uuid";
 
 import { GetUserInfo } from "../../utils/api/user";
+import { getChatMessages } from "../../utils/api/chat";
 
 const ChatScreen = () => {
   //Navigation object to navigate and to get prop
   const navigation = useNavigation();
   const route = useRoute();
   const { data } = route.params;
+
+  console.log(data);
 
   // Use useSelector to access the Redux store state
   const auth = useSelector(selectAuth);
@@ -87,6 +89,11 @@ const ChatScreen = () => {
     setOtherUser(response);
   };
 
+  const fetchMessages = async () => {
+    const response = await getChatMessages(data.chatID);
+    setMessageArray(response);
+  };
+
   useEffect(() => {
     const otherId =
       data.Participant1ID === myUser.id
@@ -94,6 +101,7 @@ const ChatScreen = () => {
         : data.Participant1ID;
 
     fetchUserData(otherId);
+    fetchMessages();
   }, [data]);
 
   //Use effect to load messages
@@ -126,9 +134,12 @@ const ChatScreen = () => {
           </View>
         ) : null}
 
-        <View style={styles.container}>
-          <Messages arr={messageArray} myUser={myUser} />
-        </View>
+        {messageArray ? (
+          <View style={styles.container}>
+            <Messages arr={messageArray} myUser={myUser} />
+          </View>
+        ) : null}
+
         <ChatInput setValue={setMsg} value={msg} onClick={sendMessage} />
 
         <Snackbar

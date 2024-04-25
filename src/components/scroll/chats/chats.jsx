@@ -24,7 +24,7 @@ const Chats = ({ arr, onClick }) => {
   };
 
   const renderChatItem = ({ item }) => {
-    return <ChatCard key={item.id} onClick={onClick} chat={item} />;
+    return <ChatCard key={item.chatID} onClick={onClick} chat={item} />;
   };
 
   return (
@@ -35,7 +35,7 @@ const Chats = ({ arr, onClick }) => {
           onRefresh={onRefresh}
           data={arr}
           renderItem={renderChatItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.chatID}
         />
       ) : (
         <EmptyCard

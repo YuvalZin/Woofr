@@ -25,7 +25,10 @@ import uuid from "react-native-uuid";
 //Redux state management
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
+
+//Importing function from the API file
 import { GetUserInfo, getFollowData } from "../../utils/api/user";
+import { startChat } from "../../utils/api/chat";
 
 const UserProfileScreen = () => {
   const navigation = useNavigation();
@@ -68,22 +71,29 @@ const UserProfileScreen = () => {
     navigation.goBack();
   };
 
-  const moveToChat = () => {
+  const moveToChat = async () => {
     //API CALL TO FIND IF THERE IS CHAT ALREADY
-    const res = false;
-    if (res) {
-      navigation.navigate("chat", { data: res });
-    } else {
-      const newChat = {
-        ChatID: uuid.v4().toString(),
-        Participant1ID: myUser.id,
-        Participant2ID: userProfile.id,
-        Participant1UnreadCount: 0,
-        Participant2UnreadCount: 0,
-        LastMessage: null,
-      };
-      navigation.navigate("chat", { data: newChat });
-    }
+    const newChat = {
+      ChatID: uuid.v4().toString(),
+      Participant1ID: myUser.id,
+      Participant2ID: userProfile.id,
+      Participant1UnreadCount: 0,
+      Participant2UnreadCount: 0,
+      LastMessage: "",
+    };
+    const res = await startChat(newChat);
+    console.log(res);
+    //   if (res) {
+    //     navigation.navigate("chat", { data: newChat });
+    //   } else {
+    //     Alert.alert("משהו השתבש", "הייתה בעיה למחוק את הפוסט", [
+    //       {
+    //         text: "שחרר",
+    //         style: "cancel",
+    //       },
+    //     ]);
+    //   }
+    // }
   };
 
   return (

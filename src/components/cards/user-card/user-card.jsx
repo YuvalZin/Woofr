@@ -4,12 +4,13 @@ import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import RegularText from "../../texts/regular-text/regular-text";
 
 const UserCard = ({ data, onClick }) => {
-
-
   return (
-    <TouchableOpacity 
-    onPress={()=>{onClick(data.id)}}
-    style={styles.container}>
+    <TouchableOpacity
+      onPress={() => {
+        onClick(data.id);
+      }}
+      style={styles.container}
+    >
       <Image source={{ uri: data.profilePictureUrl }} style={styles.image} />
       <View style={styles.textContainer}>
         <RegularText text={`${data.firstName} ${data.lastName}`} />

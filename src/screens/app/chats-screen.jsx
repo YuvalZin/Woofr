@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 
+//Redux state management
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
 
@@ -8,6 +9,7 @@ import { selectAuth } from "../../redux/authSlice";
 import BigText from "../../components/texts/big-text/big-text";
 import Chats from "../../components/scroll/chats/chats";
 
+//Importing function from the API file
 import { getUserChats } from "../../utils/api/chat";
 
 const ChatsScreen = ({ navigation }) => {
@@ -17,17 +19,17 @@ const ChatsScreen = ({ navigation }) => {
   const [chats, setChats] = useState([]);
 
   const moveToChat = (chat) => {
-    navigation.navigate("ChatScreen", { data: chat });
+    navigation.navigate("chat", { data: chat });
   };
 
   const loadChats = async () => {
-    const res = getUserChats(myUser.id);
+    const res = await getUserChats(myUser.id);
     setChats(res);
   };
 
-  // useEffect(() => {
-  //   loadChats();
-  // }, [myUser]);
+  useEffect(() => {
+    loadChats();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
