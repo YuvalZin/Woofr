@@ -17,10 +17,15 @@ import { GetUserInfo } from "../../../utils/api/user";
 import { deletePost, getPostLikes, likePost } from "../../../utils/api/posts";
 
 const Post = ({ data, onImgPress, setRender }) => {
-  const [userData, setUserData] = useState("");
+  const [userData, setUserData] = useState({
+    firstName: "",
+    lastName: "",
+    profilePictureUrl: null,
+  });
   const [timeStr, setTimeStr] = useState("");
   const [isMyPost, setIsMyPost] = useState();
   const [likesCount, setLikesCount] = useState(data.likeCount);
+  const [likeThis, setLikeThis] = useState(false);
 
   // Use useSelector to access the Redux store state
   const auth = useSelector(selectAuth);
@@ -29,6 +34,7 @@ const Post = ({ data, onImgPress, setRender }) => {
   const likeHandle = async (post_id, user_id) => {
     const res = await likePost(post_id, user_id);
     setLikesCount(res);
+    setLikeThis(!likeThis);
   };
 
   const deletePostById = async (post_id) => {
@@ -49,6 +55,7 @@ const Post = ({ data, onImgPress, setRender }) => {
     setIsMyPost(data.userId === (myUser && myUser.id));
     if (!isMyPost) {
       const res = await GetUserInfo(data.userId);
+      setUserData(res);
       setUserData(res);
     } else {
       setUserData(myUser);
@@ -126,8 +133,8 @@ const Post = ({ data, onImgPress, setRender }) => {
         )}
         <View style={styles.buttonContainer}>
           <IconButton
-            iconName={"heart"}
-            color={colorPalate.primary}
+            iconName={!likeThis ? "heart" : "heart-dislike"}
+            color={!likeThis ? colorPalate.primary : colorPalate.grey}
             iconSize={22}
             onPress={() => likeHandle(data.id, myUser.id)}
           />

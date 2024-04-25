@@ -38,7 +38,8 @@ const ProfileScreen = () => {
   const dispatch = useDispatch();
   // Use useSelector to access the Redux store state
   const auth = useSelector(selectAuth);
-  const myUser = JSON.parse(auth.user);
+  const [myUser, setMyUser] = useState(JSON.parse(auth.user));
+
   const [userFollows, setUsrFollows] = useState({
     following: 0,
     followers: 0,
@@ -134,7 +135,11 @@ const ProfileScreen = () => {
               }}
             />
             {myPosts.length > 0 && (
-              <PostSlider arr={myPosts} onImgPress={() => {}} />
+              <PostSlider
+                arr={myPosts}
+                onImgPress={() => {}}
+                setRender={onRefresh}
+              />
             )}
           </View>
         ) : (
