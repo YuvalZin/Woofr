@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 
 //Color palate for the app
@@ -11,13 +11,12 @@ const CustomSearchBar = ({ onPressSearch }) => {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    if(value !== "")
-      handleSearch();
+    if (value !== "") handleSearch();
     else onPressSearch("");
   }, [value]);
 
   const handleSearch = () => {
-      onPressSearch(value); // Pass the search query value to the onPressSearch function
+    onPressSearch(value); // Pass the search query value to the onPressSearch function
   };
 
   return (
@@ -30,7 +29,7 @@ const CustomSearchBar = ({ onPressSearch }) => {
           }
         }}
         style={styles.input}
-        placeholder="כתוב פה את ההודעה שלך..."
+        placeholder="חפש משתמשים..."
         placeholderTextColor="#A9A9A9"
       />
       <View style={styles.button}>

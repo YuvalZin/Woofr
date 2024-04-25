@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View, Alert } from "react-native";
 
 //
 import { useSelector } from "react-redux";
@@ -11,10 +11,12 @@ import SmallText from "../../texts/small-text/small-text";
 import IconButton from "../../buttons/icon-button/icon-button";
 
 import { colorPalate } from "../../../utils/ui/colors";
+
+//Import api calls
 import { GetUserInfo } from "../../../utils/api/user";
 import { deletePost, getPostLikes, likePost } from "../../../utils/api/posts";
 
-const Post = ({ data, onImgPress }) => {
+const Post = ({ data, onImgPress, setRender }) => {
   const [userData, setUserData] = useState("");
   const [timeStr, setTimeStr] = useState("");
   const [isMyPost, setIsMyPost] = useState();
@@ -31,7 +33,16 @@ const Post = ({ data, onImgPress }) => {
 
   const deletePostById = async (post_id) => {
     const res = await deletePost(post_id);
-    console.log(res);
+    if (res) {
+      setRender();
+    } else {
+      Alert.alert("משהו השתבש", "הייתה בעיה למחוק את הפוסט", [
+        {
+          text: "שחרר",
+          style: "cancel",
+        },
+      ]);
+    }
   };
 
   const fetchUserInfo = async () => {
@@ -45,11 +56,13 @@ const Post = ({ data, onImgPress }) => {
   };
   useEffect(() => {
     fetchUserInfo();
+    var str = calculateTimeAgo();
+    setTimeStr(str);
   }, []);
 
-  const calculateTimeAgo = (timestamp) => {
+  const calculateTimeAgo = () => {
     const now = new Date();
-    const postTime = new Date(timestamp);
+    const postTime = new Date(data.createdAt);
     const diff = now - postTime;
     const seconds = Math.floor(diff / 1000);
 
@@ -72,13 +85,6 @@ const Post = ({ data, onImgPress }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.userInfo}>
-          <RegularText
-            text={`${userData.firstName} ${userData.lastName}`}
-            style={styles.username}
-          />
-          <SmallText text={timeStr} style={styles.infoText} />
-        </View>
         <TouchableOpacity
           style={styles.avatarContainer}
           onPress={() => onImgPress(userData.id)}
@@ -90,6 +96,13 @@ const Post = ({ data, onImgPress }) => {
             style={styles.avatar}
           />
         </TouchableOpacity>
+        <View style={styles.userInfo}>
+          <RegularText
+            text={`${userData.firstName} ${userData.lastName}`}
+            style={styles.username}
+          />
+          <SmallText text={timeStr} style={styles.infoText} />
+        </View>
       </View>
 
       {data.mediaUrl != "null" && (
@@ -98,7 +111,7 @@ const Post = ({ data, onImgPress }) => {
         </View>
       )}
 
-      <RegularText text={data.content} english={true} />
+      <RegularText text={data.content} />
 
       <View style={styles.buttonsContainer}>
         {isMyPost && (
@@ -118,7 +131,9 @@ const Post = ({ data, onImgPress }) => {
             iconSize={22}
             onPress={() => likeHandle(data.id, myUser.id)}
           />
-          <Text>{likesCount}</Text>
+        </View>
+        <View style={styles.buttonContainer}>
+          <SmallText text={`${likesCount}`} />
         </View>
       </View>
     </View>
@@ -162,9 +177,8 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   userInfo: {
-    flex: 1,
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
+    justifyContent: "center",
+    alignItems: "flex-start",
     marginRight: 10,
   },
   username: {
@@ -178,10 +192,12 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "flex-end",
   },
   buttonContainer: {
-    padding: 6,
+    padding: 4,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

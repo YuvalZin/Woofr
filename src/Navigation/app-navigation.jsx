@@ -18,7 +18,7 @@ const TabNavigation = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName="search-stack"
+      initialRouteName="home-stack"
       screenOptions={{
         headerShown: false,
         tabBarLabelStyle: {
@@ -28,33 +28,16 @@ const TabNavigation = () => {
       }}
     >
       <Tab.Screen
-        name="profile-stack"
-        component={ProfileStack}
+        name="home-stack"
+        component={HomeStack}
         options={{
-          tabBarLabel: "פרופיל",
+          tabBarLabel: "בית",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              name="account"
-              size={iconSize}
-              color={color}
-            />
+            <MaterialCommunityIcons name="home" size={iconSize} color={color} />
           ),
         }}
       />
-      <Tab.Screen
-        name="search-stack"
-        component={SearchStack}
-        options={{
-          tabBarLabel: "חיפוש",
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              name="search-web"
-              size={iconSize}
-              color={color}
-            />
-          ),
-        }}
-      />
+
       <Tab.Screen
         name="chat-stack"
         component={chatStack}
@@ -71,12 +54,31 @@ const TabNavigation = () => {
       />
 
       <Tab.Screen
-        name="home-stack"
-        component={HomeStack}
+        name="search-stack"
+        component={SearchStack}
         options={{
-          tabBarLabel: "בית",
+          tabBarLabel: "חיפוש",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" size={iconSize} color={color} />
+            <MaterialCommunityIcons
+              name="search-web"
+              size={iconSize}
+              color={color}
+            />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="profile-stack"
+        component={ProfileStack}
+        options={{
+          tabBarLabel: "פרופיל",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="account"
+              size={iconSize}
+              color={color}
+            />
           ),
         }}
       />

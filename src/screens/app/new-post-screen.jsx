@@ -140,7 +140,6 @@ const NewPostScreen = () => {
       createdAt: post.createdAt,
       likeCount: 0,
     };
-    console.log(newPost);
     // Some API post method to upload the image
     const res = await insertPost(newPost);
     //const res = true;
@@ -249,7 +248,7 @@ const styles = StyleSheet.create({
   header: {
     padding: 8,
     width: "100%",
-    alignItems: "flex-end",
+    alignItems: "flex-start",
   },
   textInputContainer: {
     borderColor: "grey",

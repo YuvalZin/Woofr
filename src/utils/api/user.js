@@ -1,5 +1,5 @@
 const baseUrl =
-  "http://192.168.1.16:7207/api/Users";
+  "https://1f4f-2a0d-6fc7-204-61e1-d023-9e4-6ebd-c81c.ngrok-free.app/api/Users";
 
 //get following / followers count for user by its token
 export const getFollowData = async (token) => {

@@ -1,4 +1,5 @@
-const baseUrl = "http://192.168.1.16:7207/api/Woofs";
+const baseUrl =
+  "https://1f4f-2a0d-6fc7-204-61e1-d023-9e4-6ebd-c81c.ngrok-free.app/api/Woofs";
 export const getUserPosts = async (id) => {
   try {
     const apiUrl = `${baseUrl}/GetUserPosts/${id}`;
@@ -77,7 +78,6 @@ export const likePost = async (post_id, user_id) => {
     console.error("Error:", error);
   }
 };
-
 
 export const insertPost = async (postData) => {
   try {

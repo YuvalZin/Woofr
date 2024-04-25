@@ -5,15 +5,20 @@ import { StyleSheet, FlatList, View } from "react-native";
 import Post from "../../cards/post/post";
 import EmptyCard from "../../cards/empty-card/empty-card";
 
-const PostSlider = ({ arr, onImgPress }) => {
+const PostSlider = ({ arr, onImgPress, setRender }) => {
   const renderPostItem = ({ item, index }) => {
     return (
-      <Post key={`post num:${index}`} data={item} onImgPress={onImgPress} />
+      <Post
+        key={`post num:${index}`}
+        data={item}
+        onImgPress={onImgPress}
+        setRender={setRender}
+      />
     );
   };
 
   return (
-    <View style={{alignItems:"center"}}>
+    <View style={{ alignItems: "center" }}>
       <View style={styles.container}>
         {arr.length > 0 ? (
           <FlatList
@@ -34,7 +39,7 @@ const PostSlider = ({ arr, onImgPress }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '95%',
+    width: "95%",
   },
   loadingContainer: {
     justifyContent: "center",

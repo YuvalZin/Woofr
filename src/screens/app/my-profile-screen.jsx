@@ -105,20 +105,20 @@ const ProfileScreen = () => {
             <View style={styles.buttonsContainer}>
               <View style={styles.buttonView}>
                 <RegularButton
-                  text={`התנתק`}
-                  color={colorPalate.warning}
-                  iconName={"log-out-outline"}
-                  onPress={() => logoutUser()}
-                />
-              </View>
-              <View style={styles.buttonView}>
-                <RegularButton
                   text={"עריכת פרופיל"}
                   color={colorPalate.primary}
                   iconName={"create-outline"}
                   onPress={() => {
                     navigation.navigate("profile-edit");
                   }}
+                />
+              </View>
+              <View style={styles.buttonView}>
+                <RegularButton
+                  text={`התנתק`}
+                  color={colorPalate.warning}
+                  iconName={"log-out-outline"}
+                  onPress={() => logoutUser()}
                 />
               </View>
             </View>

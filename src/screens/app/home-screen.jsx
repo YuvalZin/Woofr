@@ -6,8 +6,6 @@ import {
   ScrollView,
   Image,
   RefreshControl,
-  Text,
-  TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -45,7 +43,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     fetchPosts();
-  }, []);
+  }, [refreshing]);
 
   // Function to handle refresh
   const onRefresh = useCallback(() => {
@@ -53,7 +51,7 @@ const HomeScreen = () => {
     fetchPosts();
     setTimeout(() => {
       setRefreshing(false);
-    }, 1000); // Simulating data fetching with a delay of 1 second
+    }, 1000);
   }, []);
 
   const moveToProfile = (id) => {
@@ -86,8 +84,12 @@ const HomeScreen = () => {
             navigation.navigate("home-post");
           }}
         />
-        {posts.length > 0 && ( // Check if myPosts is not null before rendering
-          <PostSlider arr={posts} onImgPress={moveToProfile} />
+        {posts.length > 0 && (
+          <PostSlider
+            arr={posts}
+            onImgPress={moveToProfile}
+            setRender={onRefresh}
+          />
         )}
       </ScrollView>
     </SafeAreaView>
@@ -99,8 +101,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
     padding: 8,
     width: "100%",
   },

@@ -12,17 +12,17 @@ const SearchScreen = () => {
   const navigation = useNavigation();
 
   const fetchSearchResult = async (text) => {
-    if (text == "") setUsers([]);
-    else {
+    if (text == "") {
+      setUsers(new Array());
+    } else {
       const res = await SearchUser(text);
       setUsers(res);
     }
   };
-  
+
   const moveToUserProfile = (id) => {
     navigation.navigate("search-profile", { id: id });
   };
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -30,7 +30,7 @@ const SearchScreen = () => {
         <BigText text={"חיפוש"} />
       </View>
       <CustomSearchBar onPressSearch={fetchSearchResult} />
-      <SearchList users={users} onClick={moveToUserProfile}/>
+      <SearchList users={users} onClick={moveToUserProfile} />
     </SafeAreaView>
   );
 };
@@ -38,8 +38,6 @@ const SearchScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
   header: {
     padding: 8,
