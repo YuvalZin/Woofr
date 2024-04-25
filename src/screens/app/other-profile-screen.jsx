@@ -74,26 +74,27 @@ const UserProfileScreen = () => {
   const moveToChat = async () => {
     //API CALL TO FIND IF THERE IS CHAT ALREADY
     const newChat = {
-      ChatID: uuid.v4().toString(),
-      Participant1ID: myUser.id,
-      Participant2ID: userProfile.id,
-      Participant1UnreadCount: 0,
-      Participant2UnreadCount: 0,
-      LastMessage: "",
+      chatID: uuid.v4().toString(),
+      participant1ID: myUser.id,
+      participant2ID: userProfile.id,
+      participant1UnreadCount: 0,
+      participant2UnreadCount: 0,
+      lastMessage: "",
     };
     const res = await startChat(newChat);
     console.log(res);
-    //   if (res) {
-    //     navigation.navigate("chat", { data: newChat });
-    //   } else {
-    //     Alert.alert("משהו השתבש", "הייתה בעיה למחוק את הפוסט", [
-    //       {
-    //         text: "שחרר",
-    //         style: "cancel",
-    //       },
-    //     ]);
-    //   }
-    // }
+      if (res) {
+        navigation.navigate("chat", { data: res });
+      } 
+        else {
+        Alert.alert("משהו השתבש", "לא ניתן ליצור צ'אט", [
+          {
+            text: "שחרר",
+            style: "cancel",
+          },
+        ]);
+      }
+
   };
 
   return (

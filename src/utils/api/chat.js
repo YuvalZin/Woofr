@@ -1,6 +1,7 @@
 import { baseUrl } from "./baseUrl";
 
 const chatUrl = `${baseUrl}/api/Chats`;
+const messagesUrl = `${baseUrl}/api/Messages`;
 
 export const getUserChats = async (id) => {
   try {
@@ -24,7 +25,7 @@ export const getUserChats = async (id) => {
 
 export const getChatMessages = async (id) => {
   try {
-    const apiUrl = `${chatUrl}/GetChatMessages/${id}`;
+    const apiUrl = `${messagesUrl}/GetChatMessages/${id}`;
     const response = await fetch(apiUrl, {
       method: "GET",
       headers: {
@@ -56,7 +57,7 @@ export const startChat = async (chatRequest) => {
     if (!response.ok) {
       throw new Error("Failed start new chat");
     }
-    const responseData = await response;
+    const responseData = await response.text();
     return responseData;
   } catch (error) {
     console.error("Error:", error);

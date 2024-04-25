@@ -6,7 +6,7 @@ import MessageBubble from "../../cards/message-bubble/message-bubble";
 
 const Messages = ({ arr, myUser }) => {
   const renderMessageItem = ({ item }) => {
-    return <MessageBubble key={item.id} message={item} myUser={myUser} />;
+    return <MessageBubble key={item.MessageId} message={item} myUser={myUser} />;
   };
   return (
     <View style={styles.container}>
@@ -14,7 +14,7 @@ const Messages = ({ arr, myUser }) => {
         <FlatList
           data={arr}
           renderItem={renderMessageItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.MessageId}
         />
       ) : null}
     </View>

@@ -4,14 +4,14 @@ import { StyleSheet, View, Text } from "react-native";
 import { colorPalate } from "../../../utils/ui/colors";
 
 const MessageBubble = ({ message, myUser }) => {
-  const isMyMessage = message.from === (myUser && myUser.email);
+  const isMyMessage = message.senderId === (myUser && myUser.id);
   return (
     <View
       style={
         isMyMessage ? styles.myMessageContainer : styles.otherMessageContainer
       }
     >
-      <Text style={styles.text}>{message.text}</Text>
+      <Text style={styles.text}>{message.messageText}</Text>
     </View>
   );
 };

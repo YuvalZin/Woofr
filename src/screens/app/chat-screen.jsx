@@ -37,8 +37,6 @@ const ChatScreen = () => {
   const route = useRoute();
   const { data } = route.params;
 
-  console.log(data);
-
   // Use useSelector to access the Redux store state
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
@@ -97,9 +95,8 @@ const ChatScreen = () => {
   useEffect(() => {
     const otherId =
       data.Participant1ID === myUser.id
-        ? data.Participant2ID
-        : data.Participant1ID;
-
+        ? data.participant2ID
+        : data.participant1ID;
     fetchUserData(otherId);
     fetchMessages();
   }, [data]);
