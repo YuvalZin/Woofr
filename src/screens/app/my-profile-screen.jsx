@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Image,
   SafeAreaView,
@@ -7,7 +7,7 @@ import {
   View,
   RefreshControl,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
 //Store user data handler
 import * as SecureStore from "expo-secure-store";
@@ -66,6 +66,12 @@ const ProfileScreen = () => {
   useEffect(() => {
     fetchUserData();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchUserData();
+    }, [])
+  );
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -127,8 +133,8 @@ const ProfileScreen = () => {
                 navigation.navigate("profile-post");
               }}
             />
-            {myPosts.length > 0 && ( // Check if myPosts is not null before rendering
-              <PostSlider arr={myPosts} />
+            {myPosts.length > 0 && (
+              <PostSlider arr={myPosts} onImgPress={() => {}} />
             )}
           </View>
         ) : (

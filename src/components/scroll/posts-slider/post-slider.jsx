@@ -9,7 +9,7 @@ const PostSlider = ({ arr, onImgPress, setRender }) => {
   const renderPostItem = ({ item, index }) => {
     return (
       <Post
-        key={`post num:${index}`}
+        key={item.id}
         data={item}
         onImgPress={onImgPress}
         setRender={setRender}

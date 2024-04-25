@@ -7,7 +7,7 @@ import {
   Image,
   RefreshControl,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 //
 import { useSelector } from "react-redux";
@@ -44,6 +44,12 @@ const HomeScreen = () => {
   useEffect(() => {
     fetchPosts();
   }, [refreshing]);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchPosts();
+    }, [])
+  );
 
   // Function to handle refresh
   const onRefresh = useCallback(() => {

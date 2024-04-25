@@ -14,19 +14,16 @@ import BigText from "../../components/texts/big-text/big-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import PostSlider from "../../components/scroll/posts-slider/post-slider";
-
-import { users } from "../../utils/data/users";
-import { posts } from "../../utils/data/posts";
-import { colorPalate } from "../../utils/ui/colors";
+import SmallText from "../../components/texts/small-text/small-text";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 
-//Create a random UUID
-import uuid from "react-native-uuid";
+//App color palate
+import { colorPalate } from "../../utils/ui/colors";
 
 //Redux state management
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
-import { GetUserInfo } from "../../utils/api/user";
+import { GetUserInfo, getFollowData } from "../../utils/api/user";
 
 const UserProfileScreen = () => {
   const navigation = useNavigation();
@@ -39,35 +36,34 @@ const UserProfileScreen = () => {
 
   const [userProfile, setUserProfile] = useState(null);
 
-  useEffect(() => {
-    // Simulate fetching user data based on the userId
-    // Replace this with your actual API call or data retrieval method
-    const fetchUserData = async () => {
-      // Example fetch from API
-      const response = await GetUserInfo(id);
-      setUserProfile(response);
-    };
+  const [posts, setPosts] = useState([]);
+  const [userFollows, setUsrFollows] = useState({
+    following: 0,
+    followers: 0,
+  });
 
+  const fetchUserData = async () => {
+    const response = await GetUserInfo(id);
+    setUserProfile(response);
+  };
+
+  const loadFollowData = async () => {
+    const res = await getFollowData(myUser.token);
+    const followData = res.toString().split(",");
+    setUsrFollows({
+      ...userFollows,
+      following: followData[1],
+      followers: followData[0],
+    });
+  };
+
+  useEffect(() => {
     fetchUserData();
+    loadFollowData();
   }, [id]);
 
   const moveBack = () => {
     navigation.goBack();
-  };
-  const moveToChat = async () => {
-    var chatData;
-
-    //Do api read to see if there is chat already if use give it and skip the creation of new chat object
-
-    const newId = await uuid.v4().toString();
-    chatData = {
-      id: newId,
-      lastMessage: "",
-      user1: userProfile.email,
-      user2: myUser.email,
-    };
-
-    navigation.navigate("home-chat", { data: chatData });
   };
 
   return (
@@ -83,6 +79,10 @@ const UserProfileScreen = () => {
             <BigText
               text={`${userProfile.firstName} ${userProfile.lastName}`}
             />
+            <View style={styles.followingContainer}>
+              <SmallText text={`עוקב אחרי ${userFollows.followers}`} />
+              <SmallText text={`עוקב אחרי ${userFollows.following} `} />
+            </View>
           </View>
 
           <View style={styles.buttonsContainer}>
@@ -133,6 +133,10 @@ const styles = StyleSheet.create({
     height: 160,
     resizeMode: "cover",
     borderRadius: 80,
+  },
+  followingContainer: {
+    flexDirection: "row",
+    gap: 30,
   },
   buttonsContainer: {
     padding: 8,
