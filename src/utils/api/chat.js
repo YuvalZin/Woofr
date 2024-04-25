@@ -1,6 +1,6 @@
 import { baseUrl } from "./baseUrl";
 
-const chatUrl = `${baseUrl}/Chats`;
+const chatUrl = `${baseUrl}/api/Chats`;
 
 export const getUserChats = async (id) => {
   try {

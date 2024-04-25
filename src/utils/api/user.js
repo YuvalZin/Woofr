@@ -1,6 +1,6 @@
 import { baseUrl } from "./baseUrl";
 
-const userUrl = `${baseUrl}/Users`;
+const userUrl = `${baseUrl}/api/Users`;
 
 //get following / followers count for user by its token
 export const getFollowData = async (token) => {
