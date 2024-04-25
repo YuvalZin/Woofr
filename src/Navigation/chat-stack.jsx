@@ -16,7 +16,7 @@ const ChatsStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="chats-chat"
+        name="chat"
         component={ChatScreen}
         options={{ headerShown: false }}
       />

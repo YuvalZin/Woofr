@@ -24,11 +24,12 @@ import Messages from "../../components/scroll/messages/messages";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
 
-import { users } from "../../utils/data/users";
 import { messages } from "../../utils/data/message";
 
 //Create a random UUID
 import uuid from "react-native-uuid";
+
+import { GetUserInfo } from "../../utils/api/user";
 
 const ChatScreen = () => {
   //Navigation object to navigate and to get prop
@@ -70,7 +71,7 @@ const ChatScreen = () => {
 
     var newMessage = {
       id: uuid.v4().toString(),
-      chatId: data.id,
+      chatId: data.ChatID,
       from: myUser.email,
       to: otherUser.email,
       text: msg,
@@ -81,20 +82,19 @@ const ChatScreen = () => {
     setMsg("");
   };
 
-  //Use effect to load other user
+  const fetchUserData = async (id) => {
+    const response = await GetUserInfo(id);
+    setOtherUser(response);
+  };
+
   useEffect(() => {
-    // Determine the email of the other user
-    const otherEmail =
-      data.user1.email === myUser.email ? data.user2 : data.user1;
+    const otherId =
+      data.Participant1ID === myUser.id
+        ? data.Participant1ID
+        : data.Participant2ID;
 
-    // Find the user object with the corresponding email
-    const otherUser = users.find((user) => user.email === otherEmail);
-
-    // Set the state with the other user information
-    if (otherUser) {
-      setOtherUser(otherUser);
-    }
-  }, [data, myUser]);
+    fetchUserData(otherId);
+  }, [data]);
 
   //Use effect to load messages
   useEffect(() => {
@@ -110,44 +110,40 @@ const ChatScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <GoBackButton onPress={moveBack} />
-      {otherUser ? (
-        <KeyboardAvoidingView
-          style={styles.container}
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        {otherUser ? (
           <View style={styles.infoRow}>
+            <Image
+              source={{ uri: otherUser.profilePictureUrl }}
+              style={styles.profileImage}
+            />
             <RegularText
               text={`${otherUser.firstName} ${otherUser.lastName}`}
             />
-            <Image
-              source={{ uri: otherUser.img }}
-              style={styles.profileImage}
-            />
           </View>
-          <View style={styles.container}>
-            <Messages arr={messageArray} myUser={myUser} />
-          </View>
-          <ChatInput setValue={setMsg} value={msg} onClick={sendMessage} />
+        ) : null}
 
-          <Snackbar
-            visible={snackbarOpen}
-            onDismiss={() => {}}
-            action={{
-              label: "סגור",
-              onPress: () => {
-                setSnackbarOpen(false);
-              },
-            }}
-          >
-            {snackBarText}
-          </Snackbar>
-        </KeyboardAvoidingView>
-      ) : (
-        <EmptyCard
-          text={"הייתה בעיה למצוא את הפרופיל לצערנו"}
-          iconName={"sad-outline"}
-        />
-      )}
+        <View style={styles.container}>
+          <Messages arr={messageArray} myUser={myUser} />
+        </View>
+        <ChatInput setValue={setMsg} value={msg} onClick={sendMessage} />
+
+        <Snackbar
+          visible={snackbarOpen}
+          onDismiss={() => {}}
+          action={{
+            label: "סגור",
+            onPress: () => {
+              setSnackbarOpen(false);
+            },
+          }}
+        >
+          {snackBarText}
+        </Snackbar>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -163,7 +159,7 @@ const styles = StyleSheet.create({
   },
   infoRow: {
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "flex-start",
     padding: 8,
     alignItems: "center",
   },

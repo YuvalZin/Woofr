@@ -4,7 +4,6 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  Text,
   View,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -19,6 +18,9 @@ import LoadingIndicator from "../../components/animation/loading-indicator/loadi
 
 //App color palate
 import { colorPalate } from "../../utils/ui/colors";
+
+//Create a random UUID
+import uuid from "react-native-uuid";
 
 //Redux state management
 import { useSelector } from "react-redux";
@@ -64,6 +66,24 @@ const UserProfileScreen = () => {
 
   const moveBack = () => {
     navigation.goBack();
+  };
+
+  const moveToChat = () => {
+    //API CALL TO FIND IF THERE IS CHAT ALREADY
+    const res = false;
+    if (res) {
+      navigation.navigate("chat", { data: res });
+    } else {
+      const newChat = {
+        ChatID: uuid.v4().toString(),
+        Participant1ID: myUser.id,
+        Participant2ID: userProfile.id,
+        Participant1UnreadCount: 0,
+        Participant2UnreadCount: 0,
+        LastMessage: null,
+      };
+      navigation.navigate("chat", { data: newChat });
+    }
   };
 
   return (

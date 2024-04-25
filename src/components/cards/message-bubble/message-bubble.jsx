@@ -22,14 +22,14 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 12,
     margin: 8,
-    alignSelf: "flex-end",
+    alignSelf: "flex-start",
   },
   otherMessageContainer: {
     backgroundColor: colorPalate.grey,
     borderRadius: 8,
     padding: 12,
     margin: 8,
-    alignSelf: "flex-start",
+    alignSelf: "flex-end",
   },
   text: {
     fontSize: 18,

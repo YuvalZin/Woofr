@@ -23,7 +23,7 @@ const HomeStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="home-chat"
+        name="chat"
         component={ChatScreen}
         options={{ headerShown: false }}
       />

@@ -22,7 +22,7 @@ const SearchStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="search-chat"
+        name="chat"
         component={ChatScreen}
         options={{ headerShown: false }}
       />
