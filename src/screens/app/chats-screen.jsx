@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
+
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
+
+//Custom components
 import BigText from "../../components/texts/big-text/big-text";
 import Chats from "../../components/scroll/chats/chats";
-//import { chats } from "../../utils/data/chats";
+
+import { getUserChats } from "../../utils/api/chat";
 
 const ChatsScreen = ({ navigation }) => {
   const auth = useSelector(selectAuth);
@@ -16,16 +20,21 @@ const ChatsScreen = ({ navigation }) => {
     navigation.navigate("ChatScreen", { data: chat });
   };
 
-  useEffect(() => {
-    //Chats api call by myUser.id
-  }, [myUser]);
+  const loadChats = async () => {
+    const res = getUserChats(myUser.id);
+    setChats(res);
+  };
+
+  // useEffect(() => {
+  //   loadChats();
+  // }, [myUser]);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <BigText text={"שיחות"} />
       </View>
-      {/* <Chats onClick={moveToChat} arr={chats} /> */}
+      <Chats onClick={moveToChat} arr={chats} />
     </SafeAreaView>
   );
 };

@@ -90,8 +90,8 @@ const ChatScreen = () => {
   useEffect(() => {
     const otherId =
       data.Participant1ID === myUser.id
-        ? data.Participant1ID
-        : data.Participant2ID;
+        ? data.Participant2ID
+        : data.Participant1ID;
 
     fetchUserData(otherId);
   }, [data]);

@@ -4,6 +4,7 @@ import BigText from "../../components/texts/big-text/big-text";
 import CustomSearchBar from "../../components/inputs/search-bar/custom-search-bar";
 import SearchList from "../../components/scroll/search-list/search-list";
 import { SearchUser } from "../../utils/api/user";
+
 //Navigation handler
 import { useNavigation } from "@react-navigation/native";
 

@@ -7,7 +7,6 @@ import { Ionicons } from "@expo/vector-icons";
 //Custom components
 import RegularText from "../../texts/regular-text/regular-text";
 import SmallText from "../../texts/small-text/small-text";
-import ChatCardSkeleton from "../chat-card-skeleton/chat-card-skeleton";
 
 //Fake data
 import { users } from "../../../utils/data/users";
@@ -21,12 +20,6 @@ const ChatCard = ({ onClick, chat }) => {
     const timer = setTimeout(() => {
       users.forEach((user) => {
         if (user.email === chat.user1) {
-          // Fix condition
-          setOtherUser(user);
-          setIsLoading(false);
-        }
-        if (user.email === chat.user1) {
-          // Fix condition
           setOtherUser(user);
           setIsLoading(false);
         }
@@ -35,11 +28,6 @@ const ChatCard = ({ onClick, chat }) => {
 
     return () => clearTimeout(timer); // Cleanup timeout
   }, [chat.email]);
-
-  // If still loading, show skeleton
-  if (isLoading) {
-    return <ChatCardSkeleton />;
-  }
 
   return (
     <TouchableOpacity onPress={() => onClick(chat)}>
@@ -62,7 +50,6 @@ const ChatCard = ({ onClick, chat }) => {
     </TouchableOpacity>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     marginTop: 5,

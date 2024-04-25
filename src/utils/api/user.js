@@ -1,11 +1,12 @@
-const baseUrl =
-  "https://1f4f-2a0d-6fc7-204-61e1-d023-9e4-6ebd-c81c.ngrok-free.app/api/Users";
+import { baseUrl } from "./baseUrl";
+
+const userUrl = `${baseUrl}/Users`;
 
 //get following / followers count for user by its token
 export const getFollowData = async (token) => {
   try {
     // Make API request to register user
-    const apiUrl = `${baseUrl}/GetFollowCountByToken/${token}`;
+    const apiUrl = `${userUrl}/GetFollowCountByToken/${token}`;
     const response = await fetch(apiUrl, {
       method: "GET",
       headers: {
@@ -28,7 +29,7 @@ export const getFollowData = async (token) => {
 //to get logged in user data
 export const GetUserData = async (token) => {
   try {
-    const apiUrl = `${baseUrl}/GetUserData/${token}`;
+    const apiUrl = `${userUrl}/GetUserData/${token}`;
     const response = await fetch(apiUrl, {
       method: "GET",
       headers: {
@@ -49,7 +50,7 @@ export const GetUserData = async (token) => {
 //to get logged in user data
 export const SearchUser = async (keyword) => {
   try {
-    const apiUrl = `${baseUrl}/SearchUsers`;
+    const apiUrl = `${userUrl}/SearchUsers`;
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
@@ -71,7 +72,7 @@ export const SearchUser = async (keyword) => {
 //to get other users data
 export const GetUserInfo = async (id) => {
   try {
-    const apiUrl = `${baseUrl}/GetUserInfo/${id}`;
+    const apiUrl = `${userUrl}/GetUserInfo/${id}`;
     const response = await fetch(apiUrl, {
       method: "GET",
       headers: {
@@ -93,7 +94,7 @@ export const GetUserInfo = async (id) => {
 export const loginUser = async (loginData) => {
   try {
     // Make API request to register user
-    const apiUrl = `${baseUrl}/UserLogIn/${loginData.email}`;
+    const apiUrl = `${userUrl}/UserLogIn/${loginData.email}`;
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
@@ -119,7 +120,7 @@ export const uploadImageURL = async (id, imageURL) => {
     formData.append("id", id);
     formData.append("imageURL", imageURL);
 
-    const apiUrl = `${baseUrl}/UploadProfileImage`;
+    const apiUrl = `${userUrl}/UploadProfileImage`;
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
@@ -145,7 +146,7 @@ export const saveUser = async (userData) => {
     userData.token = "string";
     userData.userId = 0;
     // Make API request to register user
-    const apiUrl = baseUrl;
+    const apiUrl = userUrl;
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {

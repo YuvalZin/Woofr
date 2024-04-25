@@ -1,8 +1,9 @@
-const baseUrl =
-  "https://1f4f-2a0d-6fc7-204-61e1-d023-9e4-6ebd-c81c.ngrok-free.app/api/Woofs";
+import { baseUrl } from "./baseUrl";
+
+const postUrl = `${baseUrl}/Woofs`;
 export const getUserPosts = async (id) => {
   try {
-    const apiUrl = `${baseUrl}/GetUserPosts/${id}`;
+    const apiUrl = `${postUrl}/GetUserPosts/${id}`;
     const response = await fetch(apiUrl, {
       method: "GET",
       headers: {
@@ -22,7 +23,7 @@ export const getUserPosts = async (id) => {
 
 export const getHomePagePosts = async (id) => {
   try {
-    const apiUrl = `${baseUrl}/GetHomePagePosts/${id}`;
+    const apiUrl = `${postUrl}/GetHomePagePosts/${id}`;
     const response = await fetch(apiUrl, {
       method: "GET",
       headers: {
@@ -41,7 +42,7 @@ export const getHomePagePosts = async (id) => {
 };
 export const getPostLikes = async (id) => {
   try {
-    const apiUrl = `${baseUrl}/GetLikesByPostId/${id}`;
+    const apiUrl = `${postUrl}/GetLikesByPostId/${id}`;
     const response = await fetch(apiUrl, {
       method: "GET",
       headers: {
@@ -61,7 +62,7 @@ export const getPostLikes = async (id) => {
 
 export const likePost = async (post_id, user_id) => {
   try {
-    const apiUrl = `${baseUrl}/LikePost/${post_id}/${user_id}`;
+    const apiUrl = `${postUrl}/LikePost/${post_id}/${user_id}`;
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
@@ -81,7 +82,7 @@ export const likePost = async (post_id, user_id) => {
 
 export const insertPost = async (postData) => {
   try {
-    const apiUrl = `${baseUrl}/InsertPost`;
+    const apiUrl = `${postUrl}/InsertPost`;
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
@@ -102,7 +103,7 @@ export const insertPost = async (postData) => {
 
 export const deletePost = async (post_id) => {
   try {
-    const apiUrl = `${baseUrl}/${post_id}`;
+    const apiUrl = `${postUrl}/${post_id}`;
     const response = await fetch(apiUrl, {
       method: "DELETE",
       headers: {

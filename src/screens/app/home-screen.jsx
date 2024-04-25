@@ -21,8 +21,6 @@ import LogoImage from "../../../assets/logo-wofer2.png";
 import SmallText from "../../components/texts/small-text/small-text";
 import { getHomePagePosts } from "../../utils/api/posts";
 
-//import { posts } from "../../utils/data/posts";
-
 const HomeScreen = () => {
   //Navigation handler
   const navigation = useNavigation();
