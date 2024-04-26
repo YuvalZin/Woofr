@@ -26,8 +26,8 @@ const ChatCard = ({ onClick, chat }) => {
   useEffect(() => {
     const otherId =
       chat.Participant1ID === myUser.id
-        ? chat.Participant2ID
-        : chat.participant1ID;
+        ? chat.Participant1ID
+        : chat.participant2ID;
 
     fetchUserData(otherId);
   }, []);

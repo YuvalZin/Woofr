@@ -79,7 +79,6 @@ const UserProfileScreen = () => {
   };
 
   const moveToChat = async () => {
-    //API CALL TO FIND IF THERE IS CHAT ALREADY
     const newChat = {
       chatID: uuid.v4(),
       participant1ID: myUser.id,
@@ -88,7 +87,6 @@ const UserProfileScreen = () => {
       participant2UnreadCount: 0,
       lastMessage: "",
     };
-
     const res = await startChat(newChat);
     if (res) {
       navigation.navigate("chat", { data: res });

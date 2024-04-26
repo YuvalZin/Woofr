@@ -57,7 +57,30 @@ export const startChat = async (chatRequest) => {
     if (!response.ok) {
       throw new Error("Failed start new chat");
     }
-    const responseData = await response.text();
+    const responseData = await response.json();
+    console.log(responseData);
+    return responseData;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+export const addMessage = async (message) => {
+  try {
+    const apiUrl = `${messagesUrl}/AddMessage`;
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify(message),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed send new message");
+    }
+    const responseData = await response.json();
+    console.log(responseData);
     return responseData;
   } catch (error) {
     console.error("Error:", error);
