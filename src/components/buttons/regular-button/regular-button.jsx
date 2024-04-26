@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 21,
-    fontWeight: 500,
     textAlign: "left",
     padding: 4,
     color: colorPalate.white,

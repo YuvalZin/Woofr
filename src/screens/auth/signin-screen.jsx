@@ -36,7 +36,7 @@ const SigninScreen = () => {
 
   //State to store the login data
   const [loginData, setLoginData] = useState({
-    email: "benyyoulove@gmail.com",
+    email: "beny@gmail.com",
     password: "Aa123456",
   });
 

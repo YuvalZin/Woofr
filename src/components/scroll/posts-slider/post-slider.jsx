@@ -6,7 +6,7 @@ import Post from "../../cards/post/post";
 import EmptyCard from "../../cards/empty-card/empty-card";
 
 const PostSlider = ({ arr, onImgPress, setRender }) => {
-  const renderPostItem = ({ item, index }) => {
+  const renderPostItem = ({ item }) => {
     return (
       <Post
         key={item.id}

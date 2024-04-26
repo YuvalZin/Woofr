@@ -79,6 +79,7 @@ const EditInformation = () => {
     lastName: myUser.lastName,
     email: myUser.email,
     password: myUser.password,
+    profileImage: myUser.profileImage,
   });
 
   const uploadImage = async () => {

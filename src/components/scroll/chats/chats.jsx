@@ -1,26 +1,22 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  FlatList,
-  RefreshControl,
-  ScrollView,
-} from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
 
 //Custom components
 import ChatCard from "../../cards/chat-card/chat-card";
 import EmptyCard from "../../cards/empty-card/empty-card";
 
-const Chats = ({ arr, onClick }) => {
+const Chats = ({ arr, onClick, reload }) => {
   const [refreshing, setRefreshing] = useState(false);
 
-  const onRefresh = () => {
+  const onRefresh = async () => {
     setRefreshing(true);
-    // Perform any data fetching or other tasks here
-    // Once tasks are complete, set refreshing to false
-    setTimeout(() => {
+    try {
+      reload();
+    } catch (error) {
+      console.error("Error fetching new chats:", error);
+    } finally {
       setRefreshing(false);
-    }, 2000); // Simulating a delay for demonstration purposes
+    }
   };
 
   const renderChatItem = ({ item }) => {

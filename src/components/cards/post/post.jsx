@@ -14,7 +14,7 @@ import { colorPalate } from "../../../utils/ui/colors";
 
 //Import api calls
 import { GetUserInfo } from "../../../utils/api/user";
-import { deletePost, getPostLikes, likePost } from "../../../utils/api/posts";
+import { deletePost, likePost } from "../../../utils/api/posts";
 
 const Post = ({ data, onImgPress, setRender }) => {
   const [userData, setUserData] = useState({
@@ -189,7 +189,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   username: {
-    fontWeight: "bold",
     marginBottom: 5,
   },
   infoText: {

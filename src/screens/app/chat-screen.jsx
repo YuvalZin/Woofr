@@ -19,7 +19,7 @@ import Messages from "../../components/scroll/messages/messages";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
 import { GetUserInfo } from "../../utils/api/user";
-import { getChatMessages } from "../../utils/api/chat";
+import { addMessage, getChatMessages } from "../../utils/api/chat";
 
 import uuid from "react-native-uuid";
 
@@ -36,13 +36,16 @@ const ChatScreen = () => {
   const [snackBarText, setSnackBarText] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   const moveBack = () => {
     navigation.goBack();
   };
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     Keyboard.dismiss();
 
+    setLoading(true);
     if (msg === "") {
       setSnackBarText("אין בהודעה תוכן");
       setSnackbarOpen(true);
@@ -53,21 +56,35 @@ const ChatScreen = () => {
     }
 
     var newMessage = {
-      id: uuid.v4().toString(),
-      chatId: data.ChatID,
-      from: myUser.email,
-      to: otherUser.email,
-      text: msg,
+      messageId: uuid.v4().toString(),
+      chatId: data.chatID,
+      senderId: myUser.id,
+      receiverId: otherUser.id,
+      messageText: msg,
       timestamp: new Date(),
     };
 
-    setMessageArray((prevMessages) => [...prevMessages, newMessage]);
-    setMsg("");
+    const res = await addMessage(newMessage);
+    if (res) {
+      setLoading(false);
+      setMessageArray((prevMessages) => [...prevMessages, newMessage]);
+      setMsg("");
+    } else {
+      setLoading(false);
+      Alert.alert("משהו השתבש", "הייתה בעיה בעת שליחת ההודעה", [
+        {
+          text: "שחרר",
+          style: "cancel",
+        },
+      ]);
+    }
   };
 
   const fetchUserData = async () => {
     const otherId =
-      data && myUser && (data.participant1ID === myUser.id
+      data &&
+      myUser &&
+      (data.participant1ID === myUser.id
         ? data.participant2ID
         : data.participant1ID);
 
@@ -89,6 +106,19 @@ const ChatScreen = () => {
       fetchUserData();
       fetchMessages();
     }
+  }, [data]);
+
+  useEffect(() => {
+    // Fetch messages when the component mounts
+    fetchMessages();
+
+    // Poll for new messages every 10 seconds (adjust interval as needed)
+    const interval = setInterval(() => {
+      fetchMessages();
+    }, 5000);
+
+    // Clear the interval on component unmount
+    return () => clearInterval(interval);
   }, [data]);
 
   return (
@@ -116,7 +146,12 @@ const ChatScreen = () => {
           </View>
         )}
 
-        <ChatInput setValue={setMsg} value={msg} onClick={sendMessage} />
+        <ChatInput
+          setValue={setMsg}
+          value={msg}
+          onClick={sendMessage}
+          loading={loading}
+        />
 
         <Snackbar
           visible={snackbarOpen}

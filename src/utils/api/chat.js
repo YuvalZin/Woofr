@@ -58,7 +58,6 @@ export const startChat = async (chatRequest) => {
       throw new Error("Failed start new chat");
     }
     const responseData = await response.json();
-    console.log(responseData);
     return responseData;
   } catch (error) {
     console.error("Error:", error);
@@ -80,7 +79,6 @@ export const addMessage = async (message) => {
       throw new Error("Failed send new message");
     }
     const responseData = await response.json();
-    console.log(responseData);
     return responseData;
   } catch (error) {
     console.error("Error:", error);

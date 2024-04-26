@@ -18,14 +18,14 @@ const MessageBubble = ({ message, myUser }) => {
 
 const styles = StyleSheet.create({
   myMessageContainer: {
-    backgroundColor: colorPalate.primary,
+    backgroundColor: colorPalate.accent,
     borderRadius: 8,
     padding: 12,
     margin: 8,
     alignSelf: "flex-start",
   },
   otherMessageContainer: {
-    backgroundColor: colorPalate.grey,
+    backgroundColor: colorPalate.primary,
     borderRadius: 8,
     padding: 12,
     margin: 8,

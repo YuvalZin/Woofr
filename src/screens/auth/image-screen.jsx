@@ -87,11 +87,20 @@ const ImageScreen = ({}) => {
 
   // Function to skip image upload for a user
   const skipImageUpload = async () => {
-    // Uploads a null image URL for the user
-    const user = await uploadImageURL(id, null);
-    // If user exists (image upload successful), dispatch login action
-    if (user) {
-      dispatch(login(JSON.stringify(user)));
+    // Retrieve and delete user ID from SecureStore
+    const id = SecureStore.getItem("id");
+
+    // Default image URL in case of skipping image upload
+    const noImage =
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+
+    // Upload default image URL to update user's profile
+    const updatedProfile = await uploadImageURL(id, noImage);
+
+    // Check if profile update was successful
+    if (updatedProfile) {
+      // Update user state in Redux
+      dispatch(login(JSON.stringify(updatedProfile)));
     }
   };
 

@@ -5,10 +5,13 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
+  ActivityIndicator,
 } from "react-native";
+
+//
 import { colorPalate } from "../../../utils/ui/colors";
 
-const ChatInput = ({ value, setValue, onClick }) => {
+const ChatInput = ({ value, setValue, onClick, loading }) => {
   return (
     <View style={styles.container}>
       <TextInput
@@ -21,7 +24,11 @@ const ChatInput = ({ value, setValue, onClick }) => {
         placeholderTextColor="#A9A9A9"
       />
       <TouchableOpacity style={styles.button} onPress={onClick}>
-        <Text style={styles.buttonText}>שלח</Text>
+        {loading ? (
+          <ActivityIndicator color={colorPalate.white} />
+        ) : (
+          <Text style={styles.buttonText}>שלח</Text>
+        )}
       </TouchableOpacity>
     </View>
   );

@@ -34,6 +34,19 @@ const ChatsScreen = ({ navigation }) => {
     loadChats();
   }, []);
 
+  useEffect(() => {
+    // Fetch messages when the component mounts
+    loadChats();
+
+    // Poll for new messages every 10 seconds (adjust interval as needed)
+    const interval = setInterval(() => {
+      loadChats();
+    }, 1000 * 15);
+
+    // Clear the interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -42,7 +55,7 @@ const ChatsScreen = ({ navigation }) => {
       {loading ? (
         <LoadingIndicator />
       ) : (
-        <Chats onClick={moveToChat} arr={chats} />
+        <Chats onClick={moveToChat} arr={chats} reload={loadChats} />
       )}
     </SafeAreaView>
   );

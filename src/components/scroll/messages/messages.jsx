@@ -18,6 +18,7 @@ const Messages = ({ arr, myUser }) => {
           data={arr}
           renderItem={renderMessageItem}
           keyExtractor={(item) => item.messageId}
+          inverted
         />
       ) : null}
     </View>
