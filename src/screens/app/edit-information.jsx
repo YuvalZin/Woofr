@@ -37,6 +37,8 @@ import RegularButton from "../../components/buttons/regular-button/regular-butto
 import RegularText from "../../components/texts/regular-text/regular-text";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 
+import { uploadImageURL } from "../../utils/api/user";
+
 const EditInformation = () => {
   //Set state to store image
   const [image, setImage] = useState(null);
@@ -115,6 +117,7 @@ const EditInformation = () => {
 
     if (image) {
       const url = await uploadImage();
+      const updatedProfile = await uploadImageURL(myUser.id, url);
     }
 
     // Add API call instead
