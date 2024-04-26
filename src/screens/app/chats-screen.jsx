@@ -8,6 +8,7 @@ import { selectAuth } from "../../redux/authSlice";
 //Custom components
 import BigText from "../../components/texts/big-text/big-text";
 import Chats from "../../components/scroll/chats/chats";
+import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 
 //Importing function from the API file
 import { getUserChats } from "../../utils/api/chat";
@@ -16,6 +17,7 @@ const ChatsScreen = ({ navigation }) => {
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
 
+  const [loading, setLoading] = useState(true);
   const [chats, setChats] = useState([]);
 
   const moveToChat = (chat) => {
@@ -25,6 +27,7 @@ const ChatsScreen = ({ navigation }) => {
   const loadChats = async () => {
     const res = await getUserChats(myUser.id);
     setChats(res);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -36,7 +39,11 @@ const ChatsScreen = ({ navigation }) => {
       <View style={styles.header}>
         <BigText text={"שיחות"} />
       </View>
-      <Chats onClick={moveToChat} arr={chats} />
+      {loading ? (
+        <LoadingIndicator />
+      ) : (
+        <Chats onClick={moveToChat} arr={chats} />
+      )}
     </SafeAreaView>
   );
 };

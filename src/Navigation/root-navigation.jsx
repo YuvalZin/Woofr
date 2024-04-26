@@ -27,9 +27,12 @@ const RootNavigation = () => {
     const fetchUserFromSecureStore = async () => {
       try {
         const token = SecureStore.getItem("token");
+
         if (token) {
           const userData = await GetUserData(token);
-          dispatch(login(JSON.stringify(userData)));
+          if (userData) {
+            dispatch(login(JSON.stringify(userData)));
+          }
         }
       } catch (error) {
         console.error("Error fetching user data from SecureStore:", error);

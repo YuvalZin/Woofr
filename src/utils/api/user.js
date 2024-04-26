@@ -37,11 +37,14 @@ export const GetUserData = async (token) => {
       },
     });
 
-    if (!response.ok) {
-      throw new Error("Failed get user data");
+    if (response.ok) {
+      const responseData = await response.json();
+      if (responseData.id) {
+        return responseData;
+      }
+    } else {
+      return null;
     }
-    const responseData = await response.json();
-    return responseData;
   } catch (error) {
     console.error("Error:", error);
   }
@@ -102,12 +105,13 @@ export const loginUser = async (loginData) => {
       },
       body: JSON.stringify(loginData.password), // Pass user password as JSON
     });
-    if (!response.ok) {
-      throw new Error("Incorrect Email or Password");
+    if (response.ok) {
+      const token = await response.text();
+      // Navigate to next screen or perform other actions
+      return token.toString();
+    } else {
+      return null;
     }
-    const token = await response.text();
-    // Navigate to next screen or perform other actions
-    return token.toString();
   } catch (error) {
     // Handle any errors that occur during the API request
     console.error("Error:", error);

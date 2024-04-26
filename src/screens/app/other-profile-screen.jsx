@@ -29,6 +29,7 @@ import { selectAuth } from "../../redux/authSlice";
 //Importing function from the API file
 import { GetUserInfo, getFollowData } from "../../utils/api/user";
 import { startChat } from "../../utils/api/chat";
+import { getUserPosts } from "../../utils/api/posts";
 
 const UserProfileScreen = () => {
   const navigation = useNavigation();
@@ -52,6 +53,11 @@ const UserProfileScreen = () => {
     setUserProfile(response);
   };
 
+  const fetchUserPosts = async () => {
+    const response = await getUserPosts(id);
+    setPosts(response);
+  };
+
   const loadFollowData = async () => {
     const res = await getFollowData(myUser.token);
     const followData = res.toString().split(",");
@@ -65,6 +71,7 @@ const UserProfileScreen = () => {
   useEffect(() => {
     fetchUserData();
     loadFollowData();
+    fetchUserPosts();
   }, [id]);
 
   const moveBack = () => {
@@ -74,27 +81,25 @@ const UserProfileScreen = () => {
   const moveToChat = async () => {
     //API CALL TO FIND IF THERE IS CHAT ALREADY
     const newChat = {
-      chatID: uuid.v4().toString(),
+      chatID: uuid.v4(),
       participant1ID: myUser.id,
       participant2ID: userProfile.id,
       participant1UnreadCount: 0,
       participant2UnreadCount: 0,
       lastMessage: "",
     };
-    const res = await startChat(newChat);
-    console.log(res);
-      if (res) {
-        navigation.navigate("chat", { data: res });
-      } 
-        else {
-        Alert.alert("משהו השתבש", "לא ניתן ליצור צ'אט", [
-          {
-            text: "שחרר",
-            style: "cancel",
-          },
-        ]);
-      }
 
+    const res = await startChat(newChat);
+    if (res) {
+      navigation.navigate("chat", { data: res });
+    } else {
+      Alert.alert("משהו השתבש", "לא ניתן ליצור צ'אט", [
+        {
+          text: "שחרר",
+          style: "cancel",
+        },
+      ]);
+    }
   };
 
   return (

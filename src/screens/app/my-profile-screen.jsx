@@ -37,7 +37,7 @@ const ProfileScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   // Use useSelector to access the Redux store state
-  const auth = useSelector(selectAuth);
+  let auth = useSelector(selectAuth);
   const [myUser, setMyUser] = useState(JSON.parse(auth.user));
 
   const [userFollows, setUsrFollows] = useState({

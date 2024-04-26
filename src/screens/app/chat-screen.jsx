@@ -82,8 +82,13 @@ const ChatScreen = () => {
     setMsg("");
   };
 
-  const fetchUserData = async (id) => {
-    const response = await GetUserInfo(id);
+  const fetchUserData = async () => {
+    const otherId =
+      data.Participant1ID === myUser.id
+        ? data.participant2ID
+        : data.participant1ID;
+
+    const response = await GetUserInfo(otherId);
     setOtherUser(response);
   };
 
@@ -93,11 +98,7 @@ const ChatScreen = () => {
   };
 
   useEffect(() => {
-    const otherId =
-      data.Participant1ID === myUser.id
-        ? data.participant2ID
-        : data.participant1ID;
-    fetchUserData(otherId);
+    fetchUserData();
     fetchMessages();
   }, [data]);
 

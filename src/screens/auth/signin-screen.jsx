@@ -95,7 +95,6 @@ const SigninScreen = () => {
 
         <View>
           <CustomTextInput
-
             value={loginData.email}
             placeholder="איימל"
             style={styles.input}
@@ -107,7 +106,7 @@ const SigninScreen = () => {
           <PasswordInput
             value={loginData.password}
             placeholder="סיסמא"
-            style={[styles.input, { textAlign: 'right' }]}
+            style={[styles.input, { textAlign: "right" }]}
             width={formWidth}
             onChangeText={(value) => {
               setLoginData({ ...loginData, password: value });
@@ -172,7 +171,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderRadius: 5,
     padding: 10,
-  
+
     marginVertical: 5,
     width: 300,
   },
