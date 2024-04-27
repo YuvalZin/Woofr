@@ -117,7 +117,7 @@ const ChatScreen = () => {
 
   const fetchMessages = async () => {
     if (data && data.chatID) {
-      const response = await getChatMessages(data.chatID);
+      const response = await getChatMessages(data.chatID,myUser.id);
       setMessageArray(response);
     }
   };

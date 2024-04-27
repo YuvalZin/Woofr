@@ -23,9 +23,9 @@ export const getUserChats = async (id) => {
   }
 };
 
-export const getChatMessages = async (id) => {
+export const getChatMessages = async (id,readerId) => {
   try {
-    const apiUrl = `${messagesUrl}/GetChatMessages/${id}`;
+    const apiUrl = `${messagesUrl}/GetChatMessages/${id}/${readerId}`;
     const response = await fetch(apiUrl, {
       method: "GET",
       headers: {

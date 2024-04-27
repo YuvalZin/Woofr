@@ -57,7 +57,7 @@ const ChatCard = ({ onClick, chat }) => {
             <RegularText
               text={`${otherUser.firstName} ${otherUser.lastName}`}
             />
-            <SmallText text={chat.lastMessage} />
+            <SmallText text={chat.lastMessage.length > 19 ? chat.lastMessage.substring(0, 19) + ".." : chat.lastMessage} />
           </View>
         </View>
 

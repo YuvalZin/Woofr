@@ -1,6 +1,7 @@
 import { baseUrl } from "./baseUrl";
 
 const postUrl = `${baseUrl}/api/Woofs`;
+const usersUrl = `${baseUrl}/api/Users`;
 
 export const getUserPosts = async (id) => {
   try {
@@ -43,7 +44,7 @@ export const getHomePagePosts = async (id) => {
 };
 export const getPostLikes = async (id) => {
   try {
-    const apiUrl = `${postUrl}/GetLikesByPostId/${id}`;
+    const apiUrl = `${usersUrl}/GetLikesByPostId/${id}`;
     const response = await fetch(apiUrl, {
       method: "GET",
       headers: {

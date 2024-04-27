@@ -14,7 +14,7 @@ import { colorPalate } from "../../../utils/ui/colors";
 
 //Import api calls
 import { GetUserInfo } from "../../../utils/api/user";
-import { deletePost, likePost } from "../../../utils/api/posts";
+import { deletePost, getPostLikes, likePost } from "../../../utils/api/posts";
 
 const Post = ({ data, onImgPress, setRender }) => {
   const [userData, setUserData] = useState({
@@ -24,7 +24,8 @@ const Post = ({ data, onImgPress, setRender }) => {
   });
   const [timeStr, setTimeStr] = useState("");
   const [isMyPost, setIsMyPost] = useState();
-  const [likesCount, setLikesCount] = useState(data.likeCount);
+  const [likes, setLikes] = useState([]);
+  const [likesCount, setLikesCount] = useState(0);
   const [likeThis, setLikeThis] = useState(false);
 
   // Use useSelector to access the Redux store state
@@ -33,9 +34,16 @@ const Post = ({ data, onImgPress, setRender }) => {
 
   const likeHandle = async (post_id, user_id) => {
     const res = await likePost(post_id, user_id);
-    setLikesCount(res);
     setLikeThis(!likeThis);
   };
+
+  const getLikes = async () => {
+    console.log(data.id);
+    const res = await getPostLikes(data.id);
+    setLikes(res);
+    setLikesCount(res.length);
+    
+  }
 
   const deletePostById = async (post_id) => {
     const res = await deletePost(post_id);
@@ -65,6 +73,7 @@ const Post = ({ data, onImgPress, setRender }) => {
     fetchUserInfo();
     var str = calculateTimeAgo();
     setTimeStr(str);
+    if(data) getLikes();
   }, []);
 
   const calculateTimeAgo = () => {

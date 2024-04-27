@@ -116,7 +116,6 @@ const NewPostScreen = () => {
       userId: post.userId,
       mediaUrl: imgLink,
       createdAt: post.createdAt,
-      likeCount: 0,
     };
 
     //API post method to upload the image
