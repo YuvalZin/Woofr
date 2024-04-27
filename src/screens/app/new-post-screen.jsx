@@ -104,7 +104,10 @@ const NewPostScreen = () => {
     var imgLink = "";
 
     if (selectedImage) {
-      imgLink = await uploadImage(selectedImage, `posts/${post.id}`);
+      imgLink = await uploadImage(
+        selectedImage,
+        `posts/${myUser.id}/${post.id}`
+      );
     }
 
     const newPost = {
@@ -121,7 +124,7 @@ const NewPostScreen = () => {
 
     if (res) {
       showSnackbar("הפוסט עלה בהצלחה", 1500);
-      moveBack();
+      navigation.goBack();
     } else {
       setLoading(false);
       showSnackbar("משהו לא עבד נסה שוב", 3000);

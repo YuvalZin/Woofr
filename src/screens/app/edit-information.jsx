@@ -14,12 +14,17 @@ import { useNavigation } from "@react-navigation/native";
 //Redux state management
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/authSlice";
 
 //Snack bar to show user information
 import { Snackbar } from "react-native-paper";
 
 //Import app color palate
 import { colorPalate } from "../../utils/ui/colors";
+
+//Store user data handler
+import * as SecureStore from "expo-secure-store";
 
 //Import image picker
 import * as ImagePicker from "expo-image-picker";
@@ -54,6 +59,18 @@ const EditInformation = () => {
   //Width for the form
   const formWidth = 290;
 
+  // Use useSelector to access the Redux store state
+  const dispatch = useDispatch();
+  const auth = useSelector(selectAuth);
+  const myUser = JSON.parse(auth.user);
+  const [userData, setUserData] = useState({
+    firstName: myUser.firstName,
+    lastName: myUser.lastName,
+    email: myUser.email,
+    password: myUser.password,
+    profileImage: myUser.profileImage,
+  });
+
   const pickImage = async () => {
     // Launch the image library and await the result
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -68,17 +85,6 @@ const EditInformation = () => {
       setImage(result.assets[0].uri);
     }
   };
-
-  // Use useSelector to access the Redux store state
-  const auth = useSelector(selectAuth);
-  const myUser = JSON.parse(auth.user);
-  const [userData, setUserData] = useState({
-    firstName: myUser.firstName,
-    lastName: myUser.lastName,
-    email: myUser.email,
-    password: myUser.password,
-    profileImage: myUser.profileImage,
-  });
 
   // Function to move back using navigation.goBack()
   const moveBack = () => {
@@ -105,6 +111,20 @@ const EditInformation = () => {
         }
       }, 2000);
     }
+  };
+
+  const deleteUser = () => {
+    setLoading(true);
+
+    //Api call using to delete account
+    //
+    //
+
+    // Delete the authentication token from SecureStore
+    SecureStore.deleteItemAsync("token");
+    // Dispatch the logout action to the Redux store
+    setLoading(false);
+    dispatch(logout());
   };
 
   return (
@@ -176,7 +196,7 @@ const EditInformation = () => {
               <RegularButton
                 text={"מחיקת משתמש"}
                 color={colorPalate.warning}
-                onPress={handelUpdate}
+                onPress={deleteUser}
               />
             </View>
 

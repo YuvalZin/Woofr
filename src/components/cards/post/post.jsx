@@ -112,7 +112,7 @@ const Post = ({ data, onImgPress, setRender }) => {
         </View>
       </View>
 
-      {data.mediaUrl != "null" && (
+      {data.mediaUrl !== "" && (
         <View style={styles.postImageContainer}>
           <Image source={{ uri: data.mediaUrl }} style={styles.postImage} />
         </View>
