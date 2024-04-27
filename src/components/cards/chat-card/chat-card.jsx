@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View, Text } from "react-native";
 
 //import expo icons
 import { Ionicons } from "@expo/vector-icons";
@@ -7,7 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../../redux/authSlice";
 
-//
+//Import app color palate
 import { colorPalate } from "../../../utils/ui/colors";
 
 //Custom components
@@ -64,7 +64,7 @@ const ChatCard = ({ onClick, chat }) => {
         <View style={styles.edge}>
           {unread > 0 && (
             <View style={styles.newMessage}>
-              <SmallText text={unread.toString()} />
+              <Text style={styles.notificationText}>{unread.toString()}</Text>
             </View>
           )}
 
@@ -112,15 +112,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    gap: 8,
   },
   newMessage: {
     padding: 4,
     backgroundColor: colorPalate.secondary,
     height: 40,
     width: 40,
-    borderRadius: 20,
+    borderRadius: 18,
     justifyContent: "center",
     alignItems: "center",
+  },
+  notificationText: {
+    color: colorPalate.white,
   },
 });
 
