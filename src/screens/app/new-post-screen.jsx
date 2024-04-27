@@ -23,9 +23,8 @@ import * as ImagePicker from "expo-image-picker";
 //Snack bar to show user information
 import { Snackbar } from "react-native-paper";
 
-//Fire store config
-import { imageDB } from "../../utils/api/firebase-config";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+//Api handler for firebase
+import { uploadImage } from "../../utils/api/image";
 
 //Custom components
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
@@ -77,61 +76,39 @@ const NewPostScreen = () => {
     }
   };
 
-  const uploadImage = async () => {
-    if (selectedImage) {
-      // Create a reference to the Firebase Storage location where you want to store the image
-      const storageRef = ref(imageDB, `posts/${post.id}`);
-
-      try {
-        // Convert the image URI to a Blob
-        const response = await fetch(selectedImage);
-        const blob = await response.blob();
-
-        // Upload the image blob to Firebase Storage
-        await uploadBytes(storageRef, blob);
-
-        // Get the download URL of the uploaded image
-        const downloadURL = await getDownloadURL(storageRef);
-
-        if (downloadURL) {
-          return downloadURL;
-        } else {
-          return null;
-        }
-      } catch (error) {
-        console.error("Error uploading image: ", error);
-        // Handle any errors that occur during the upload process
-      }
-    }
-
-    // Return null if no image is selected
-    return "null";
-  };
-
   const moveBack = () => {
     navigation.goBack();
   };
 
+  // Function to handle Snackbar
+  const showSnackbar = (message, duration) => {
+    setSnackBarText(message);
+    setSnackbarOpen(true);
+
+    // Close the snackbar after the specified duration
+    setTimeout(() => {
+      setSnackbarOpen(false);
+    }, duration);
+  };
+
+  // Updated uploadPost function
   const uploadPost = async () => {
     Keyboard.dismiss();
 
     if (post.content.length < 10) {
-      setSnackBarText("פוסט חייב להכיל לפחות 10 תווים");
-      setSnackbarOpen(true);
-
-      // Close the snackbar after 3 seconds
-      setTimeout(() => {
-        setSnackbarOpen(false);
-      }, 3000);
-
+      showSnackbar("פוסט חייב להכיל לפחות 10 תווים", 3000);
       return;
     }
 
     // Set the screen to loading state
     setLoading(true);
 
-    // Load
-    const imgLink = await uploadImage();
+    var imgLink = "";
+
+    if (selectedImage) {
+      imgLink = await uploadImage(selectedImage, `posts/${post.id}`);
+    }
+
     let newPost = {
       id: post.id,
       content: post.content,
@@ -140,31 +117,16 @@ const NewPostScreen = () => {
       createdAt: post.createdAt,
       likeCount: 0,
     };
+
     // Some API post method to upload the image
     const res = await insertPost(newPost);
-    //const res = true;
 
     if (res) {
-      setSnackBarText("הפוסט עלה בהצלחה");
-      setSnackbarOpen(true);
-
-      // Close the snackbar after 1.5 seconds
-      setTimeout(() => {
-        setSnackbarOpen(false);
-      }, 1500);
-
+      showSnackbar("הפוסט עלה בהצלחה", 1500);
       moveBack();
     } else {
       setLoading(false);
-      setSnackBarText("משהו לא עבד נסה שוב");
-      setSnackbarOpen(true);
-
-      // Close the snackbar after 3 seconds
-      setTimeout(() => {
-        setSnackbarOpen(false);
-      }, 3000);
-
-      return;
+      showSnackbar("משהו לא עבד נסה שוב", 3000);
     }
   };
 

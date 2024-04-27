@@ -8,10 +8,8 @@ import {
   View,
   Image,
   StatusBar,
+  Alert,
 } from "react-native";
-
-import { imageDB } from "../../utils/api/firebase-config";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 //Import image picker
 import * as ImagePicker from "expo-image-picker";
@@ -28,6 +26,7 @@ import { login } from "../../redux/authSlice";
 
 //Importing function from the user API file
 import { uploadImageURL } from "../../utils/api/user";
+import { uploadImage } from "../../utils/api/image";
 
 //Custom components
 import BigText from "../../components/texts/big-text/big-text";
@@ -55,33 +54,34 @@ const ImageScreen = ({}) => {
     }
   };
 
-  const uploadImage = async () => {
+  const addImage = async () => {
     if (image) {
       const id = SecureStore.getItem("id");
-      SecureStore.deleteItemAsync("id");
-      // Create a reference to the Firebase Storage location where you want to store the image
-      const storageRef = ref(imageDB, `profile/${id}`);
 
-      try {
-        // Convert the image URI to a Blob
-        const response = await fetch(image);
-        const blob = await response.blob();
+      // Get the download URL of the uploaded image
+      const downloadURL = await uploadImage(image, `profile/${id}`);
 
-        // Upload the image blob to Firebase Storage
-        await uploadBytes(storageRef, blob);
-
-        // Get the download URL of the uploaded image
-        const downloadURL = await getDownloadURL(storageRef);
-
-        if (downloadURL) {
-          const updatedProfile = await uploadImageURL(id, downloadURL);
-          if (updatedProfile) {
-            dispatch(login(JSON.stringify(updatedProfile))); // Update user state in Redux
-          }
+      if (downloadURL) {
+        const updatedProfile = await uploadImageURL(id, downloadURL);
+        if (updatedProfile) {
+          SecureStore.deleteItemAsync("id");
+          dispatch(login(JSON.stringify(updatedProfile)));
+        } else {
+          Alert.alert("משהו השתבש", "הייתה בעיה לעלות את התמונה", [
+            {
+              text: "שחרר",
+              style: "cancel",
+            },
+          ]);
         }
-      } catch (error) {
-        console.error("Error uploading image: ", error);
       }
+    } else {
+      Alert.alert("חסרה תמונה", "על מנת לעלות תמונה צריך לבחור קודם תמונה", [
+        {
+          text: "שחרר",
+          style: "cancel",
+        },
+      ]);
     }
   };
 
@@ -96,6 +96,9 @@ const ImageScreen = ({}) => {
 
     // Upload default image URL to update user's profile
     const updatedProfile = await uploadImageURL(id, noImage);
+
+    //Remove user id from secure store
+    SecureStore.deleteItemAsync("id");
 
     // Check if profile update was successful
     if (updatedProfile) {
@@ -129,7 +132,7 @@ const ImageScreen = ({}) => {
           <RegularButton
             color={colorPalate.primary}
             text={"הוסף"}
-            onPress={uploadImage}
+            onPress={addImage}
           />
           <TouchableOpacity onPress={skipImageUpload} style={styles.skip}>
             <SmallText text={"דלג"} />

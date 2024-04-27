@@ -7,6 +7,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../../redux/authSlice";
 
+//
+import { colorPalate } from "../../../utils/ui/colors";
+
 //Custom components
 import RegularText from "../../texts/regular-text/regular-text";
 import SmallText from "../../texts/small-text/small-text";
@@ -17,6 +20,7 @@ const ChatCard = ({ onClick, chat }) => {
   const myUser = JSON.parse(auth.user);
 
   const [otherUser, setOtherUser] = useState(null);
+  const [unread, setUnread] = useState(0);
 
   const fetchUserData = async (id) => {
     const response = await GetUserInfo(id);
@@ -25,9 +29,16 @@ const ChatCard = ({ onClick, chat }) => {
 
   useEffect(() => {
     const otherId =
-      chat.Participant1ID === myUser.id
-        ? chat.Participant1ID
-        : chat.participant2ID;
+      chat.participant1ID === myUser.id
+        ? chat.participant2ID
+        : chat.participant1ID;
+
+    const unreadCount =
+      myUser.id === chat.participant1ID
+        ? chat.participant1UnreadCount
+        : chat.participant2UnreadCount;
+
+    setUnread(unreadCount);
 
     fetchUserData(otherId);
   }, []);
@@ -49,8 +60,17 @@ const ChatCard = ({ onClick, chat }) => {
             <SmallText text={chat.lastMessage} />
           </View>
         </View>
-        <View style={styles.iconContainer}>
-          <Ionicons name="arrow-back" size={28} color="black" />
+
+        <View style={styles.edge}>
+          {unread > 0 && (
+            <View style={styles.newMessage}>
+              <SmallText text={unread.toString()} />
+            </View>
+          )}
+
+          <View style={styles.iconContainer}>
+            <Ionicons name="arrow-back" size={28} color="black" />
+          </View>
         </View>
       </View>
     </TouchableOpacity>
@@ -87,6 +107,20 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
+  },
+  edge: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  newMessage: {
+    padding: 4,
+    backgroundColor: colorPalate.secondary,
+    height: 40,
+    width: 40,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

@@ -24,10 +24,6 @@ import { colorPalate } from "../../utils/ui/colors";
 //Import image picker
 import * as ImagePicker from "expo-image-picker";
 
-//Fire store config
-import { imageDB } from "../../utils/api/firebase-config";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-
 //Custom components
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import BigText from "../../components/texts/big-text/big-text";
@@ -38,6 +34,7 @@ import RegularText from "../../components/texts/regular-text/regular-text";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 
 import { uploadImageURL } from "../../utils/api/user";
+import { uploadImage } from "../../utils/api/image";
 
 const EditInformation = () => {
   //Set state to store image
@@ -82,32 +79,6 @@ const EditInformation = () => {
     profileImage: myUser.profileImage,
   });
 
-  const uploadImage = async () => {
-    if (image) {
-      // Create a reference to the Firebase Storage location where you want to store the image
-      const storageRef = ref(imageDB, `profile/${myUser.id}`);
-
-      try {
-        // Convert the image URI to a Blob
-        const response = await fetch(image);
-        const blob = await response.blob();
-
-        // Upload the image blob to Firebase Storage
-        await uploadBytes(storageRef, blob);
-
-        // Get the download URL of the uploaded image
-        const downloadURL = await getDownloadURL(storageRef);
-
-        if (downloadURL) {
-          return downloadURL;
-        }
-      } catch (error) {
-        console.error("Error uploading image: ", error);
-      }
-    }
-    return null;
-  };
-
   // Function to move back using navigation.goBack()
   const moveBack = () => {
     navigation.goBack();
@@ -117,22 +88,22 @@ const EditInformation = () => {
     setLoading(true);
 
     if (image) {
-      const url = await uploadImage();
+      const url = await uploadImage(image, `profile/${myUser.id}`);
       const updatedProfile = await uploadImageURL(myUser.id, url);
+
+      // Add API call instead
+      const req = true;
+
+      setTimeout(() => {
+        if (req) {
+          navigation.goBack();
+        } else {
+          setLoading(false);
+          setSnackBarText("פוסט חייב להכיל לפחות 10 תווים");
+          setSnackbarOpen(true);
+        }
+      }, 2000);
     }
-
-    // Add API call instead
-    const req = true;
-
-    setTimeout(() => {
-      if (req) {
-        navigation.goBack();
-      } else {
-        setLoading(false);
-        setSnackBarText("פוסט חייב להכיל לפחות 10 תווים");
-        setSnackbarOpen(true);
-      }
-    }, 2000);
   };
 
   return (
@@ -196,6 +167,14 @@ const EditInformation = () => {
               <RegularButton
                 text={"עדכן"}
                 color={colorPalate.primary}
+                onPress={handelUpdate}
+              />
+            </View>
+
+            <View style={styles.buttonContainer}>
+              <RegularButton
+                text={"מחיקת משתמש"}
+                color={colorPalate.warning}
                 onPress={handelUpdate}
               />
             </View>
