@@ -14,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 //Create a random UUID
 import uuid from "react-native-uuid";
 
+//Redux handler state management
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
 
@@ -25,15 +26,16 @@ import { Snackbar } from "react-native-paper";
 
 //Api handler for firebase
 import { uploadImage } from "../../utils/api/image";
+import { insertPost } from "../../utils/api/posts";
+
+//Importing app color palate
+import { colorPalate } from "../../utils/ui/colors";
 
 //Custom components
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import BigText from "../../components/texts/big-text/big-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
-
-import { colorPalate } from "../../utils/ui/colors";
-import { insertPost } from "../../utils/api/posts";
 
 const NewPostScreen = () => {
   //Navigation handler
@@ -76,10 +78,6 @@ const NewPostScreen = () => {
     }
   };
 
-  const moveBack = () => {
-    navigation.goBack();
-  };
-
   // Function to handle Snackbar
   const showSnackbar = (message, duration) => {
     setSnackBarText(message);
@@ -109,7 +107,7 @@ const NewPostScreen = () => {
       imgLink = await uploadImage(selectedImage, `posts/${post.id}`);
     }
 
-    let newPost = {
+    const newPost = {
       id: post.id,
       content: post.content,
       userId: post.userId,
@@ -118,7 +116,7 @@ const NewPostScreen = () => {
       likeCount: 0,
     };
 
-    // Some API post method to upload the image
+    //API post method to upload the image
     const res = await insertPost(newPost);
 
     if (res) {
@@ -134,7 +132,11 @@ const NewPostScreen = () => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={{ flex: 1 }}>
         <KeyboardAvoidingView style={styles.container}>
-          <GoBackButton onPress={moveBack} />
+          <GoBackButton
+            onPress={() => {
+              navigation.goBack();
+            }}
+          />
           <View style={styles.header}>
             <BigText text={"צור פוסט חדש"} />
           </View>

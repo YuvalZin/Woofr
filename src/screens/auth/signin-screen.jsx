@@ -34,6 +34,9 @@ const SigninScreen = () => {
   // Importing the useDispatch hook from react-redux to dispatch actions
   const dispatch = useDispatch();
 
+  //State to show the button loading
+  const [buttonLoading, setButtonLoading] = useState(false);
+
   //State to store the login data
   const [loginData, setLoginData] = useState({
     email: "beny@gmail.com",
@@ -50,6 +53,7 @@ const SigninScreen = () => {
   // Function to handle the login event
   const handleLoginEvent = async () => {
     try {
+      setButtonLoading(true);
       // Attempt to authenticate the user and retrieve a token
       const token = await loginUser(loginData);
       if (token) {
@@ -58,6 +62,7 @@ const SigninScreen = () => {
 
         // Retrieve user data using the token and dispatch login action
         const userData = await GetUserData(token);
+        setButtonLoading(false);
         dispatch(login(JSON.stringify(userData)));
       } else {
         // If authentication fails, display a snackbar with an error message
@@ -117,6 +122,7 @@ const SigninScreen = () => {
         <View>
           <View style={{ width: 200 }}>
             <RegularButton
+              loading={buttonLoading}
               text={"התחבר"}
               onPress={handleLoginEvent}
               color={colorPalate.primary}

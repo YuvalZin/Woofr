@@ -159,13 +159,12 @@ export const saveUser = async (userData) => {
       body: JSON.stringify(userData), // Pass user data as JSON
     });
 
-    if (!response.ok) {
-      throw new Error("Failed to register user");
+    if (response.ok) {
+      const token = await response.text();
+      return token;
+    } else {
+      return null;
     }
-    const token = await response.text();
-
-    // Navigate to next screen or perform other actions
-    return token;
   } catch (error) {
     // Handle any errors that occur during the API request
     console.error("Error:", error);

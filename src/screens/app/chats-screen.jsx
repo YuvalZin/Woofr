@@ -5,46 +5,55 @@ import { SafeAreaView, StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
 
+//Importing function from the API file
+import { getUserChats } from "../../utils/api/chat";
+
 //Custom components
 import BigText from "../../components/texts/big-text/big-text";
 import Chats from "../../components/scroll/chats/chats";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 
-//Importing function from the API file
-import { getUserChats } from "../../utils/api/chat";
-
 const ChatsScreen = ({ navigation }) => {
+  // Use useSelector to access the Redux store state
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
 
+  // State variable to indicate whether data is loading
   const [loading, setLoading] = useState(true);
+
+  // State variable to store the list of chats
   const [chats, setChats] = useState([]);
 
+  // Function to navigate to the "chat" screen and pass the chat data as a parameter
   const moveToChat = (chat) => {
     navigation.navigate("chat", { data: chat });
   };
 
   const loadChats = async () => {
-    const res = await getUserChats(myUser.id);
-    setChats(res);
-    setLoading(false);
+    try {
+      const res = await getUserChats(myUser.id);
+      setChats(res);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error loading chats:", error);
+    }
   };
 
+  // Effect to fetch messages when the component mounts
+  // and poll for new messages every 15 seconds
   useEffect(() => {
-    loadChats();
-  }, []);
+    const fetchAndPollChats = async () => {
+      await loadChats();
+      const interval = setInterval(loadChats, 1000 * 15);
+      return () => clearInterval(interval);
+    };
 
-  useEffect(() => {
-    // Fetch messages when the component mounts
-    loadChats();
+    fetchAndPollChats();
 
-    // Poll for new messages every 10 seconds (adjust interval as needed)
-    const interval = setInterval(() => {
-      loadChats();
-    }, 1000 * 15);
-
-    // Clear the interval on component unmount
-    return () => clearInterval(interval);
+    // Cleanup function
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   return (

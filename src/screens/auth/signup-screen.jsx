@@ -60,6 +60,9 @@ const SignupScreen = () => {
   // State for managing the visibility of the date picker
   const [showDatePicker, setShowDatePicker] = useState(false);
 
+  //State to show the button loading
+  const [buttonLoading, setButtonLoading] = useState(false);
+
   // State for managing the snackbar: storing text content to be displayed and controlling visibility
   const [snackBarText, setSnackBarText] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -101,6 +104,7 @@ const SignupScreen = () => {
 
   // Function to handle form submission
   const handleSubmit = async () => {
+    setButtonLoading(true);
     // Validate the user data using signupValidator
     const formCheck = signupValidator(userData);
 
@@ -109,7 +113,6 @@ const SignupScreen = () => {
       //Open and Set snackbar text to display the error message
       setSnackBarText(formCheck.errorMessage);
       setSnackbarOpen(true);
-
       // Close the snackbar after 3 seconds
       setTimeout(() => {
         setSnackbarOpen(false);
@@ -117,12 +120,9 @@ const SignupScreen = () => {
       return;
     }
 
-    // Remove the 'confirm' property from the 'userData' object
-    delete userData.confirm;
-
     //Api call to signup the user into db
     const token = await saveUser(userData);
-
+    setButtonLoading(false);
     if (token) {
       SecureStore.setItem("token", token);
       SecureStore.setItem("id", userData.id);
@@ -251,6 +251,7 @@ const SignupScreen = () => {
 
         <View style={{ width: 200 }}>
           <RegularButton
+            loading={buttonLoading}
             text={"הירשם"}
             onPress={handleSubmit}
             color={colorPalate.primary}

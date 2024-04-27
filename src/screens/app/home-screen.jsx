@@ -13,13 +13,17 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
 
+//Importing function from the API file
+import { getHomePagePosts } from "../../utils/api/posts";
+
+//Import app logo
+import LogoImage from "../../../assets/logo-wofer2.png";
+
 //Custom Component
 import PostFilter from "../../components/scroll/posts-filter/post-filter";
 import PostSlider from "../../components/scroll/posts-slider/post-slider";
 import AddPost from "../../components/buttons/add-post/add-post";
-import LogoImage from "../../../assets/logo-wofer2.png";
 import SmallText from "../../components/texts/small-text/small-text";
-import { getHomePagePosts } from "../../utils/api/posts";
 
 const HomeScreen = () => {
   //Navigation handler
@@ -28,9 +32,11 @@ const HomeScreen = () => {
   // Use useSelector to access the Redux store state
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
+
   // State to control refreshing
   const [refreshing, setRefreshing] = useState(false);
 
+  // Initialize state for storing the user's posts
   const [posts, setPosts] = useState([]);
 
   //fetch posts to display on homepage
@@ -38,16 +44,6 @@ const HomeScreen = () => {
     const res = await getHomePagePosts(myUser.id);
     setPosts(res);
   };
-
-  useEffect(() => {
-    fetchPosts();
-  }, [refreshing]);
-
-  useFocusEffect(
-    useCallback(() => {
-      fetchPosts();
-    }, [])
-  );
 
   // Function to handle refresh
   const onRefresh = useCallback(() => {
@@ -58,6 +54,7 @@ const HomeScreen = () => {
     }, 1000);
   }, []);
 
+  // Function to navigate to either the "home-profile" or "profile-stack" screen based on the provided ID
   const moveToProfile = (id) => {
     if (myUser.id !== id) {
       navigation.navigate("home-profile", { id: id });
@@ -65,6 +62,18 @@ const HomeScreen = () => {
       navigation.navigate("profile-stack");
     }
   };
+
+  // useEffect hook to fetch posts when the refreshing state changes
+  useEffect(() => {
+    fetchPosts();
+  }, [refreshing]);
+
+  // useFocusEffect hook to fetch posts when the component gains focus
+  useFocusEffect(
+    useCallback(() => {
+      fetchPosts();
+    }, [])
+  );
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

@@ -9,43 +9,61 @@ import {
   View,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
+
+//Snack bar to show user information
 import { Snackbar } from "react-native-paper";
 
+//Redux state management
+import { useSelector } from "react-redux";
+import { selectAuth } from "../../redux/authSlice";
+
+//Importing function from the API file
+import { GetUserInfo } from "../../utils/api/user";
+import { addMessage, getChatMessages } from "../../utils/api/chat";
+
+//Create a random UUID
+import uuid from "react-native-uuid";
+
+//Custom components
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import RegularText from "../../components/texts/regular-text/regular-text";
 import ChatInput from "../../components/inputs/chat-input/chat-input";
 import Messages from "../../components/scroll/messages/messages";
 
-import { useSelector } from "react-redux";
-import { selectAuth } from "../../redux/authSlice";
-import { GetUserInfo } from "../../utils/api/user";
-import { addMessage, getChatMessages } from "../../utils/api/chat";
-
-import uuid from "react-native-uuid";
-
 const ChatScreen = () => {
+  //Navigation handler
   const navigation = useNavigation();
+
+  // Extracts the 'data' parameter from the current route.
   const route = useRoute();
   const { data } = route.params;
+
+  // Use useSelector to access the Redux store state
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
 
+  // State variable to hold the other user initialize otherUser state to null
   const [otherUser, setOtherUser] = useState(null);
+
+  // Initialize state variable to hold an array of messages
   const [messageArray, setMessageArray] = useState([]);
+
+  // State variable to hold the message input value
   const [msg, setMsg] = useState("");
+
+  // State for storing text to be displayed in the and visibility of the snackbar
   const [snackBarText, setSnackBarText] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
+  // State variable to track loading state
   const [loading, setLoading] = useState(false);
 
-  const moveBack = () => {
-    navigation.goBack();
-  };
-
+  // Function to send a message
   const sendMessage = async () => {
+    // Dismiss the keyboard and set loading state to true
     Keyboard.dismiss();
-
     setLoading(true);
+
     if (msg === "") {
       setSnackBarText("אין בהודעה תוכן");
       setSnackbarOpen(true);
@@ -55,7 +73,8 @@ const ChatScreen = () => {
       return;
     }
 
-    var newMessage = {
+    // Create a new message object
+    const newMessage = {
       messageId: uuid.v4().toString(),
       chatId: data.chatID,
       senderId: myUser.id,
@@ -64,10 +83,12 @@ const ChatScreen = () => {
       timestamp: new Date(),
     };
 
+    // Add the message to the database
     const res = await addMessage(newMessage);
+
     if (res) {
+      //Set message to empty string and set that loading had been complete
       setLoading(false);
-      setMessageArray((prevMessages) => [...prevMessages, newMessage]);
       setMsg("");
     } else {
       setLoading(false);
@@ -112,7 +133,7 @@ const ChatScreen = () => {
     // Fetch messages when the component mounts
     fetchMessages();
 
-    // Poll for new messages every 10 seconds (adjust interval as needed)
+    // Poll for new messages every 10 seconds
     const interval = setInterval(() => {
       fetchMessages();
     }, 5000);
@@ -123,7 +144,11 @@ const ChatScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <GoBackButton onPress={moveBack} />
+      <GoBackButton
+        onPress={() => {
+          navigation.goBack();
+        }}
+      />
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === "ios" ? "padding" : "height"}

@@ -1,5 +1,3 @@
-//image-screen.tsx
-
 import React, { useState } from "react";
 import {
   SafeAreaView,
@@ -39,6 +37,9 @@ const ImageScreen = ({}) => {
   const [image, setImage] = useState(null);
   const dispatch = useDispatch();
 
+  //State to show the button loading
+  const [buttonLoading, setButtonLoading] = useState(false);
+
   const pickImage = async () => {
     // Launch the image library and await the result
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -56,6 +57,7 @@ const ImageScreen = ({}) => {
 
   const addImage = async () => {
     if (image) {
+      setButtonLoading(true);
       const id = SecureStore.getItem("id");
 
       // Get the download URL of the uploaded image
@@ -65,6 +67,7 @@ const ImageScreen = ({}) => {
         const updatedProfile = await uploadImageURL(id, downloadURL);
         if (updatedProfile) {
           SecureStore.deleteItemAsync("id");
+          setButtonLoading(false);
           dispatch(login(JSON.stringify(updatedProfile)));
         } else {
           Alert.alert("משהו השתבש", "הייתה בעיה לעלות את התמונה", [
@@ -130,6 +133,7 @@ const ImageScreen = ({}) => {
 
         <View style={styles.buttonContainer}>
           <RegularButton
+            loading={buttonLoading}
             color={colorPalate.primary}
             text={"הוסף"}
             onPress={addImage}

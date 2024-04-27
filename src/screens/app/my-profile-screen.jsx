@@ -34,22 +34,40 @@ import PostSlider from "../../components//scroll/posts-slider/post-slider";
 import AddPost from "../../components/buttons/add-post/add-post";
 
 const ProfileScreen = () => {
+  //Navigation handler
   const navigation = useNavigation();
-  const dispatch = useDispatch();
+
   // Use useSelector to access the Redux store state
+  const dispatch = useDispatch();
   let auth = useSelector(selectAuth);
   const [myUser, setMyUser] = useState(JSON.parse(auth.user));
 
+  // Initialize state for user follows (following and followers counts)
   const [userFollows, setUsrFollows] = useState({
     following: 0,
     followers: 0,
   });
+
+  // Initialize state for storing the user's posts
   const [myPosts, setMyPosts] = useState([]);
+
+  // Initialize state for handling the refreshing state of the posts (e.g., when pulling down to refresh)
   const [refreshing, setRefreshing] = useState(false);
 
+  // Function to logout the user
+  const logoutUser = () => {
+    // Delete the authentication token from SecureStore
+    SecureStore.deleteItemAsync("token");
+    // Dispatch the logout action to the Redux store
+    dispatch(logout());
+  };
+
   const fetchUserData = async () => {
+    // Retrieve user posts and set the values
     const posts = await getUserPosts(myUser.id);
     setMyPosts(posts);
+
+    // Retrieve user follow data and set the values
     const res = await getFollowData(myUser.token);
     const followData = res.toString().split(",");
     setUsrFollows({
@@ -59,29 +77,24 @@ const ProfileScreen = () => {
     });
   };
 
-  const logoutUser = () => {
-    SecureStore.deleteItemAsync("token");
-    dispatch(logout());
-  };
-
-  useEffect(() => {
-    fetchUserData();
-  }, []);
-
+  // Execute the provided callback when the component gains focus
   useFocusEffect(
     useCallback(() => {
       fetchUserData();
-    }, [])
+    }, [refreshing])
   );
 
+  // Function to handle the refresh action
   const onRefresh = () => {
     setRefreshing(true);
     fetchUserData();
-
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
+    setRefreshing(false);
   };
+
+  useEffect(() => {
+    // Fetch user data when the refreshing state changes
+    fetchUserData();
+  }, [refreshing]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -90,7 +103,7 @@ const ProfileScreen = () => {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            colors={[colorPalate.primary]} // Customize the loading spinner color
+            colors={[colorPalate.primary]}
           />
         }
       >

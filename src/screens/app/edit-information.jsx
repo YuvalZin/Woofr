@@ -33,6 +33,7 @@ import RegularButton from "../../components/buttons/regular-button/regular-butto
 import RegularText from "../../components/texts/regular-text/regular-text";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 
+//Importing function from the API file
 import { uploadImageURL } from "../../utils/api/user";
 import { uploadImage } from "../../utils/api/image";
 

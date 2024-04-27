@@ -1,20 +1,32 @@
 // regular-button.tsx
 
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 //App color palate
 import { colorPalate } from "../../../utils/ui/colors";
 
-const RegularButton = ({ text, onPress, color, iconName }) => {
+const RegularButton = ({ text, onPress, color, iconName, loading = false }) => {
   return (
     <TouchableOpacity
       style={[styles.button, { backgroundColor: color }]}
       onPress={onPress}
     >
-      <Text style={styles.text}>{text}</Text>
-      {iconName && <Ionicons name={iconName} size={24} color="white" />}
+      {!loading ? (
+        <>
+          <Text style={styles.text}>{text}</Text>
+          {iconName && <Ionicons name={iconName} size={24} color="white" />}
+        </>
+      ) : (
+        <ActivityIndicator color={colorPalate.white} size={32} />
+      )}
     </TouchableOpacity>
   );
 };

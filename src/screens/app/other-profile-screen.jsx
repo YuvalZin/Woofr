@@ -8,14 +8,6 @@ import {
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-//Custom components
-import BigText from "../../components/texts/big-text/big-text";
-import RegularButton from "../../components/buttons/regular-button/regular-button";
-import GoBackButton from "../../components/buttons/go-back/go-back-button";
-import PostSlider from "../../components/scroll/posts-slider/post-slider";
-import SmallText from "../../components/texts/small-text/small-text";
-import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
-
 //App color palate
 import { colorPalate } from "../../utils/ui/colors";
 
@@ -31,8 +23,19 @@ import { GetUserInfo, getFollowData } from "../../utils/api/user";
 import { startChat } from "../../utils/api/chat";
 import { getUserPosts } from "../../utils/api/posts";
 
+//Custom components
+import BigText from "../../components/texts/big-text/big-text";
+import RegularButton from "../../components/buttons/regular-button/regular-button";
+import GoBackButton from "../../components/buttons/go-back/go-back-button";
+import PostSlider from "../../components/scroll/posts-slider/post-slider";
+import SmallText from "../../components/texts/small-text/small-text";
+import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
+
 const UserProfileScreen = () => {
+  //Importing the useNavigation hook from React Navigation to access navigation prop
   const navigation = useNavigation();
+
+  // Extracts the 'id' parameter from the current route.
   const route = useRoute();
   const { id } = route.params;
 
@@ -40,44 +43,19 @@ const UserProfileScreen = () => {
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
 
+  // Define state variable 'userProfile' using the 'useState' hook, initialized as null.
   const [userProfile, setUserProfile] = useState(null);
 
+  // Define state variable 'posts' using the 'useState' hook, initialized as an empty array.
   const [posts, setPosts] = useState([]);
-  const [userFollows, setUsrFollows] = useState({
+
+  // State variable 'userFollows' initialization with 'useState': object with 'following' and 'followers' properties.
+  const [userFollows, setUserFollows] = useState({
     following: 0,
     followers: 0,
   });
 
-  const fetchUserData = async () => {
-    const response = await GetUserInfo(id);
-    setUserProfile(response);
-  };
-
-  const fetchUserPosts = async () => {
-    const response = await getUserPosts(id);
-    setPosts(response);
-  };
-
-  const loadFollowData = async () => {
-    const res = await getFollowData(myUser.token);
-    const followData = res.toString().split(",");
-    setUsrFollows({
-      ...userFollows,
-      following: followData[1],
-      followers: followData[0],
-    });
-  };
-
-  useEffect(() => {
-    fetchUserData();
-    loadFollowData();
-    fetchUserPosts();
-  }, [id]);
-
-  const moveBack = () => {
-    navigation.goBack();
-  };
-
+  // Initiates a new chat between the current user and the user profile being viewed.
   const moveToChat = async () => {
     const newChat = {
       chatID: uuid.v4(),
@@ -89,8 +67,10 @@ const UserProfileScreen = () => {
     };
     const res = await startChat(newChat);
     if (res) {
+      // If the chat initiation is successful, navigate to the chat screen with the chat data.
       navigation.navigate("chat", { data: res });
     } else {
+      // If there's an error, display an alert.
       Alert.alert("משהו השתבש", "לא ניתן ליצור צ'אט", [
         {
           text: "שחרר",
@@ -100,9 +80,43 @@ const UserProfileScreen = () => {
     }
   };
 
+  // Fetches user data, user posts, and follow data upon screen mount.
+  useEffect(() => {
+    // Asynchronously fetches user data based on the provided 'id' and updates the 'userProfile' state.
+    const fetchUserData = async () => {
+      const response = await GetUserInfo(id);
+      setUserProfile(response);
+    };
+
+    // Asynchronously fetches user posts based on the provided 'id' and updates the 'posts' state.
+    const fetchUserPosts = async () => {
+      const response = await getUserPosts(id);
+      setPosts(response);
+    };
+
+    // Asynchronously loads follow data for the current user and updates the 'userFollows' state.
+    const loadFollowData = async () => {
+      const res = await getFollowData(myUser.token);
+      const followData = res.toString().split(",");
+      setUserFollows({
+        ...userFollows,
+        following: followData[1],
+        followers: followData[0],
+      });
+    };
+
+    fetchUserData();
+    loadFollowData();
+    fetchUserPosts();
+  }, [id]);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <GoBackButton onPress={moveBack} />
+      <GoBackButton
+        onPress={() => {
+          navigation.goBack();
+        }}
+      />
       {userProfile ? (
         <ScrollView style={styles.container}>
           <View style={styles.imageContainer}>
