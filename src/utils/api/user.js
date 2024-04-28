@@ -148,7 +148,7 @@ export const saveUser = async (userData) => {
   try {
     userData.profilePictureUrl = "none";
     userData.token = "string";
-    userData.userId = 0;
+    // userData.userId = 0;
     // Make API request to register user
     const apiUrl = userUrl;
     const response = await fetch(apiUrl, {
@@ -165,6 +165,53 @@ export const saveUser = async (userData) => {
     } else {
       return null;
     }
+  } catch (error) {
+    // Handle any errors that occur during the API request
+    console.error("Error:", error);
+    // Optionally, show an error message to the user
+  }
+};
+
+export const editProfile = async (userData) => {
+  try {
+    const apiUrl = userUrl;
+    const response = await fetch(apiUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify(userData), 
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed update user data");
+    }
+    const responseData = await response.json();
+    return responseData;
+
+  } catch (error) {
+    // Handle any errors that occur during the API request
+    console.error("Error:", error);
+    // Optionally, show an error message to the user
+  }
+};
+export const deleteProfile = async (userData) => {
+  try {
+    const apiUrl = userUrl;
+    const response = await fetch(apiUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify(userData), 
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed update user data");
+    }
+    const responseData = await response.json();
+    return responseData;
+
   } catch (error) {
     // Handle any errors that occur during the API request
     console.error("Error:", error);

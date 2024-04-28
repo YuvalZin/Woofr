@@ -39,7 +39,7 @@ import RegularText from "../../components/texts/regular-text/regular-text";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 
 //Importing function from the API file
-import { uploadImageURL } from "../../utils/api/user";
+import { editProfile, uploadImageURL } from "../../utils/api/user";
 import { uploadImage } from "../../utils/api/image";
 
 const EditInformation = () => {
@@ -93,24 +93,28 @@ const EditInformation = () => {
 
   const handelUpdate = async () => {
     setLoading(true);
-
+    const url = myUser.profileImage;
     if (image) {
-      const url = await uploadImage(image, `profile/${myUser.id}`);
-      const updatedProfile = await uploadImageURL(myUser.id, url);
-
-      // Add API call instead
-      const req = true;
-
-      setTimeout(() => {
-        if (req) {
-          navigation.goBack();
-        } else {
-          setLoading(false);
-          setSnackBarText("פוסט חייב להכיל לפחות 10 תווים");
-          setSnackbarOpen(true);
-        }
-      }, 2000);
+      url = await uploadImage(image, `profile/${myUser.id}`);
     }
+    const updatedUser = {
+      token: myUser.token,
+      profilePictureUrl: url,
+      password:userData.password,
+      email:userData.email,
+      firstName:userData.firstName,
+      lastName:userData.lastName
+    }
+    const req = editProfile(updatedUser);
+    setTimeout(() => {
+      if (req) {
+        navigation.goBack();
+      } else {
+        setLoading(false);
+        setSnackBarText("פוסט חייב להכיל לפחות 10 תווים");
+        setSnackbarOpen(true);
+      }
+    }, 2000);
   };
 
   const deleteUser = () => {

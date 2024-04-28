@@ -2,6 +2,7 @@ import { Provider } from "react-redux";
 import RootNavigation from "./src/Navigation/root-navigation";
 import store from "./src/redux/store";
 import { I18nManager } from "react-native";
+import VetScreen from "./src/utils/toDeleteBefore/vets-screen";
 
 export default function App() {
   // Ensure RTL direction is set
