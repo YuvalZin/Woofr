@@ -16,7 +16,7 @@ import { selectAuth } from "../../redux/authSlice";
 
 import SmallText from "../../components/texts/small-text/small-text";
 import { getVets } from "./vet";
-import VetSlider from "./vetSlider";
+import VetSlider from "./vet-slider";
 
 const VetScreen = () => {
   //Navigation handler
@@ -28,8 +28,8 @@ const VetScreen = () => {
   
   const [resultsFilter, setResultsFilter] = useState({
     id: "string",
-    firstName: "string",
-    lastName: "string",
+    userId: "string",
+    displayName: "string",
     address: "string",
     phone: "string",
     profileImage: "string",
@@ -54,6 +54,7 @@ const VetScreen = () => {
   //fetch posts to display on homepage
   const fetchVets = async () => {
     const res = await getVets(resultsFilter);
+    console.log(res);
     setVets(res);
   };
 

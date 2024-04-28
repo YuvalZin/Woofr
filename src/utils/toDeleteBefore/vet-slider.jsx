@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, FlatList, View } from "react-native";
 
 // Custom components
-import VetCard from "./vetCard";
+import VetCard from "./vet-card";
 import EmptyCard from "../../components/cards/empty-card/empty-card";
 
 const VetSlider = ({ arr, setRender }) => {
@@ -38,8 +38,11 @@ const VetSlider = ({ arr, setRender }) => {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop:30,
+    paddingBottom:100,
     flex: 1,
-    width: "95%",
+    width: "100%",
+    backgroundColor:"#F0F2F5"
   },
   loadingContainer: {
     justifyContent: "center",
