@@ -2,13 +2,13 @@ import React from "react";
 import { StyleSheet, FlatList, View } from "react-native";
 
 // Custom components
-import VetCard from "./vet-card";
-import EmptyCard from "../../components/cards/empty-card/empty-card";
+import ProfessionalCard from "../../cards/professional-card/professional-card";
+import EmptyCard from "../../cards/empty-card/empty-card";
 
 const VetSlider = ({ arr, setRender }) => {
   const renderPostItem = ({ item }) => {
     return (
-      <VetCard
+      <ProfessionalCard
         key={item.id}
         data={item}
         // onImgPress={onImgPress}
@@ -38,11 +38,11 @@ const VetSlider = ({ arr, setRender }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop:30,
-    paddingBottom:100,
+    paddingTop: 30,
+    paddingBottom: 100,
     flex: 1,
     width: "100%",
-    backgroundColor:"#F0F2F5"
+    backgroundColor: "#F0F2F5",
   },
   loadingContainer: {
     justifyContent: "center",

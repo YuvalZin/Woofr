@@ -66,7 +66,6 @@ const EditInformation = () => {
   const [userData, setUserData] = useState({
     firstName: myUser.firstName,
     lastName: myUser.lastName,
-    email: myUser.email,
     password: myUser.password,
     profileImage: myUser.profileImage,
   });
@@ -166,14 +165,7 @@ const EditInformation = () => {
                   setUserData({ ...userData, lastName: value });
                 }}
               />
-              <CustomTextInput
-                value={userData.email}
-                placeholder="איימל"
-                width={formWidth}
-                onChangeText={(value) => {
-                  setUserData({ ...userData, email: value });
-                }}
-              />
+
               <PasswordInput
                 value={userData.password}
                 placeholder="סיסמא"

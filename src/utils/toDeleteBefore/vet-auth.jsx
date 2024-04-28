@@ -1,27 +1,32 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 
 const VetRegister = () => {
   const [vetData, setVetData] = useState({
-    id: '',
-    firstName: '',
-    lastName: '',
-    address: '',
-    phone: '',
-    profileImage: '',
-    description: '',
-    specialization: '',
-    ratings: '',
+    id: "",
+    firstName: "",
+    lastName: "",
+    address: "",
+    phone: "",
+    profileImage: "",
+    description: "",
+    specialization: "",
+    ratings: "",
     availability24_7: false,
     sellsProducts: false,
     vetToHome: false,
-    notes: '',
-    verificationStatus: ''
+    notes: "",
+    verificationStatus: "",
   });
 
   const handleRegister = () => {
     // Implement your registration logic here
-    console.log('Vet registration data:', vetData);
     // Example: Send data to API, perform validation, etc.
   };
 
@@ -64,27 +69,38 @@ const VetRegister = () => {
         placeholder="Specialization"
         style={styles.input}
         value={vetData.specialization}
-        onChangeText={(text) => setVetData({ ...vetData, specialization: text })}
+        onChangeText={(text) =>
+          setVetData({ ...vetData, specialization: text })
+        }
       />
-      
+
       <View style={styles.checkboxContainer}>
         <TouchableOpacity
           style={styles.checkbox}
-          onPress={() => setVetData({ ...vetData, availability24_7: !vetData.availability24_7 })}
+          onPress={() =>
+            setVetData({
+              ...vetData,
+              availability24_7: !vetData.availability24_7,
+            })
+          }
         >
           <Text>Available 24/7</Text>
           {vetData.availability24_7 && <Text>✔️</Text>}
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.checkbox}
-          onPress={() => setVetData({ ...vetData, sellsProducts: !vetData.sellsProducts })}
+          onPress={() =>
+            setVetData({ ...vetData, sellsProducts: !vetData.sellsProducts })
+          }
         >
           <Text>Sells Products</Text>
           {vetData.sellsProducts && <Text>✔️</Text>}
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.checkbox}
-          onPress={() => setVetData({ ...vetData, vetToHome: !vetData.vetToHome })}
+          onPress={() =>
+            setVetData({ ...vetData, vetToHome: !vetData.vetToHome })
+          }
         >
           <Text>Vet to Home</Text>
           {vetData.vetToHome && <Text>✔️</Text>}
@@ -98,7 +114,7 @@ const VetRegister = () => {
         value={vetData.notes}
         onChangeText={(text) => setVetData({ ...vetData, notes: text })}
       />
-     
+
       <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
@@ -109,8 +125,8 @@ const VetRegister = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingHorizontal: 20,
   },
   heading: {
@@ -118,10 +134,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    width: '100%',
+    width: "100%",
     height: 40,
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderRadius: 8,
     paddingHorizontal: 10,
     marginBottom: 10,
@@ -130,23 +146,23 @@ const styles = StyleSheet.create({
     height: 80,
   },
   checkboxContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
     marginBottom: 10,
   },
   checkbox: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   registerButton: {
-    backgroundColor: 'blue',
+    backgroundColor: "blue",
     padding: 10,
     borderRadius: 8,
     marginTop: 20,
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
   },
 });

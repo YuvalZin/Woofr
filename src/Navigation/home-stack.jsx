@@ -6,6 +6,7 @@ import HomeScreen from "../screens/app/home-screen";
 import ProfileScreen from "../screens/app/other-profile-screen";
 import ChatScreen from "../screens/app/chat-screen";
 import NewPostScreen from "../screens/app/new-post-screen";
+import ProfessionalsScreen from "../screens/app/professionals-screen";
 
 const Stack = createStackNavigator();
 
@@ -28,8 +29,8 @@ const HomeStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="home-post"
-        component={NewPostScreen}
+        name="home-professionals"
+        component={ProfessionalsScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

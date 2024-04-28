@@ -6,6 +6,7 @@ import {
   ScrollView,
   Image,
   RefreshControl,
+  TouchableOpacity,
 } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
@@ -20,10 +21,11 @@ import { getHomePagePosts } from "../../utils/api/posts";
 import LogoImage from "../../../assets/logo-wofer2.png";
 
 //Custom Component
-import PostFilter from "../../components/scroll/posts-filter/post-filter";
 import PostSlider from "../../components/scroll/posts-slider/post-slider";
 import AddPost from "../../components/buttons/add-post/add-post";
 import SmallText from "../../components/texts/small-text/small-text";
+import BigText from "../../components/texts/big-text/big-text";
+import { Ionicons } from "@expo/vector-icons";
 
 const HomeScreen = () => {
   //Navigation handler
@@ -64,6 +66,10 @@ const HomeScreen = () => {
     }
   };
 
+  const moveToProfessionals = () => {
+    navigation.navigate("home-professionals");
+  };
+
   // useEffect hook to fetch posts when the refreshing state changes
   useEffect(() => {
     fetchPosts();
@@ -92,7 +98,14 @@ const HomeScreen = () => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <PostFilter />
+        <TouchableOpacity
+          style={styles.touchableContainer}
+          onPress={moveToProfessionals}
+        >
+          <BigText text={"גלה עוד בעלי מקצוע"} />
+          <Ionicons name="caret-back-outline" size={24} color={"black"} />
+        </TouchableOpacity>
+
         <AddPost
           onPress={() => {
             navigation.navigate("home-post");
@@ -125,6 +138,13 @@ const styles = StyleSheet.create({
     height: 50,
     resizeMode: "contain",
     marginLeft: 10,
+  },
+  touchableContainer: {
+    justifyContent: "end",
+    alignItems: "center",
+    flexDirection: "row",
+    gap: 12,
+    padding: 4,
   },
 });
 

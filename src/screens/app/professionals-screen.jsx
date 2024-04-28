@@ -1,10 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
 import {
   StyleSheet,
-  View,
   SafeAreaView,
   ScrollView,
-  Image,
   RefreshControl,
 } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
@@ -13,19 +11,18 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
 
+import { getVets } from "../../utils/api/vet";
+import ProfessionalSlider from "../../components/scroll/professional-slider/professional-slider";
+import GoBackButton from "../../components/buttons/go-back/go-back-button";
 
-import SmallText from "../../components/texts/small-text/small-text";
-import { getVets } from "./vet";
-import VetSlider from "./vet-slider";
-
-const VetScreen = () => {
+const ProfessionalsScreen = () => {
   //Navigation handler
-  //const navigation = useNavigation();
+  const navigation = useNavigation();
 
   // Use useSelector to access the Redux store state
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
-  
+
   const [resultsFilter, setResultsFilter] = useState({
     id: "string",
     userId: "string",
@@ -68,13 +65,13 @@ const VetScreen = () => {
   }, []);
 
   // Function to navigate to either the "home-profile" or "profile-stack" screen based on the provided ID
-//   const moveToProfile = (id) => {
-//     if (myUser.id !== id) {
-//       navigation.navigate("home-profile", { id: id });
-//     } else {
-//       navigation.navigate("profile-stack");
-//     }
-//   };
+  //   const moveToProfile = (id) => {
+  //     if (myUser.id !== id) {
+  //       navigation.navigate("home-profile", { id: id });
+  //     } else {
+  //       navigation.navigate("profile-stack");
+  //     }
+  //   };
 
   // useEffect hook to fetch posts when the refreshing state changes
   useEffect(() => {
@@ -82,15 +79,14 @@ const VetScreen = () => {
   }, [refreshing]);
 
   // useFocusEffect hook to fetch posts when the component gains focus
-//   useFocusEffect(
-//     useCallback(() => {
-//       fetchVets();
-//     }, [])
-//   );
+  //   useFocusEffect(
+  //     useCallback(() => {
+  //       fetchVets();
+  //     }, [])
+  //   );
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      
       <ScrollView
         nestedScrollEnabled={true}
         style={styles.container}
@@ -98,11 +94,13 @@ const VetScreen = () => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
+        <GoBackButton
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
         {vets.length > 0 && (
-          <VetSlider
-            arr={vets}
-            setRender={onRefresh}
-          />
+          <ProfessionalSlider arr={vets} setRender={onRefresh} />
         )}
       </ScrollView>
     </SafeAreaView>
@@ -127,4 +125,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VetScreen;
+export default ProfessionalsScreen;

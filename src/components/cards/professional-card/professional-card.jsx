@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Image, StyleSheet, TouchableOpacity, View, Text, Alert } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
 //
 import { useSelector } from "react-redux";
-import { selectAuth } from "../../redux/authSlice";
+import { selectAuth } from "../../../redux/authSlice";
+
+import { getVets } from "../../../utils/api/vet";
 
 //Custom Components
-import RegularText from "../../components/texts/regular-text/regular-text";
-import SmallText from "../../components/texts/small-text/small-text";
-import { getVets } from "./vet";
-import RatingBar from "./rating-bar";
+import RegularText from "../../texts/regular-text/regular-text";
+import SmallText from "../../texts/small-text/small-text";
+import RatingBar from "../rating-bar/rating-bar";
 
 //import { colorPalate } from "../../../utils/ui/colors";
 
-
-const VetCard = ({ data, onImgPress, setRender }) => {
+const ProfessionalCard = ({ data, onImgPress, setRender }) => {
   const [vetData, setVetData] = useState({
     id: "string",
     displayName: "string",
@@ -31,32 +31,25 @@ const VetCard = ({ data, onImgPress, setRender }) => {
     verificationStatus: "string",
     activeWoofr: true,
     city: "string",
-    userId: "string"
+    userId: "string",
   });
 
   // Use useSelector to access the Redux store state
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
 
-
   const fetchVetInfo = async () => {
     setVetData(data);
-    console.log(vetData.ratingScore);
-
   };
 
   useEffect(() => {
     fetchVetInfo();
   }, []);
 
-
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.avatarContainer}
-        >
+        <TouchableOpacity style={styles.avatarContainer}>
           <Image
             source={{
               uri: vetData.profileImage,
@@ -69,14 +62,19 @@ const VetCard = ({ data, onImgPress, setRender }) => {
             text={`${vetData.displayName}`}
             style={styles.username}
           />
-          <RegularText text={`${vetData.specialization}`} style={styles.bottomText} />
-          <SmallText text={`${vetData.address}, ${vetData.phone}`} style={styles.infoText} />
+          <RegularText
+            text={`${vetData.specialization}`}
+            style={styles.bottomText}
+          />
+          <SmallText
+            text={`${vetData.address}, ${vetData.phone}`}
+            style={styles.infoText}
+          />
         </View>
       </View>
 
       <View style={styles.bottomContainer}>
-        <RegularText text={vetData.description} style={styles.descriptionText} />
-        
+        <SmallText text={vetData.description} style={styles.descriptionText} />
       </View>
       <RatingBar rating={vetData.ratingScore} />
     </View>
@@ -85,7 +83,7 @@ const VetCard = ({ data, onImgPress, setRender }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     backgroundColor: "#fff",
     marginBottom: 10,
     padding: 25,
@@ -129,4 +127,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VetCard;
+export default ProfessionalCard;
