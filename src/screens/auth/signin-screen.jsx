@@ -65,6 +65,7 @@ const SigninScreen = () => {
         setButtonLoading(false);
         dispatch(login(JSON.stringify(userData)));
       } else {
+        setButtonLoading(false);
         // If authentication fails, display a snackbar with an error message
         setSnackbarOpen(true);
         setSnackBarText("סיסמא או איימל לא נכונים");

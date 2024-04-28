@@ -98,23 +98,18 @@ const EditInformation = () => {
       url = await uploadImage(image, `profile/${myUser.id}`);
     }
     const updatedUser = {
-      token: myUser.token,
+      id: myUser.id,
+      email: userData.email,
+      password: userData.password,
+      gender: myUser.gender,
       profilePictureUrl: url,
-      password:userData.password,
-      email:userData.email,
-      firstName:userData.firstName,
-      lastName:userData.lastName
-    }
-    const req = editProfile(updatedUser);
-    setTimeout(() => {
-      if (req) {
-        navigation.goBack();
-      } else {
-        setLoading(false);
-        setSnackBarText("פוסט חייב להכיל לפחות 10 תווים");
-        setSnackbarOpen(true);
-      }
-    }, 2000);
+      birthday: myUser.birthday,
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      token: myUser.token,
+    };
+
+    const res = await editProfile(updatedUser);
   };
 
   const deleteUser = () => {

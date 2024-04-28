@@ -48,6 +48,7 @@ const HomeScreen = () => {
   // Function to handle refresh
   const onRefresh = useCallback(() => {
     setRefreshing(true);
+    setPosts([]);
     fetchPosts();
     setTimeout(() => {
       setRefreshing(false);

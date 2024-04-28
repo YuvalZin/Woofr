@@ -5,20 +5,7 @@ import { StyleSheet, View, FlatList } from "react-native";
 import ChatCard from "../../cards/chat-card/chat-card";
 import EmptyCard from "../../cards/empty-card/empty-card";
 
-const Chats = ({ arr, onClick, reload }) => {
-  const [refreshing, setRefreshing] = useState(false);
-
-  const onRefresh = async () => {
-    setRefreshing(true);
-    try {
-      reload();
-    } catch (error) {
-      console.error("Error fetching new chats:", error);
-    } finally {
-      setRefreshing(false);
-    }
-  };
-
+const Chats = ({ arr, onClick }) => {
   const renderChatItem = ({ item }) => {
     return <ChatCard key={item.chatID} onClick={onClick} chat={item} />;
   };
@@ -27,8 +14,6 @@ const Chats = ({ arr, onClick, reload }) => {
     <View style={styles.container}>
       {arr.length > 0 ? (
         <FlatList
-          refreshing={refreshing}
-          onRefresh={onRefresh}
           data={arr}
           renderItem={renderChatItem}
           keyExtractor={(item) => item.chatID}

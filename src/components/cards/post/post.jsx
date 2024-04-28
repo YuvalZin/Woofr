@@ -25,7 +25,6 @@ const Post = ({ data, onImgPress, setRender }) => {
   const [timeStr, setTimeStr] = useState("");
   const [isMyPost, setIsMyPost] = useState();
   const [likes, setLikes] = useState([]);
-  const [likesCount, setLikesCount] = useState(0);
   const [likeThis, setLikeThis] = useState(false);
 
   // Use useSelector to access the Redux store state
@@ -34,16 +33,24 @@ const Post = ({ data, onImgPress, setRender }) => {
 
   const likeHandle = async (post_id, user_id) => {
     const res = await likePost(post_id, user_id);
-    setLikeThis(!likeThis);
+
+    if (res === 1) {
+      setLikeThis(true);
+    } else {
+      setLikeThis(false);
+    }
   };
 
   const getLikes = async () => {
-    console.log(data.id);
     const res = await getPostLikes(data.id);
     setLikes(res);
-    setLikesCount(res.length);
-    
-  }
+
+    res.forEach((user) => {
+      if (user.id === myUser.id) {
+        setLikeThis(true);
+      }
+    });
+  };
 
   const deletePostById = async (post_id) => {
     const res = await deletePost(post_id);
@@ -69,12 +76,13 @@ const Post = ({ data, onImgPress, setRender }) => {
       setUserData(myUser);
     }
   };
+
   useEffect(() => {
     fetchUserInfo();
     var str = calculateTimeAgo();
     setTimeStr(str);
-    if(data) getLikes();
-  }, []);
+    if (data) getLikes();
+  }, [likeThis]);
 
   const calculateTimeAgo = () => {
     const now = new Date();
@@ -149,7 +157,7 @@ const Post = ({ data, onImgPress, setRender }) => {
           />
         </View>
         <View style={styles.buttonContainer}>
-          <SmallText text={`${likesCount}`} />
+          <SmallText text={`${likes.length}`} />
         </View>
       </View>
     </View>
