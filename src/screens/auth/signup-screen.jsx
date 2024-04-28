@@ -132,6 +132,7 @@ const SignupScreen = () => {
       setSnackBarText("שגיאה בהרשמה");
       // Open the snackbar
       setSnackbarOpen(true);
+      setButtonLoading(false);
 
       // Close the snackbar after 3 seconds
       setTimeout(() => {

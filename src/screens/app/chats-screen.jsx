@@ -42,17 +42,18 @@ const ChatsScreen = ({ navigation }) => {
   // Effect to fetch messages when the component mounts
   // and poll for new messages every 15 seconds
   useEffect(() => {
+    let intervalId;
+
     const fetchAndPollChats = async () => {
       await loadChats();
-      const interval = setInterval(loadChats, 1000 * 15);
-      return () => clearInterval(interval);
+      intervalId = setInterval(loadChats, 1000 * 15);
     };
 
     fetchAndPollChats();
 
     // Cleanup function
     return () => {
-      clearInterval(interval);
+      clearInterval(intervalId); // Use intervalId for cleanup
     };
   }, []);
 
@@ -64,7 +65,7 @@ const ChatsScreen = ({ navigation }) => {
       {loading ? (
         <LoadingIndicator />
       ) : (
-        <Chats onClick={moveToChat} arr={chats} reload={loadChats} />
+        <Chats onClick={moveToChat} arr={chats} />
       )}
     </SafeAreaView>
   );

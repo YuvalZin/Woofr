@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../redux/authSlice";
 
 //Importing function from the API file
-import { getFollowData } from "../../utils/api/user";
+import { getUserFollowers, getUserFollowings } from "../../utils/api/user";
 import { getUserPosts } from "../../utils/api/posts";
 
 //App color palate
@@ -42,11 +42,9 @@ const ProfileScreen = () => {
   let auth = useSelector(selectAuth);
   const [myUser, setMyUser] = useState(JSON.parse(auth.user));
 
-  // Initialize state for user follows (following and followers counts)
-  const [userFollows, setUsrFollows] = useState({
-    following: 0,
-    followers: 0,
-  });
+  // Initialize state variables for following and followers
+  const [following, setFollowing] = useState([]);
+  const [followers, setFollower] = useState([]);
 
   // Initialize state for storing the user's posts
   const [myPosts, setMyPosts] = useState([]);
@@ -67,14 +65,13 @@ const ProfileScreen = () => {
     const posts = await getUserPosts(myUser.id);
     setMyPosts(posts);
 
-    // Retrieve user follow data and set the values
-    const res = await getFollowData(myUser.token);
-    const followData = res.toString().split(",");
-    setUsrFollows({
-      ...userFollows,
-      following: followData[1],
-      followers: followData[0],
-    });
+    // Retrieve user following data and set the values
+    const fetchFollowings = await getUserFollowings(myUser.id);
+    setFollowing(fetchFollowings);
+
+    // Retrieve user follower data and set the values
+    const fetchFollowers = await getUserFollowers(myUser.id);
+    setFollower(fetchFollowers);
   };
 
   // Execute the provided callback when the component gains focus
@@ -86,14 +83,19 @@ const ProfileScreen = () => {
 
   // Function to handle the refresh action
   const onRefresh = () => {
+    // Set refreshing to true immediately
+    setMyPosts([]);
     setRefreshing(true);
-    fetchUserData();
-    setRefreshing(false);
   };
 
   useEffect(() => {
     // Fetch user data when the refreshing state changes
-    fetchUserData();
+    if (refreshing) {
+      fetchUserData().then(() => {
+        // After fetching data, set refreshing to false
+        setRefreshing(false);
+      });
+    }
   }, [refreshing]);
 
   return (
@@ -118,8 +120,8 @@ const ProfileScreen = () => {
               </View>
               <BigText text={`${myUser.firstName} ${myUser.lastName}`} />
               <View style={styles.followingContainer}>
-                <SmallText text={`עוקב אחרי ${userFollows.followers}`} />
-                <SmallText text={`עוקב אחרי ${userFollows.following} `} />
+                <SmallText text={`עוקב ${following.length}`} />
+                <SmallText text={`במעקב ${followers.length} `} />
               </View>
             </View>
             <View style={styles.buttonsContainer}>

@@ -19,7 +19,12 @@ import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
 
 //Importing function from the API file
-import { GetUserInfo, getFollowData } from "../../utils/api/user";
+import {
+  GetUserInfo,
+  followAction,
+  getUserFollowers,
+  getUserFollowings,
+} from "../../utils/api/user";
 import { startChat } from "../../utils/api/chat";
 import { getUserPosts } from "../../utils/api/posts";
 
@@ -49,11 +54,12 @@ const UserProfileScreen = () => {
   // Define state variable 'posts' using the 'useState' hook, initialized as an empty array.
   const [posts, setPosts] = useState([]);
 
-  // State variable 'userFollows' initialization with 'useState': object with 'following' and 'followers' properties.
-  const [userFollows, setUserFollows] = useState({
-    following: 0,
-    followers: 0,
-  });
+  // Initialize state variables for following and followers
+  const [following, setFollowing] = useState([]);
+  const [followers, setFollower] = useState([]);
+
+  // State variable to track whether to follow a user or not
+  const [followThis, setFollowThis] = useState(false);
 
   // Initiates a new chat between the current user and the user profile being viewed.
   const moveToChat = async () => {
@@ -80,35 +86,52 @@ const UserProfileScreen = () => {
     }
   };
 
+  const followHandler = async () => {
+    const res = await followAction(myUser.id, id);
+    if (res === 1) {
+      setFollowThis(false);
+      setFollowThis(true);
+    } else {
+      setFollowThis(true);
+      setFollowThis(false);
+    }
+  };
+
+  // Asynchronously fetches user data based on the provided 'id' and updates the 'userProfile' state.
+  const fetchUserData = async () => {
+    const response = await GetUserInfo(id);
+    setUserProfile(response);
+  };
+
+  // Asynchronously fetches user posts based on the provided 'id' and updates the 'posts' state.
+  const fetchUserPosts = async () => {
+    const response = await getUserPosts(id);
+    setPosts(response);
+  };
+
+  // Asynchronously loads follow data for the current user and updates the 'userFollows' state.
+  const loadFollowData = async () => {
+    // Retrieve user following data and set the values
+    const fetchFollowings = await getUserFollowings(id);
+    setFollowing(fetchFollowings);
+
+    // Retrieve user follower data and set the values
+    const fetchFollowers = await getUserFollowers(id);
+    setFollower(fetchFollowers);
+
+    fetchFollowers.forEach((follow) => {
+      if (follow.id === myUser.id) {
+        setFollowThis(true);
+      }
+    });
+  };
+
   // Fetches user data, user posts, and follow data upon screen mount.
   useEffect(() => {
-    // Asynchronously fetches user data based on the provided 'id' and updates the 'userProfile' state.
-    const fetchUserData = async () => {
-      const response = await GetUserInfo(id);
-      setUserProfile(response);
-    };
-
-    // Asynchronously fetches user posts based on the provided 'id' and updates the 'posts' state.
-    const fetchUserPosts = async () => {
-      const response = await getUserPosts(id);
-      setPosts(response);
-    };
-
-    // Asynchronously loads follow data for the current user and updates the 'userFollows' state.
-    const loadFollowData = async () => {
-      const res = await getFollowData(myUser.token);
-      const followData = res.toString().split(",");
-      setUserFollows({
-        ...userFollows,
-        following: followData[1],
-        followers: followData[0],
-      });
-    };
-
     fetchUserData();
     loadFollowData();
     fetchUserPosts();
-  }, [id]);
+  }, [followThis]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -128,19 +151,19 @@ const UserProfileScreen = () => {
               text={`${userProfile.firstName} ${userProfile.lastName}`}
             />
             <View style={styles.followingContainer}>
-              <SmallText text={`עוקב אחרי ${userFollows.followers}`} />
-              <SmallText text={`עוקב אחרי ${userFollows.following} `} />
+              <SmallText text={`עוקב ${following.length}`} />
+              <SmallText text={`במעקב ${followers.length} `} />
             </View>
           </View>
 
           <View style={styles.buttonsContainer}>
             <View style={styles.buttonContainer}>
               <RegularButton
-                text={`עקוב`}
+                text={followThis ? "הסר עוקב" : "עוקב"}
                 width={120}
                 color={colorPalate.primary}
                 iconName={"person-add-outline"}
-                onPress={() => {}}
+                onPress={followHandler}
               />
             </View>
             <View style={styles.buttonContainer}>
