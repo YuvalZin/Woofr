@@ -119,7 +119,7 @@ const HomeScreen = () => {
           <Ionicons name="caret-back-outline" size={24} color={"black"} />
         </TouchableOpacity>
 
-        <ExploreSlider arr={exploreArray} />
+        <ExploreSlider arr={exploreArray} onPress={moveToProfile} />
 
         <View style={styles.touchableContainer} onPress={moveToProfessionals}>
           <BigText text={"מה נובח עכשיו"} />
@@ -148,8 +148,8 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   logo: {
-    width: 100,
-    height: 50,
+    width: 120,
+    height: 60,
     resizeMode: "contain",
     marginLeft: 10,
   },

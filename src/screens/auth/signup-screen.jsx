@@ -25,7 +25,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { Snackbar } from "react-native-paper";
 
 //Importing form validator
-import { signupValidator } from "../../utils/scripts/formValidate";
+import { signupValidator } from "../../utils/scripts/form-validate";
 
 //Importing genders data
 import { genders } from "../../utils/data/gender";

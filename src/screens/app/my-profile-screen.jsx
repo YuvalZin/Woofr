@@ -77,6 +77,7 @@ const ProfileScreen = () => {
   // Execute the provided callback when the component gains focus
   useFocusEffect(
     useCallback(() => {
+      setMyPosts([]);
       fetchUserData();
     }, [refreshing])
   );

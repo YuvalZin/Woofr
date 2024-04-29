@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   Image,
+  ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -164,81 +165,94 @@ const EditInformation = () => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={{ flex: 1 }}>
         {!loading ? (
-          <KeyboardAvoidingView style={styles.container}>
-            <GoBackButton onPress={moveBack} />
-            <View style={styles.header}>
-              <BigText text={"עדכן את הפרטים שלך"} />
-            </View>
-            <View style={styles.formScroll}>
-              <View style={styles.circleContainer}>
-                {image ? (
-                  <TouchableOpacity onPress={pickImage}>
-                    <Image
-                      source={{ uri: image }}
-                      style={styles.imagePreview}
-                    />
-                  </TouchableOpacity>
-                ) : (
-                  <TouchableOpacity style={styles.circle} onPress={pickImage}>
-                    <RegularText text={"בחר תמונה"} />
-                  </TouchableOpacity>
-                )}
+          <ScrollView>
+            <KeyboardAvoidingView style={styles.container}>
+              <GoBackButton onPress={moveBack} />
+
+              <View style={styles.header}>
+                <BigText text={"עדכן את הפרטים שלך"} />
               </View>
-              <CustomTextInput
-                value={userData.firstName}
-                placeholder="שם פרטי"
-                width={formWidth}
-                onChangeText={(value) => {
-                  setUserData({ ...userData, firstName: value });
-                }}
-              />
-              <CustomTextInput
-                value={userData.lastName}
-                placeholder="שם משפחה"
-                width={formWidth}
-                onChangeText={(value) => {
-                  setUserData({ ...userData, lastName: value });
-                }}
-              />
+              <View style={styles.formScroll}>
+                <View style={styles.circleContainer}>
+                  {image ? (
+                    <TouchableOpacity onPress={pickImage}>
+                      <Image
+                        source={{ uri: image }}
+                        style={styles.imagePreview}
+                      />
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity style={styles.circle} onPress={pickImage}>
+                      <RegularText text={"בחר תמונה"} />
+                    </TouchableOpacity>
+                  )}
+                </View>
+                <CustomTextInput
+                  value={userData.firstName}
+                  placeholder="שם פרטי"
+                  width={formWidth}
+                  onChangeText={(value) => {
+                    setUserData({ ...userData, firstName: value });
+                  }}
+                />
+                <CustomTextInput
+                  value={userData.lastName}
+                  placeholder="שם משפחה"
+                  width={formWidth}
+                  onChangeText={(value) => {
+                    setUserData({ ...userData, lastName: value });
+                  }}
+                />
 
-              <PasswordInput
-                value={userData.password}
-                placeholder="סיסמא"
-                width={formWidth}
-                onChangeText={(value) => {
-                  setUserData({ ...userData, password: value });
+                <PasswordInput
+                  value={userData.password}
+                  placeholder="סיסמא"
+                  width={formWidth}
+                  onChangeText={(value) => {
+                    setUserData({ ...userData, password: value });
+                  }}
+                />
+              </View>
+              <View style={styles.buttonContainer}>
+                <RegularButton
+                  text={"עדכן"}
+                  color={colorPalate.primary}
+                  onPress={handelUpdate}
+                />
+              </View>
+
+              <View style={styles.buttonContainer}>
+                <RegularButton
+                  text={"הפוך לעסק"}
+                  color={colorPalate.primary}
+                  onPress={() => {
+                    navigation.navigate("profile-professionals-registration");
+                  }}
+                />
+              </View>
+
+              <View style={styles.buttonContainer}>
+                <RegularButton
+                  text={"מחיקת משתמש"}
+                  color={colorPalate.warning}
+                  onPress={deleteUser}
+                />
+              </View>
+
+              <Snackbar
+                visible={snackbarOpen}
+                onDismiss={() => {}}
+                action={{
+                  label: "סגור",
+                  onPress: () => {
+                    setSnackbarOpen(false);
+                  },
                 }}
-              />
-            </View>
-            <View style={styles.buttonContainer}>
-              <RegularButton
-                text={"עדכן"}
-                color={colorPalate.primary}
-                onPress={handelUpdate}
-              />
-            </View>
-
-            <View style={styles.buttonContainer}>
-              <RegularButton
-                text={"מחיקת משתמש"}
-                color={colorPalate.warning}
-                onPress={deleteUser}
-              />
-            </View>
-
-            <Snackbar
-              visible={snackbarOpen}
-              onDismiss={() => {}}
-              action={{
-                label: "סגור",
-                onPress: () => {
-                  setSnackbarOpen(false);
-                },
-              }}
-            >
-              {snackBarText}
-            </Snackbar>
-          </KeyboardAvoidingView>
+              >
+                {snackBarText}
+              </Snackbar>
+            </KeyboardAvoidingView>
+          </ScrollView>
         ) : (
           <LoadingIndicator />
         )}

@@ -1,11 +1,12 @@
 import React from "react";
 import { StyleSheet, Animated, View, Dimensions } from "react-native";
-import { colorPalate } from "../../../utils/ui/colors";
 
 // Destructuring 'width' from Dimensions
 const { width } = Dimensions.get("screen");
 
-const Pagination = ({ data, scrollX, index }) => {
+const Pagination = ({ data, scrollX, dotColor }) => {
+  // Reverse the data array
+
   return (
     <View style={styles.container}>
       {data.map((_, idx) => {
@@ -19,7 +20,7 @@ const Pagination = ({ data, scrollX, index }) => {
 
         const backgroundColor = scrollX.interpolate({
           inputRange,
-          outputRange: ["#ccc", "#000", "#ccc"],
+          outputRange: ["#ccc", dotColor, "#ccc"],
           extrapolate: "clamp",
         });
 
@@ -46,13 +47,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   dot: {
-    width: 12,
     height: 12,
     borderRadius: 6,
     marginHorizontal: 3,
-    backgroundColor: "#ccc",
-  },
-  dotActive: {
-    backgroundColor: colorPalate.primary,
   },
 });

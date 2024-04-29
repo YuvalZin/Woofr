@@ -42,7 +42,12 @@ const WelcomeScreen = () => {
             color={colorPalate.primary}
           />
         </View>
-        <Pagination data={features} scrollX={scrollX} index={index} />
+        <Pagination
+          data={features}
+          scrollX={scrollX}
+          index={index}
+          dotColor={colorPalate.primary}
+        />
       </View>
     </SafeAreaView>
   );

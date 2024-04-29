@@ -4,9 +4,9 @@ import { FlatList } from "react-native-gesture-handler";
 
 import ExploreCard from "../../cards/explore-card/explore-card";
 
-const ExploreSlider = ({ arr }) => {
+const ExploreSlider = ({ arr, onPress }) => {
   const renderExploreItem = ({ item }) => {
-    return <ExploreCard key={item.messageId} data={item} />;
+    return <ExploreCard key={item.messageId} data={item} onPress={onPress} />;
   };
 
   return (

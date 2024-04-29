@@ -8,7 +8,7 @@ const BigText = ({ text, english = false }) => {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 28,
+    fontSize: 27,
     fontWeight: "bold",
     textAlign: "left",
     padding: 3,

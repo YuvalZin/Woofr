@@ -14,11 +14,16 @@ import { colorPalate } from "../../../utils/ui/colors";
 import RegularText from "../../texts/regular-text/regular-text";
 import SmallText from "../../texts/small-text/small-text";
 
-const ExploreCard = ({ data }) => {
+const ExploreCard = ({ data, onPress }) => {
   const screenWidth = Dimensions.get("window").width;
 
   return (
-    <TouchableOpacity style={[styles.container, { width: screenWidth }]}>
+    <TouchableOpacity
+      style={[styles.container, { width: screenWidth }]}
+      onPress={() => {
+        onPress("ccc9dc85-be13-4435-a23e-37250c2c9kkk");
+      }}
+    >
       <View style={styles.cardBackground}>
         <Image
           source={{
