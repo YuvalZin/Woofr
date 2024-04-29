@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 
 //Redux state management
 import { useSelector } from "react-redux";
-import { selectAuth } from "../../redux/authSlice";
+import { login, selectAuth } from "../../redux/authSlice";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/authSlice";
 
@@ -39,7 +39,7 @@ import RegularText from "../../components/texts/regular-text/regular-text";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 
 //Importing function from the API file
-import { editProfile, uploadImageURL } from "../../utils/api/user";
+import { editProfile, GetUserData, uploadImageURL } from "../../utils/api/user";
 import { uploadImage } from "../../utils/api/image";
 
 const EditInformation = () => {
@@ -90,25 +90,60 @@ const EditInformation = () => {
     navigation.goBack();
   };
 
+  // Function to handle Snackbar
+  const showSnackbar = (message, duration) => {
+    setSnackBarText(message);
+    setSnackbarOpen(true);
+
+    // Close the snackbar after the specified duration
+    setTimeout(() => {
+      setSnackbarOpen(false);
+    }, duration);
+  };
+
   const handelUpdate = async () => {
     setLoading(true);
-    const url = myUser.profileImage;
-    if (image) {
-      url = await uploadImage(image, `profile/${myUser.id}`);
-    }
-    const updatedUser = {
+    let updatedUser = {
       id: myUser.id,
-      email: userData.email,
+      email: myUser.email,
       password: userData.password,
       gender: myUser.gender,
-      profilePictureUrl: url,
+      profilePictureUrl: myUser.profilePictureUrl,
       birthday: myUser.birthday,
       firstName: userData.firstName,
       lastName: userData.lastName,
       token: myUser.token,
     };
 
-    const res = await editProfile(updatedUser);
+    if (image) {
+      const url = await uploadImage(image, `profile/${myUser.id}`);
+      const imageUpdate = await uploadImageURL(myUser.id, url);
+
+      if (!imageUpdate) {
+        // If authentication fails, display a snackbar with an error message
+        setLoading(false);
+        showSnackbar("הייתה בעיה להעלות את התמונה", 3000);
+        return;
+      }
+
+      // Update profilePictureUrl in updatedUser with the newly uploaded image URL
+      updatedUser.profilePictureUrl = url;
+    }
+
+    const editRes = await editProfile(updatedUser);
+
+    if (editRes) {
+      const user = await GetUserData(SecureStore.getItem("token"));
+
+      if (user) {
+        dispatch(login(JSON.stringify(user)));
+        moveBack();
+      }
+    } else {
+      // If authentication fails, display a snackbar with an error message
+      setLoading(false);
+      showSnackbar("הייתה בעיה לעדכן את הפרופיל", 3000);
+    }
   };
 
   const deleteUser = () => {

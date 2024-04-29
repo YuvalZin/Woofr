@@ -14,7 +14,7 @@ import * as SecureStore from "expo-secure-store";
 
 //Redux state management
 import { useSelector } from "react-redux";
-import { selectAuth } from "../../redux/authSlice";
+import authSlice, { selectAuth } from "../../redux/authSlice";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/authSlice";
 
@@ -39,8 +39,8 @@ const ProfileScreen = () => {
 
   // Use useSelector to access the Redux store state
   const dispatch = useDispatch();
-  let auth = useSelector(selectAuth);
-  const [myUser, setMyUser] = useState(JSON.parse(auth.user));
+  const auth = useSelector(selectAuth);
+  const myUser = JSON.parse(auth.user);
 
   // Initialize state variables for following and followers
   const [following, setFollowing] = useState([]);
