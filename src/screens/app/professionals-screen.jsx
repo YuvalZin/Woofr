@@ -51,7 +51,6 @@ const ProfessionalsScreen = () => {
   //fetch posts to display on homepage
   const fetchVets = async () => {
     const res = await getVets(resultsFilter);
-    console.log(res);
     setVets(res);
   };
 
@@ -110,18 +109,6 @@ const ProfessionalsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    padding: 8,
-    width: "100%",
-  },
-  logo: {
-    width: 100,
-    height: 50,
-    resizeMode: "contain",
-    marginLeft: 10,
   },
 });
 

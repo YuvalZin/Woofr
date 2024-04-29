@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 
 //Redux state management
 import { useSelector } from "react-redux";
@@ -23,9 +24,9 @@ import LogoImage from "../../../assets/logo-wofer2.png";
 //Custom Component
 import PostSlider from "../../components/scroll/posts-slider/post-slider";
 import AddPost from "../../components/buttons/add-post/add-post";
-import SmallText from "../../components/texts/small-text/small-text";
 import BigText from "../../components/texts/big-text/big-text";
-import { Ionicons } from "@expo/vector-icons";
+import ExploreSlider from "../../components/scroll/explore-slider/explore-slider";
+import RegularText from "../../components/texts/regular-text/regular-text";
 
 const HomeScreen = () => {
   //Navigation handler
@@ -82,11 +83,18 @@ const HomeScreen = () => {
     }, [])
   );
 
+  const exploreArray = [
+    { id: "0", name: "", desc: "" },
+    { id: "1", name: "", desc: "" },
+    { id: "2", name: "", desc: "" },
+    { id: "3", name: "", desc: "" },
+  ];
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.header}>
         <Image source={LogoImage} style={styles.logo} />
-        <SmallText
+        <RegularText
           text={`היי ${myUser.firstName} שמחים לראות שחזרת`}
           english={true}
         />
@@ -98,6 +106,11 @@ const HomeScreen = () => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
+        <AddPost
+          onPress={() => {
+            navigation.navigate("home-post");
+          }}
+        />
         <TouchableOpacity
           style={styles.touchableContainer}
           onPress={moveToProfessionals}
@@ -106,11 +119,12 @@ const HomeScreen = () => {
           <Ionicons name="caret-back-outline" size={24} color={"black"} />
         </TouchableOpacity>
 
-        <AddPost
-          onPress={() => {
-            navigation.navigate("home-post");
-          }}
-        />
+        <ExploreSlider arr={exploreArray} />
+
+        <View style={styles.touchableContainer} onPress={moveToProfessionals}>
+          <BigText text={"מה נובח עכשיו"} />
+        </View>
+
         {posts.length > 0 && (
           <PostSlider
             arr={posts}
@@ -143,6 +157,7 @@ const styles = StyleSheet.create({
     justifyContent: "end",
     alignItems: "center",
     flexDirection: "row",
+    marginTop: 10,
     gap: 12,
     padding: 4,
   },

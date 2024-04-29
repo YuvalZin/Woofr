@@ -14,7 +14,7 @@ import RatingBar from "../rating-bar/rating-bar";
 
 //import { colorPalate } from "../../../utils/ui/colors";
 
-const ProfessionalCard = ({ data, onImgPress, setRender }) => {
+const ProfessionalCard = ({ data }) => {
   const [vetData, setVetData] = useState({
     id: "string",
     displayName: "string",

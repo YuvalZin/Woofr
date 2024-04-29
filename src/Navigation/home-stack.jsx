@@ -29,6 +29,11 @@ const HomeStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="home-post"
+        component={NewPostScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="home-professionals"
         component={ProfessionalsScreen}
         options={{ headerShown: false }}
