@@ -18,6 +18,8 @@ import uuid from "react-native-uuid";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
 
+import { Ionicons } from "@expo/vector-icons";
+
 //Importing function from the API file
 import {
   GetUserInfo,
@@ -35,8 +37,28 @@ import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import PostSlider from "../../components/scroll/posts-slider/post-slider";
 import SmallText from "../../components/texts/small-text/small-text";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
+import RegularText from "../../components/texts/regular-text/regular-text";
+import ProfessionalCheckbox from "../../components/cards/professional-checkbox/professional-checkbox";
 
 const UserProfileScreen = () => {
+  const info = {
+    displayName: "וטרינר הארץ",
+    address: "בן צבי 12",
+    phone: "0507799799",
+    description: "וטרינטר ותיק אוהב חיות במחירים מצויים לכל חברי האפליקציה",
+    specialization: "מזון חיות",
+    ratingScore: 0,
+    availability24_7: true,
+    sellsProducts: false,
+    vetToHome: true,
+    notes: "מחירים פצצה לכל בעלי החיות",
+    verificationStatus: "",
+    activeWoofr: false,
+    city: "נתניה",
+  };
+
+  const pro = true;
+
   //Importing the useNavigation hook from React Navigation to access navigation prop
   const navigation = useNavigation();
 
@@ -143,13 +165,49 @@ const UserProfileScreen = () => {
       {userProfile ? (
         <ScrollView style={styles.container}>
           <View style={styles.imageContainer}>
+            {pro ? <BigText text={info.displayName} /> : null}
+
             <Image
               source={{ uri: userProfile.profilePictureUrl }}
               style={styles.profileImage}
             />
-            <BigText
-              text={`${userProfile.firstName} ${userProfile.lastName}`}
-            />
+
+            {pro ? (
+              <View style={styles.infoContainer}>
+                <ProfessionalCheckbox
+                  availability={info.availability24_7}
+                  sells={info.sellsProducts}
+                  toHome={info.vetToHome}
+                />
+
+                <View style={styles.infoRow}>
+                  <Ionicons
+                    name="home-outline"
+                    color={colorPalate.primary}
+                    size={18}
+                  />
+                  <RegularText text={`${info.city} ${info.address}`} />
+                </View>
+
+                <View style={styles.infoRow}>
+                  <Ionicons
+                    name="call-outline"
+                    color={colorPalate.primary}
+                    size={18}
+                  />
+                  <RegularText text={`${info.phone}`} />
+                </View>
+
+                <View style={styles.descriptionContainer}>
+                  <SmallText text={`${info.description}`} />
+                </View>
+              </View>
+            ) : (
+              <BigText
+                text={`${userProfile.firstName} ${userProfile.lastName}`}
+              />
+            )}
+
             <View style={styles.followingContainer}>
               <SmallText text={`עוקב ${following.length}`} />
               <SmallText text={`במעקב ${followers.length} `} />
@@ -178,6 +236,7 @@ const UserProfileScreen = () => {
               />
             </View>
           </View>
+
           <PostSlider arr={posts} onImgPress={() => {}} />
         </ScrollView>
       ) : (
@@ -198,12 +257,23 @@ const styles = StyleSheet.create({
   imageContainer: {
     justifyContent: "center",
     alignItems: "center",
+    margin: 5,
   },
   profileImage: {
     width: 160,
     height: 160,
     resizeMode: "cover",
     borderRadius: 80,
+  },
+  infoContainer: {
+    flexDirection: "column",
+    width: "100%",
+    padding: 8,
+  },
+  infoRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 2,
   },
   followingContainer: {
     flexDirection: "row",

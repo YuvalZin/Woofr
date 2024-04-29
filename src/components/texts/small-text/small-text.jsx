@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text } from "react-native";
 
 const SmallText = ({ text, english = false }) => {
-  const textAlign = !english ? "right" : "left";
+  const textAlign = !english ? "left" : "right";
   return <Text style={[styles.text, { textAlign }]}>{text}</Text>;
 };
 
