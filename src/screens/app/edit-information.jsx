@@ -114,6 +114,7 @@ const EditInformation = () => {
       firstName: userData.firstName,
       lastName: userData.lastName,
       token: myUser.token,
+      type:""
     };
 
     if (image) {
