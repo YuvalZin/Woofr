@@ -1,7 +1,7 @@
-import feat1 from "assets/feat1.png"
+import feat1 from "../../utils/images/feat1.png"
 export const features = [
   {
-    image: "https://cdn-icons-png.flaticon.com/512/4253/4253264.png",
+    image: feat1,
     name: "חברים חדשים לכל החיים",
     description:
       "הצטרפו לקהילת חובבי הכלבים הגדולה ביותר בישראל",
