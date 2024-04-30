@@ -5,8 +5,6 @@ import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../../redux/authSlice";
 
-import { getVets } from "../../../utils/api/vet";
-
 //Custom Components
 import RegularText from "../../texts/regular-text/regular-text";
 import SmallText from "../../texts/small-text/small-text";
@@ -14,7 +12,7 @@ import RatingBar from "../rating-bar/rating-bar";
 
 //import { colorPalate } from "../../../utils/ui/colors";
 
-const ProfessionalCard = ({ data }) => {
+const ProfessionalCard = ({ data, onCardPress }) => {
   const [vetData, setVetData] = useState({
     id: "string",
     displayName: "string",
@@ -34,10 +32,6 @@ const ProfessionalCard = ({ data }) => {
     userId: "string",
   });
 
-  // Use useSelector to access the Redux store state
-  const auth = useSelector(selectAuth);
-  const myUser = JSON.parse(auth.user);
-
   const fetchVetInfo = async () => {
     setVetData(data);
   };
@@ -49,7 +43,12 @@ const ProfessionalCard = ({ data }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.avatarContainer}>
+        <TouchableOpacity
+          style={styles.avatarContainer}
+          onPress={() => {
+            onCardPress(data.userId);
+          }}
+        >
           <Image
             source={{
               uri: vetData.profileImage,

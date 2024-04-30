@@ -37,11 +37,11 @@ import LoadingIndicator from "../../components/animation/loading-indicator/loadi
 import RegularText from "../../components/texts/regular-text/regular-text";
 import RegularTextBold from "../../components/texts/regular-text/regular-text-bold";
 import RegularButtonSmall from "../../components/buttons/regular-button/regular-button-small";
-import ProfessionalProfile from "../../components/professional-profile"
+import ProfessionalProfile from "../../components/professional-profile";
 import { getVetById, getVets } from "../../utils/api/vet";
 
 const UserProfileScreen = () => {
-//Importing the useNavigation hook from React Navigation to access navigation prop
+  //Importing the useNavigation hook from React Navigation to access navigation prop
   const navigation = useNavigation();
 
   // Extracts the 'id' parameter from the current route.
@@ -110,7 +110,6 @@ const UserProfileScreen = () => {
     if (response.type == "vet") {
       const vetData = await getVetById(id);
       setProfessional(vetData);
-      console.log(professional);
     }
   };
 
@@ -154,10 +153,11 @@ const UserProfileScreen = () => {
         />
         {userProfile && (
           <View>
-            <RegularTextBold text={userProfile.firstName + " " + userProfile.lastName} />
+            <RegularTextBold
+              text={userProfile.firstName + " " + userProfile.lastName}
+            />
           </View>
         )}
-
       </View>
       {userProfile ? (
         <ScrollView style={styles.container}>
@@ -197,19 +197,16 @@ const UserProfileScreen = () => {
               />
             </View>
           </View>
-          {professional && (
-            <ProfessionalProfile data={professional} />
-          )}
+          {professional && <ProfessionalProfile data={professional} />}
 
           <View style={styles.postsArea}>
-            <PostSlider arr={posts} onImgPress={() => { }} />
+            <PostSlider arr={posts} onImgPress={() => {}} />
           </View>
-
-        </ScrollView >
+        </ScrollView>
       ) : (
         <LoadingIndicator />
       )}
-    </SafeAreaView >
+    </SafeAreaView>
   );
 };
 
@@ -218,8 +215,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   postsArea: {
-    borderTopWidth:0.5,
-    borderTopColor:colorPalate.lightGrey,
+    borderTopWidth: 0.5,
+    borderTopColor: colorPalate.lightGrey,
     width: "100%",
     backgroundColor: "#f5f5f5",
     paddingBottom: 30,

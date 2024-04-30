@@ -5,15 +5,10 @@ import { StyleSheet, FlatList, View } from "react-native";
 import ProfessionalCard from "../../cards/professional-card/professional-card";
 import EmptyCard from "../../cards/empty-card/empty-card";
 
-const VetSlider = ({ arr, setRender }) => {
+const VetSlider = ({ arr, onCardPress }) => {
   const renderPostItem = ({ item }) => {
     return (
-      <ProfessionalCard
-        key={item.id}
-        data={item}
-        // onImgPress={onImgPress}
-        setRender={setRender}
-      />
+      <ProfessionalCard key={item.id} data={item} onCardPress={onCardPress} />
     );
   };
 

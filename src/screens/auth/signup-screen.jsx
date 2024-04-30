@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Platform,
-  ScrollView,
   StatusBar,
 } from "react-native";
 
@@ -119,9 +118,7 @@ const SignupScreen = () => {
         setSnackbarOpen(false);
       }, 3000);
       return;
-    }
-    else setButtonLoading(true);
-
+    } else setButtonLoading(true);
 
     //Api call to signup the user into db
     const token = await saveUser(userData);
@@ -158,11 +155,7 @@ const SignupScreen = () => {
       <View style={styles.container}>
         <View style={styles.header}>
           <BigTextBold text={"הצטרף לחוויה שלנו"} />
-          <RegularText
-            text={
-              "* כל השדות הם שדות חובה"
-            }
-          />
+          <RegularText text={"* כל השדות הם שדות חובה"} />
         </View>
 
         <View style={styles.formBody}>
@@ -223,8 +216,9 @@ const SignupScreen = () => {
               }}
             >
               <RegularText
-                text={`${userData.birthday.getUTCFullYear()}-${userData.birthday.getMonth() + 1
-                  }-${userData.birthday.getDate()}`}
+                text={`${userData.birthday.getUTCFullYear()}-${
+                  userData.birthday.getMonth() + 1
+                }-${userData.birthday.getDate()}`}
               />
             </TouchableOpacity>
           )}
@@ -244,13 +238,12 @@ const SignupScreen = () => {
               value={userData.gender}
               items={genders}
               setOpen={setOpenGender}
-              setValue={(value) => {
-                setUserData({ ...userData, gender: value });
+              onSelectItem={(value) => {
+                setUserData({ ...userData, gender: value.value });
               }}
               placeholder="בחר מגדר"
-              dropDownDirection="RTL"
-              labelStyle={styles.dropDownLabel}
-
+              dropDownDirection="BOTTOM"
+              dropDownContainerStyle={colorPalate.white}
             />
           </View>
           <View style={{ marginTop: 165, width: 300 }}>
@@ -262,12 +255,11 @@ const SignupScreen = () => {
             />
           </View>
         </View>
-
       </View>
 
       <Snackbar
         visible={snackbarOpen}
-        onDismiss={() => { }}
+        onDismiss={() => {}}
         action={{
           label: "סגור",
           onPress: () => {
@@ -288,13 +280,12 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   dropDownLabel: {
-    textAlign: "right",
+    textAlign: "left",
     fontSize: 16,
   },
   formBody: {
     alignItems: "center",
     paddingBottom: 10,
-
   },
   header: {
     alignItems: "flex-start",
@@ -303,24 +294,17 @@ const styles = StyleSheet.create({
     textAlign: "left",
     paddingHorizontal: 20,
     paddingBottom: 40,
-
   },
   input: {
-    textAlign: "right",
     padding: 10,
     width: 300,
+    textAlign: "left",
   },
-
+  dropDownContainer: {
+    backgroundColor: "red",
+  },
   picker: {
-    direction:"rtl",
-    flexDirection:"row-reverse",
-    alignSelf:"flex-start",
-    flex:1,
-    alignContent:"flex-start",
-    justifyContent: "space-between",
-    alignItems: "center",
-    textAlign: "right",
-
+    flex: 1,
   },
 });
 
