@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 import { useFonts, Assistant_400Regular } from '@expo-google-fonts/assistant';
+import { colorPalate } from "../../../utils/ui/colors";
 
 const SmallText = ({ text, english = false }) => {
   const textAlign = !english ? "left" : "right";
@@ -22,7 +23,8 @@ const SmallText = ({ text, english = false }) => {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 16,
+    color:"grey",
+    fontSize: 15,
     fontWeight: "normal",
     textAlign: "left",
   },

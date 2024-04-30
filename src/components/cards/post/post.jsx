@@ -172,7 +172,7 @@ const Post = ({ data, onImgPress, setRender }) => {
 const styles = StyleSheet.create({
   input: {
     flex: 1,
-    padding: 5,
+    paddingHorizontal: 15,
     alignItems: "flex-start",
   },
   container: {
@@ -199,8 +199,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   avatar: {
-    width: 70,
-    height: 70,
+    width: 50,
+    height: 50,
     borderRadius: 35,
   },
   postImageContainer: {

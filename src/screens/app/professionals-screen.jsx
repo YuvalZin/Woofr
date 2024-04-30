@@ -84,16 +84,13 @@ const ProfessionalsScreen = () => {
           <BigText text={"וטרינרים"} />
         </View>
       </View>
-      <ProfessionalFilter data={resultsFilter} setData={setResultsFilter} />
-      <View style={styles.buttonContainer}>
-        <RegularButton
-          color={colorPalate.primaryLight}
-          text={"חפש"}
-          iconName={"search-outline"}
-          onPress={fetchVets}
-        />
-      </View>
-      <ScrollView nestedScrollEnabled={true} style={styles.container}>
+      <ScrollView
+        nestedScrollEnabled={true}
+        style={styles.container}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         {vets.length > 0 && (
           <ProfessionalSlider arr={vets} onCardPress={moveToProfile} />
         )}

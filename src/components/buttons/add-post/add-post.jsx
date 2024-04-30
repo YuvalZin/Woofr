@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    color: colorPalate.white,
+    color: "white",
     fontSize: 19,
     padding: 8,
   },

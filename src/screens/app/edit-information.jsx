@@ -36,12 +36,14 @@ import BigText from "../../components/texts/big-text/big-text";
 import CustomTextInput from "../../components/inputs/custom-text-input/custom-text-input";
 import PasswordInput from "../../components/inputs/password-input/password-input";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
+import RegularButtonSmall from "../../components/buttons/regular-button/regular-button-small";
 import RegularText from "../../components/texts/regular-text/regular-text";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 
 //Importing function from the API file
 import { editProfile, GetUserData, uploadImageURL } from "../../utils/api/user";
 import { uploadImage } from "../../utils/api/image";
+import BigTextBold from "../../components/texts/big-text/big-text-bold";
 
 const EditInformation = () => {
   //Set state to store image
@@ -114,7 +116,7 @@ const EditInformation = () => {
       firstName: userData.firstName,
       lastName: userData.lastName,
       token: myUser.token,
-      type:""
+      type: ""
     };
 
     if (image) {
@@ -168,10 +170,12 @@ const EditInformation = () => {
         {!loading ? (
           <ScrollView>
             <KeyboardAvoidingView style={styles.container}>
-              <GoBackButton onPress={moveBack} />
 
               <View style={styles.header}>
-                <BigText text={"עדכן את הפרטים שלך"} />
+                <GoBackButton onPress={moveBack} />
+                <View>
+                  <BigTextBold text={"עדכן את הפרטים שלך"} />
+                </View>
               </View>
               <View style={styles.formScroll}>
                 <View style={styles.circleContainer}>
@@ -217,32 +221,33 @@ const EditInformation = () => {
               <View style={styles.buttonContainer}>
                 <RegularButton
                   text={"עדכן"}
-                  color={colorPalate.primary}
+                  color={colorPalate.primaryLight}
                   onPress={handelUpdate}
                 />
               </View>
-
-              <View style={styles.buttonContainer}>
-                <RegularButton
-                  text={"הפוך לעסק"}
-                  color={colorPalate.primary}
+                  
+              <View style={[styles.buttonContainer,{width:200,marginTop:90}]}>
+                <RegularButtonSmall
+                  text={"מעבר לפרופיל עסקי"}
+                  style={styles.button}
+                  color={colorPalate.primaryLight}
                   onPress={() => {
                     navigation.navigate("profile-professionals-registration");
                   }}
                 />
               </View>
 
-              <View style={styles.buttonContainer}>
-                <RegularButton
+              <View style={[styles.buttonContainer,{width:200}]}>
+                <RegularButtonSmall
                   text={"מחיקת משתמש"}
-                  color={colorPalate.warning}
+                  color={colorPalate.lightGrey}
                   onPress={deleteUser}
                 />
               </View>
 
               <Snackbar
                 visible={snackbarOpen}
-                onDismiss={() => {}}
+                onDismiss={() => { }}
                 action={{
                   label: "סגור",
                   onPress: () => {
@@ -267,9 +272,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
+  
   header: {
+    flexDirection: "row-reverse",
+    justifyContent: "space-between",
+    alignItems: "center",
     width: "100%",
-    padding: 6,
+    paddingHorizontal: 20,
   },
   formScroll: {
     marginTop: 10,
@@ -282,28 +291,32 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 6,
+    marginTop:32,
+    marginBottom:12,
   },
   circle: {
-    width: 200,
-    height: 200,
+    width: 150,
+    height: 150,
     borderRadius: 100,
     backgroundColor: colorPalate.white,
     borderColor: colorPalate.primary,
-    borderWidth: 1,
+    borderWidth: 2,
     justifyContent: "center",
     alignItems: "center",
+
   },
   imagePreview: {
-    width: 200,
-    height: 200,
+    width: 150,
+    height: 150,
     borderRadius: 100,
     borderColor: colorPalate.primary,
-    borderWidth: 1,
+    borderWidth: 2,
   },
   buttonContainer: {
     marginTop: 10,
-    width: 260,
+    width: 288,
   },
+
 });
 
 export default EditInformation;

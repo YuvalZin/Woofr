@@ -23,7 +23,7 @@ const BigTextBold = ({ text, english = false }) => {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 27,
+    fontSize: 25,
     fontWeight: "bold",
     padding: 3,
   },

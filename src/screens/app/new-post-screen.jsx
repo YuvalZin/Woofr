@@ -36,6 +36,7 @@ import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import BigText from "../../components/texts/big-text/big-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
+import BigTextBold from "../../components/texts/big-text/big-text-bold";
 
 const NewPostScreen = () => {
   //Navigation handler
@@ -141,7 +142,7 @@ const NewPostScreen = () => {
               }}
             />
             <View>
-              <BigText text={"צור פוסט חדש"} />
+              <BigTextBold text={"צור פוסט חדש"} />
             </View>
           </View>
           {!loading ? (

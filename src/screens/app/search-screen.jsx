@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import BigText from "../../components/texts/big-text/big-text";
 import CustomSearchBar from "../../components/inputs/search-bar/custom-search-bar";
 import SearchList from "../../components/scroll/search-list/search-list";
+import BigTextBold from "../../components/texts/big-text/big-text-bold";
 
 const SearchScreen = () => {
   // Define state variable 'users' using the 'useState' hook, initialized as an empty array
@@ -38,9 +39,7 @@ const SearchScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <BigText text={"חיפוש"} />
-      </View>
+
       <CustomSearchBar onPressSearch={fetchSearchResult} />
       <SearchList users={users} onClick={moveToUserProfile} />
     </SafeAreaView>
@@ -49,13 +48,10 @@ const SearchScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
+    
     flex: 1,
   },
-  header: {
-    padding: 8,
-    width: "100%",
-    alignItems: "flex-start",
-  },
+
 });
 
 export default SearchScreen;
