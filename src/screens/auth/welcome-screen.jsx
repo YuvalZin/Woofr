@@ -16,6 +16,7 @@ import RegularButton from "../../components/buttons/regular-button/regular-butto
 //Navigation handler
 import { useNavigation } from "@react-navigation/native";
 import { colorPalate } from "../../utils/ui/colors";
+import Logo from "../../components/logo";
 
 const WelcomeScreen = () => {
   //States to handel the page slider props
@@ -32,12 +33,12 @@ const WelcomeScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <BigText text={"WOOFR"} />
+        <Logo />
         <FeatureSlider index={index} setIndex={setIndex} scrollX={scrollX} />
 
         <View style={styles.buttonContainer}>
           <RegularButton
-            text={"בוא נתחיל"}
+            text={"בואו נתחיל"}
             onPress={moveToSignin}
             color={colorPalate.primary}
           />

@@ -14,7 +14,7 @@ import RatingBar from "./cards/rating-bar/rating-bar";
 import ProfessionalCheckbox from "./cards/professional-checkbox/professional-checkbox";
 import { Ionicons } from "@expo/vector-icons";
 import { colorPalate } from "../utils/ui/colors";
-import RegularTextBold from "./texts/regular-text/regular-text -bold";
+import RegularTextBold from "./texts/regular-text/regular-text-bold";
 //import { colorPalate } from "../../../utils/ui/colors";
 
 const ProfessionalProfile = ({ data }) => {

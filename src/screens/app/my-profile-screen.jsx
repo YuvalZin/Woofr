@@ -33,7 +33,7 @@ import RegularButtonSmall from "../../components/buttons/regular-button/regular-
 import EmptyCard from "../../components/cards/empty-card/empty-card";
 import PostSlider from "../../components//scroll/posts-slider/post-slider";
 import AddPost from "../../components/buttons/add-post/add-post";
-import RegularTextBold from "../../components/texts/regular-text/regular-text -bold";
+import RegularTextBold from "../../components/texts/regular-text/regular-text-bold";
 import RegularText from "../../components/texts/regular-text/regular-text";
 
 const ProfileScreen = () => {

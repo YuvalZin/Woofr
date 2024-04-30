@@ -15,7 +15,7 @@ import { colorPalate } from "../../../utils/ui/colors";
 //Import api calls
 import { GetUserInfo } from "../../../utils/api/user";
 import { deletePost, getPostLikes, likePost } from "../../../utils/api/posts";
-import RegularTextBold from "../../texts/regular-text/regular-text -bold";
+import RegularTextBold from "../../texts/regular-text/regular-text-bold";
 import { AntDesign } from '@expo/vector-icons';
 
 const Post = ({ data, onImgPress, setRender }) => {

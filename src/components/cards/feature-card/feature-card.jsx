@@ -4,6 +4,7 @@ import { StyleSheet, View, useWindowDimensions, Image } from "react-native";
 //Import custom components
 import RegularText from "../../texts/regular-text/regular-text";
 import BigText from "../../texts/big-text/big-text";
+import BigTextBold from "../../texts/big-text/big-text-bold";
 
 const FeatureCard = ({ feature }) => {
   const windowWidth = useWindowDimensions().width;
@@ -13,7 +14,7 @@ const FeatureCard = ({ feature }) => {
       <View style={styles.textContainer}>
         <View style={styles.header}>
           <Image source={{ uri: feature.image }} style={styles.image} />
-          <BigText text={feature.name} />
+          <BigTextBold text={feature.name} />
           <RegularText text={feature.description} />
         </View>
       </View>
@@ -32,16 +33,18 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   image: {
-    width: 160,
-    height: 160,
+    width: 140,
+    height: 140,
     objectFit: "contain",
+    alignSelf:"center",
+    marginBottom:25
   },
   header: {
     alignItems: "flex-start",
     justifyContent: "flex-start",
     direction: "rtl",
-    textAlign: "left",
-    paddingRight: 20,
+    textAlign: "right",
+    paddingHorizontal: 40,
     paddingBottom: 20,
   },
 });

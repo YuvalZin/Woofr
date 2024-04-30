@@ -35,29 +35,13 @@ import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import PostSlider from "../../components/scroll/posts-slider/post-slider";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 import RegularText from "../../components/texts/regular-text/regular-text";
-import RegularTextBold from "../../components/texts/regular-text/regular-text -bold";
+import RegularTextBold from "../../components/texts/regular-text/regular-text-bold";
 import RegularButtonSmall from "../../components/buttons/regular-button/regular-button-small";
 import ProfessionalProfile from "../../components/professional-profile"
 import { getVetById, getVets } from "../../utils/api/vet";
 
 const UserProfileScreen = () => {
-  // const info = {
-  //   displayName: "וטרינר הארץ",
-  //   address: "בן צבי 12",
-  //   phone: "0507799799",
-  //   description: "וטרינטר ותיק אוהב חיות במחירים מצויים לכל חברי האפליקציה",
-  //   specialization: "מומחה עיניים",
-  //   ratingScore: 4,
-  //   availability24_7: true,
-  //   sellsProducts: false,
-  //   vetToHome: true,
-  //   notes: "מחירים פצצה לכל בעלי החיות",
-  //   verificationStatus: "",
-  //   activeWoofr: false,
-  //   city: "נתניה",
-  // };
-
-  //Importing the useNavigation hook from React Navigation to access navigation prop
+//Importing the useNavigation hook from React Navigation to access navigation prop
   const navigation = useNavigation();
 
   // Extracts the 'id' parameter from the current route.
