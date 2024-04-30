@@ -1,29 +1,23 @@
-import feat1 from "../../utils/images/feat1.png"
 export const features = [
   {
-    image: feat1,
+    image: "https://i.ibb.co/R71Hm0V/feat1.png",
     name: "חברים חדשים לכל החיים",
     description:
       "הצטרפו לקהילת חובבי הכלבים הגדולה ביותר בישראל",
   },
 
   {
-    image: "https://cdn-icons-png.flaticon.com/512/6352/6352923.png",
-    name: "מערכת חיבוריות יחודית ",
+    image: "https://i.ibb.co/Y7BgMWg/feat2.png",
+    name: "לבחור נכון ",
     description:
-      "מערכת שלמה שנותנת לך לעקוב אחרי התוכן האהוב עליך לגבי בעלי החיים שלך",
+      "גלה פרופילים של וטרינר המציגים ביקורות, מידע והמלצות חשובות המותאמות לבעלי כלבים.",
   },
   {
     image:
-      "https://icons.veryicon.com/png/o/miscellaneous/fs-icon/live-chat.png",
-    name: "שיחה בזמן אמת",
+      "https://i.ibb.co/d5dv5d5/feat3.png",
+    name: "לנצור רגעים",
     description:
-      "מערכת צ'טים חכמה שמאפשרת לך לדבר באופן מיידי עם בעלי חיות המחמד האהובים עליף מכל מקום",
+      "שיתוף תמונות וחוויות עם הכלב האהוב שלך. גלה טיפים ועצות מבעלי כלבים אחרים.",
   },
-  {
-    image: "https://cdn-icons-png.flaticon.com/512/2289/2289389.png",
-    name: "תמיכה במספר פלטפורמות",
-    description:
-      "גישה לישום שלנו ממערכות המוביילי הפופוליריות ביותר בעולם על מנת לספק חווית משתמש לכולם",
-  },
+
 ];

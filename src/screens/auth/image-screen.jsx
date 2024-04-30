@@ -29,8 +29,10 @@ import { uploadImage } from "../../utils/api/image";
 //Custom components
 import BigText from "../../components/texts/big-text/big-text";
 import RegularText from "../../components/texts/regular-text/regular-text";
-import SmallText from "../../components/texts/small-text/small-text";
+import RegularTextBold from "../../components/texts/regular-text/regular-text-bold";
+import SmallTextBold from "../../components/texts/small-text/small-text-bold";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
+import BigTextBold from "../../components/texts/big-text/big-text-bold";
 
 const ImageScreen = ({}) => {
   //State to save the image
@@ -115,9 +117,9 @@ const ImageScreen = ({}) => {
       <StatusBar />
       <View style={styles.container}>
         <View style={styles.header}>
-          <BigText text={"כותרת של הדף"} />
+          <BigTextBold text={"תמונה שווה אלף מילים"} />
           <RegularText
-            text={"תיאור קצר שמפרט על הדף ולמה להוסיף תמונה חשוב ביותר "}
+            text={"לבנות רושם ראשוני חזק עם תמונת פרופיל נהדרת"}
           />
         </View>
 
@@ -127,7 +129,7 @@ const ImageScreen = ({}) => {
           </TouchableOpacity>
         ) : (
           <TouchableOpacity style={styles.circle} onPress={pickImage}>
-            <RegularText text={"בחר תמונה"} />
+            <RegularTextBold text={"בחר תמונה"} />
           </TouchableOpacity>
         )}
 
@@ -138,8 +140,9 @@ const ImageScreen = ({}) => {
             text={"הוסף"}
             onPress={addImage}
           />
+          
           <TouchableOpacity onPress={skipImageUpload} style={styles.skip}>
-            <SmallText text={"דלג"} />
+            <SmallTextBold text={"דלג"} />
           </TouchableOpacity>
         </View>
       </View>
@@ -149,19 +152,18 @@ const ImageScreen = ({}) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 5,
+    marginTop: 60,
     flex: 1,
     alignItems: "center",
     flexDirection: "column",
-    justifyContent: "space-between",
   },
   header: {
     alignItems: "flex-start",
     justifyContent: "flex-start",
     direction: "rtl",
     textAlign: "left",
-    paddingRight: 20,
-    paddingBottom: 20,
+    paddingHorizontal: 20,
+    marginBottom:55,
   },
   circle: {
     width: 300,
@@ -169,9 +171,11 @@ const styles = StyleSheet.create({
     borderRadius: 150,
     backgroundColor: colorPalate.white,
     borderColor: colorPalate.primary,
-    borderWidth: 1,
+    borderWidth: 4,
     justifyContent: "center",
     alignItems: "center",
+    marginBottom:55,
+
   },
   imagePreview: {
     width: 300,
@@ -179,6 +183,10 @@ const styles = StyleSheet.create({
     borderRadius: 150,
     borderColor: colorPalate.primary,
     borderWidth: 1,
+    borderWidth: 4,
+
+    marginBottom:55,
+
   },
   buttonContainer: {
     justifyContent: "center",

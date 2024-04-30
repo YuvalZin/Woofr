@@ -1,10 +1,9 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
-import { useFonts, Assistant_400Regular,Assistant_700Bold  } from '@expo-google-fonts/assistant';
+import { useFonts, Assistant_400Regular,Assistant_700Bold } from '@expo-google-fonts/assistant';
 
-const RegularText = ({ text, english = false ,color,onPress}) => {
+const SmallTextBold = ({ text, english = false }) => {
   const textAlign = !english ? "left" : "right";
-   
 
   const [fontsLoaded] = useFonts({
     Assistant_400Regular,
@@ -16,7 +15,7 @@ const RegularText = ({ text, english = false ,color,onPress}) => {
   }
 
   return (
-    <Text onPress= {onPress} style={[styles.text, { color:color,textAlign:textAlign,fontFamily: 'Assistant_400Regular' }]}>
+    <Text style={[styles.text, { textAlign, fontFamily: 'Assistant_700Bold' }]}>
       {text}
     </Text>
   );
@@ -24,9 +23,10 @@ const RegularText = ({ text, english = false ,color,onPress}) => {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 20,
-    padding: 4,
+    fontSize: 18,
+    fontWeight: "normal",
+    textAlign: "left",
   },
 });
 
-export default RegularText;
+export default SmallTextBold;

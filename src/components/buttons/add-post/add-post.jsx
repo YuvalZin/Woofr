@@ -42,13 +42,19 @@ const AddPost = ({ onPress }) => {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
+    paddingHorizontal:20,
     marginBottom:10,
+    marginTop:10,
+    borderTopColor:colorPalate.lightGrey,
+    borderTopWidth:1,
+    paddingTop:28,
   },
   button: {
     backgroundColor: colorPalate.primaryLight,
     borderBottomWidth:8,
     borderColor:colorPalate.primary,
     padding: 6,
+    borderRadius:10,
     width: "100%",
 
   },

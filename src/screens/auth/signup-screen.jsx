@@ -46,6 +46,7 @@ import RegularText from "../../components/texts/regular-text/regular-text";
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import CustomTextInput from "../../components/inputs/custom-text-input/custom-text-input";
 import PasswordInput from "../../components/inputs/password-input/password-input";
+import BigTextBold from "../../components/texts/big-text/big-text-bold";
 
 //Check the mobile device os
 const isIos = Platform.OS === "ios";
@@ -80,7 +81,7 @@ const SignupScreen = () => {
     email: "benyx13@gmail.com",
     password: "Aa123456",
     confirm: "Aa123456",
-    type:"",
+    type: "",
   });
 
   // Check if the app runs on iPhone
@@ -105,7 +106,6 @@ const SignupScreen = () => {
 
   // Function to handle form submission
   const handleSubmit = async () => {
-    setButtonLoading(true);
     // Validate the user data using signupValidator
     const formCheck = signupValidator(userData);
 
@@ -120,6 +120,8 @@ const SignupScreen = () => {
       }, 3000);
       return;
     }
+    else setButtonLoading(true);
+
 
     //Api call to signup the user into db
     const token = await saveUser(userData);
@@ -155,116 +157,117 @@ const SignupScreen = () => {
       </View>
       <View style={styles.container}>
         <View style={styles.header}>
-          <BigText text={"הצטרף לחוויה שלנו"} />
+          <BigTextBold text={"הצטרף לחוויה שלנו"} />
           <RegularText
             text={
-              "בלה בלה בלה חוויה יחודית שלנו שתתן לך ביצועים מצויינים עם פיצרים פגז בלה בלה בלה"
+              "* כל השדות הם שדות חובה"
             }
           />
         </View>
 
-        <View style={styles.formScroll}>
-          <ScrollView>
-            <CustomTextInput
-              value={userData.firstName}
-              placeholder="שם פרטי"
-              style={styles.input}
-              width={formWidth}
-              onChangeText={(value) => {
-                setUserData({ ...userData, firstName: value });
-              }}
-            />
-            <CustomTextInput
-              value={userData.lastName}
-              placeholder="שם משפחה"
-              style={styles.input}
-              width={formWidth}
-              onChangeText={(value) => {
-                setUserData({ ...userData, lastName: value });
-              }}
-            />
-
-            <CustomTextInput
-              value={userData.email}
-              placeholder="איימל"
-              style={styles.input}
-              width={formWidth}
-              onChangeText={(value) => {
-                setUserData({ ...userData, email: value });
-              }}
-            />
-
-            <PasswordInput
-              value={userData.password}
-              placeholder="סיסמא"
-              style={styles.input}
-              width={formWidth}
-              onChangeText={(value) => {
-                setUserData({ ...userData, password: value });
-              }}
-            />
-
-            <PasswordInput
-              value={userData.confirm}
-              placeholder="אימות סיסמא"
-              style={styles.input}
-              width={formWidth}
-              onChangeText={(value) => {
-                setUserData({ ...userData, confirm: value });
-              }}
-            />
-          </ScrollView>
-        </View>
-
-        {isIos ? null : (
-          <TouchableOpacity
-            onPress={() => {
-              setShowDatePicker(true);
+        <View style={styles.formBody}>
+          <CustomTextInput
+            value={userData.firstName}
+            placeholder="שם פרטי"
+            style={styles.input}
+            width={formWidth}
+            onChangeText={(value) => {
+              setUserData({ ...userData, firstName: value });
             }}
-          >
-            <RegularText
-              text={`${userData.birthday.getUTCFullYear()}-${
-                userData.birthday.getMonth() + 1
-              }-${userData.birthday.getDate()}`}
-            />
-          </TouchableOpacity>
-        )}
-
-        {showDatePicker && (
-          <DateTimePicker
-            value={userData.birthday}
-            onChange={handleDateSelection}
           />
-        )}
+          <CustomTextInput
+            value={userData.lastName}
+            placeholder="שם משפחה"
+            style={styles.input}
+            width={formWidth}
+            onChangeText={(value) => {
+              setUserData({ ...userData, lastName: value });
+            }}
+          />
 
-        <View style={styles.input}>
-          <DropDownPicker
-            rtl={true}
-            style={styles.picker}
-            open={openGender}
-            value={userData.gender}
-            items={genders}
-            setOpen={setOpenGender}
-            onSelectItem={(value) => {
-              setUserData({ ...userData, gender: value["value"] });
+          <CustomTextInput
+            value={userData.email}
+            placeholder="איימל"
+            style={styles.input}
+            width={formWidth}
+            onChangeText={(value) => {
+              setUserData({ ...userData, email: value });
+            }}
+          />
+
+          <PasswordInput
+            value={userData.password}
+            placeholder="סיסמא"
+            style={styles.input}
+            width={formWidth}
+            onChangeText={(value) => {
+              setUserData({ ...userData, password: value });
+            }}
+          />
+
+          <PasswordInput
+            value={userData.confirm}
+            placeholder="אימות סיסמא"
+            style={styles.input}
+            width={formWidth}
+            onChangeText={(value) => {
+              setUserData({ ...userData, confirm: value });
             }}
           />
         </View>
+        <View style={{ alignItems: "center" }}>
+          {isIos ? null : (
+            <TouchableOpacity
+              onPress={() => {
+                setShowDatePicker(true);
+              }}
+            >
+              <RegularText
+                text={`${userData.birthday.getUTCFullYear()}-${userData.birthday.getMonth() + 1
+                  }-${userData.birthday.getDate()}`}
+              />
+            </TouchableOpacity>
+          )}
 
-        <View style={{ width: 200 }}>
-          <RegularButton
-            loading={buttonLoading}
-            text={"הירשם"}
-            onPress={handleSubmit}
-            color={colorPalate.primary}
-            iconName={"checkmark-circle-outline"}
-          />
+          {showDatePicker && (
+            <DateTimePicker
+              value={userData.birthday}
+              onChange={handleDateSelection}
+            />
+          )}
+
+          <View style={styles.input}>
+            <DropDownPicker
+              rtl={true}
+              style={styles.picker}
+              open={openGender}
+              value={userData.gender}
+              items={genders}
+              setOpen={setOpenGender}
+              setValue={(value) => {
+                setUserData({ ...userData, gender: value });
+              }}
+              placeholder="בחר מגדר"
+              dropDownDirection="RTL"
+              labelStyle={styles.dropDownLabel}
+
+            />
+          </View>
+          <View style={{ marginTop: 165, width: 300 }}>
+            <RegularButton
+              loading={buttonLoading}
+              text={"הרשמה"}
+              onPress={handleSubmit}
+              color={colorPalate.primary}
+            />
+          </View>
         </View>
+
       </View>
 
       <Snackbar
         visible={snackbarOpen}
-        onDismiss={() => {}}
+        onDismiss={() => { }}
         action={{
           label: "סגור",
           onPress: () => {
@@ -282,34 +285,42 @@ const styles = StyleSheet.create({
   container: {
     padding: 5,
     flex: 1,
-    alignItems: "center",
     flexDirection: "column",
-    justifyContent: "space-between",
+  },
+  dropDownLabel: {
+    textAlign: "right",
+    fontSize: 16,
+  },
+  formBody: {
+    alignItems: "center",
+    paddingBottom: 10,
+
   },
   header: {
     alignItems: "flex-start",
     justifyContent: "flex-start",
     direction: "rtl",
     textAlign: "left",
-    paddingRight: 20,
-    paddingBottom: 20,
+    paddingHorizontal: 20,
+    paddingBottom: 40,
+
   },
   input: {
     textAlign: "right",
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 5,
     padding: 10,
-    marginVertical: 5,
     width: 300,
   },
-  formScroll: {
-    height: 300,
-  },
+
   picker: {
-    flexDirection: "row",
+    direction:"rtl",
+    flexDirection:"row-reverse",
+    alignSelf:"flex-start",
+    flex:1,
+    alignContent:"flex-start",
     justifyContent: "space-between",
     alignItems: "center",
+    textAlign: "right",
+
   },
 });
 

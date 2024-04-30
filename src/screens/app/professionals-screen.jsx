@@ -25,14 +25,31 @@ const ProfessionalsScreen = () => {
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
 
-  
-
   // State to control refreshing
   const [refreshing, setRefreshing] = useState(false);
 
   // Initialize state for storing the user's posts
   const [vets, setVets] = useState([]);
-
+  
+  const [resultsFilter, setResultsFilter] = useState({
+    id: "string",
+    userId: "string",
+    displayName: "string",
+    address: "string",
+    phone: "string",
+    profileImage: "string",
+    description: "string",
+    specialization: null,
+    ratingScore: 0,
+    availability24_7: null,
+    sellsProducts: null,
+    vetToHome: null,
+    notes: "string",
+    verificationStatus: "string",
+    activeWoofr: true,
+    city: null,
+  });
+  
   //fetch posts to display on homepage
   const fetchVets = async () => {
     const res = await getVets(resultsFilter);

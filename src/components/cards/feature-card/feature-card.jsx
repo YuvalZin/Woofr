@@ -5,7 +5,6 @@ import { StyleSheet, View, useWindowDimensions, Image } from "react-native";
 import RegularText from "../../texts/regular-text/regular-text";
 import BigText from "../../texts/big-text/big-text";
 import BigTextBold from "../../texts/big-text/big-text-bold";
-
 const FeatureCard = ({ feature }) => {
   const windowWidth = useWindowDimensions().width;
 
@@ -33,11 +32,11 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   image: {
-    width: 140,
-    height: 140,
+    width: 200,
+    height: 200,
     objectFit: "contain",
     alignSelf:"center",
-    marginBottom:25
+  
   },
   header: {
     alignItems: "flex-start",

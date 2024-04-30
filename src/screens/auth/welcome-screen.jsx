@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     flex: 0.3,
   },
   buttonContainer: {
-    width: 300,
+    width: 320,
     padding: 12,
   },
 });

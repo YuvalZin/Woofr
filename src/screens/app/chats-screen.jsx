@@ -32,6 +32,7 @@ const ChatsScreen = ({ navigation }) => {
   const loadChats = async () => {
     try {
       const res = await getUserChats(myUser.id);
+      setChats([]);
       setChats(res);
       setLoading(false);
     } catch (error) {

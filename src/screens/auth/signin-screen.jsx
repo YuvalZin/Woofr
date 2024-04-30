@@ -26,6 +26,8 @@ import RegularButton from "../../components/buttons/regular-button/regular-butto
 import RegularText from "../../components/texts/regular-text/regular-text";
 import CustomTextInput from "../../components/inputs/custom-text-input/custom-text-input";
 import PasswordInput from "../../components/inputs/password-input/password-input";
+import Logo from "../../components/logo";
+import BigTextBold from "../../components/texts/big-text/big-text-bold";
 
 const SigninScreen = () => {
   // Importing the useNavigation hook from React Navigation to access navigation prop
@@ -90,11 +92,14 @@ const SigninScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar />
       <View style={styles.container}>
+      <Logo/>
+
         <View style={styles.header}>
-          <BigText text={"היי כיף לראות שחזרת"} />
+
+          <BigTextBold text={"כיף לראות אותך שוב!"} />
           <RegularText
             text={
-              "אנחנו פה בשביל חיות המחמד שלך בלה בלה בלה להמשיך לעשות כיף פה"
+              "התחברו עכשיו"
             }
           />
         </View>
@@ -121,7 +126,7 @@ const SigninScreen = () => {
         </View>
 
         <View>
-          <View style={{ width: 200 }}>
+          <View style={{ alignItems:"center",width: 200,marginTop:55 }}>
             <RegularButton
               loading={buttonLoading}
               text={"התחבר"}
@@ -131,15 +136,16 @@ const SigninScreen = () => {
             />
           </View>
           <View style={styles.divider}></View>
-          <View style={{ width: 200 }}>
-            <RegularButton
-              text={"הירשם"}
+
+        </View>
+        
+          <View style={{alignItems:"center",width: 250 }}>
+            <RegularText
+              text={"עדיין לא ב woofr? להרשמה"}
               onPress={moveToSignup}
               color={colorPalate.primary}
-              iconName={"person-add-outline"}
             />
           </View>
-        </View>
       </View>
 
       <Snackbar
@@ -164,14 +170,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     flexDirection: "column",
-    justifyContent: "space-around",
   },
   header: {
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
+    alignItems: "center",
     direction: "rtl",
-    textAlign: "left",
-    paddingRight: 20,
+    paddingHorizontal: 20,
+    marginTop:85,
+    marginBottom:25,
   },
   input: {
     borderWidth: 1,
@@ -183,7 +188,7 @@ const styles = StyleSheet.create({
     width: 300,
   },
   divider: {
-    backgroundColor: "grey",
+    backgroundColor: colorPalate.grey,
     height: 1,
     marginVertical: 10,
   },
