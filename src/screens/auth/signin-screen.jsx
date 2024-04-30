@@ -21,12 +21,11 @@ import { loginUser, GetUserData } from "../../utils/api/user";
 import { colorPalate } from "../../utils/ui/colors";
 
 //Custom components
-import BigText from "../../components/texts/big-text/big-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import RegularText from "../../components/texts/regular-text/regular-text";
 import CustomTextInput from "../../components/inputs/custom-text-input/custom-text-input";
 import PasswordInput from "../../components/inputs/password-input/password-input";
-import Logo from "../../components/logo";
+import Logo from "../../components/image/logo/logo";
 import BigTextBold from "../../components/texts/big-text/big-text-bold";
 
 const SigninScreen = () => {
@@ -92,16 +91,11 @@ const SigninScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar />
       <View style={styles.container}>
-      <Logo/>
+        <Logo />
 
         <View style={styles.header}>
-
           <BigTextBold text={"כיף לראות אותך שוב!"} />
-          <RegularText
-            text={
-              "התחברו עכשיו"
-            }
-          />
+          <RegularText text={"התחברו עכשיו"} />
         </View>
 
         <View>
@@ -126,7 +120,7 @@ const SigninScreen = () => {
         </View>
 
         <View>
-          <View style={{ alignItems:"center",width: 200,marginTop:55 }}>
+          <View style={{ alignItems: "center", width: 200, marginTop: 55 }}>
             <RegularButton
               loading={buttonLoading}
               text={"התחבר"}
@@ -136,16 +130,15 @@ const SigninScreen = () => {
             />
           </View>
           <View style={styles.divider}></View>
-
         </View>
-        
-          <View style={{alignItems:"center",width: 250 }}>
-            <RegularText
-              text={"עדיין לא ב woofr? להרשמה"}
-              onPress={moveToSignup}
-              color={colorPalate.primary}
-            />
-          </View>
+
+        <View style={{ alignItems: "center", width: 250 }}>
+          <RegularText
+            text={"עדיין לא ב woofr? להרשמה"}
+            onPress={moveToSignup}
+            color={colorPalate.primary}
+          />
+        </View>
       </View>
 
       <Snackbar
@@ -175,8 +168,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     direction: "rtl",
     paddingHorizontal: 20,
-    marginTop:85,
-    marginBottom:25,
+    marginTop: 85,
+    marginBottom: 25,
   },
   input: {
     borderWidth: 1,

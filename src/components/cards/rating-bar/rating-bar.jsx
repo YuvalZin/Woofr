@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { AirbnbRating } from "react-native-ratings";
 
-const RatingBar = ({ rating ,disabled}) => {
+const RatingBar = ({ rating, disabled }) => {
   return (
     <View style={styles.container}>
       <AirbnbRating

@@ -8,7 +8,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { features } from "../../utils/data/features";
 
 //Custom components
-import BigText from "../../components/texts/big-text/big-text";
 import FeatureSlider from "../../components/scroll/feature-slider/feature-slider";
 import Pagination from "../../components/animation/pagination/pagination";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
@@ -16,7 +15,7 @@ import RegularButton from "../../components/buttons/regular-button/regular-butto
 //Navigation handler
 import { useNavigation } from "@react-navigation/native";
 import { colorPalate } from "../../utils/ui/colors";
-import Logo from "../../components/logo";
+import Logo from "../../components/image/logo/logo";
 
 const WelcomeScreen = () => {
   //States to handel the page slider props

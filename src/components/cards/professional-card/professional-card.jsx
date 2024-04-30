@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
-//
-import { useSelector } from "react-redux";
-import { selectAuth } from "../../../redux/authSlice";
-
 //Custom Components
 import RegularText from "../../texts/regular-text/regular-text";
 import SmallText from "../../texts/small-text/small-text";
 import RatingBar from "../rating-bar/rating-bar";
 
-//import { colorPalate } from "../../../utils/ui/colors";
-
-const ProfessionalCard = ({ data, onCardPress }) => {
+const ProfessionalCard = ({ data, onCardPress, onRatingPress }) => {
   const [vetData, setVetData] = useState({
     id: "string",
     displayName: "string",
@@ -77,13 +71,11 @@ const ProfessionalCard = ({ data, onCardPress }) => {
       </View>
       <TouchableOpacity
         onPress={() => {
-          onRatingPress();
+          onRatingPress(vetData);
         }}
       >
-        <RatingBar disabled={true} rating={vetData.ratingScore} onPress={() => {
-        }} />
+        <RatingBar disabled={true} rating={vetData.ratingScore} />
       </TouchableOpacity>
-
     </View>
   );
 };

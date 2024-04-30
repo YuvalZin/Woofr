@@ -1,10 +1,10 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   SafeAreaView,
   ScrollView,
   View,
-  RefreshControl,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -12,7 +12,11 @@ import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
 
+// Importing the getVets function from the API utilities
 import { getVets } from "../../utils/api/vet";
+
+// Importing the colorPalate from the UI utilities
+import { colorPalate } from "../../utils/ui/colors";
 
 //Custom components
 import ProfessionalSlider from "../../components/scroll/professional-slider/professional-slider";
@@ -20,7 +24,7 @@ import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import BigText from "../../components/texts/big-text/big-text";
 import ProfessionalFilter from "../../components/inputs/professional-filter/professional-filter";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
-import { colorPalate } from "../../utils/ui/colors";
+import CollapseButton from "../../components/buttons/collapse-button/collapse-button";
 
 const ProfessionalsScreen = () => {
   //Navigation handler
@@ -33,6 +37,9 @@ const ProfessionalsScreen = () => {
   // Initialize state for storing the user's posts
   const [vets, setVets] = useState([]);
 
+  const [showFilters, setShowFilters] = useState(true);
+
+  // State for filtering results based on various criteria
   const [resultsFilter, setResultsFilter] = useState({
     id: "string",
     userId: "string",
@@ -67,6 +74,11 @@ const ProfessionalsScreen = () => {
     }
   };
 
+  //Function to move to profile
+  const moveToRating = (data) => {
+    navigation.navigate("home-rating", { data: data });
+  };
+
   // useEffect hook to fetch posts when the refreshing state changes
   useEffect(() => {
     fetchVets();
@@ -84,15 +96,35 @@ const ProfessionalsScreen = () => {
           <BigText text={"וטרינרים"} />
         </View>
       </View>
-      <ScrollView
-        nestedScrollEnabled={true}
-        style={styles.container}
-        // refreshControl={
-        //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        // }
-      >
+
+      {showFilters && (
+        <>
+          <ProfessionalFilter data={resultsFilter} setData={setResultsFilter} />
+
+          <View style={styles.buttonContainer}>
+            <RegularButton
+              text={"חפש"}
+              iconName={"search-outline"}
+              color={colorPalate.primary}
+              onPress={fetchVets}
+            />
+          </View>
+        </>
+      )}
+
+      <CollapseButton
+        value={showFilters}
+        setValue={setShowFilters}
+        text={showFilters ? "הסתר פילטרים" : "הצג פילטרים"}
+      />
+
+      <ScrollView nestedScrollEnabled={true} style={styles.container}>
         {vets.length > 0 && (
-          <ProfessionalSlider arr={vets} onCardPress={moveToProfile} />
+          <ProfessionalSlider
+            arr={vets}
+            onCardPress={moveToProfile}
+            onRatingPress={moveToRating}
+          />
         )}
       </ScrollView>
     </SafeAreaView>

@@ -6,6 +6,8 @@ import {
   StyleSheet,
   View,
 } from "react-native";
+
+// Import necessary hooks from React Navigation
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 //App color palate
@@ -18,8 +20,6 @@ import uuid from "react-native-uuid";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
 
-import { Ionicons } from "@expo/vector-icons";
-
 //Importing function from the API file
 import {
   GetUserInfo,
@@ -29,6 +29,7 @@ import {
 } from "../../utils/api/user";
 import { startChat } from "../../utils/api/chat";
 import { getUserPosts } from "../../utils/api/posts";
+import { getVetById } from "../../utils/api/vet";
 
 //Custom components
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
@@ -37,8 +38,7 @@ import LoadingIndicator from "../../components/animation/loading-indicator/loadi
 import RegularText from "../../components/texts/regular-text/regular-text";
 import RegularTextBold from "../../components/texts/regular-text/regular-text-bold";
 import RegularButtonSmall from "../../components/buttons/regular-button/regular-button-small";
-import ProfessionalProfile from "../../components/professional-profile";
-import { getVetById, getVets } from "../../utils/api/vet";
+import ProfessionalProfile from "../../components/cards/professional-profile/professional-profile";
 
 const UserProfileScreen = () => {
   //Importing the useNavigation hook from React Navigation to access navigation prop
@@ -89,6 +89,12 @@ const UserProfileScreen = () => {
           style: "cancel",
         },
       ]);
+    }
+  };
+
+  const moveToRating = (id) => {
+    if (myUser.id !== id) {
+      navigation.navigate("home-rating", { data: professional });
     }
   };
 
@@ -197,7 +203,12 @@ const UserProfileScreen = () => {
               />
             </View>
           </View>
-          {professional && <ProfessionalProfile data={professional} />}
+          {professional && (
+            <ProfessionalProfile
+              data={professional}
+              onRatingPress={moveToRating}
+            />
+          )}
 
           <View style={styles.postsArea}>
             <PostSlider arr={posts} onImgPress={() => {}} />
