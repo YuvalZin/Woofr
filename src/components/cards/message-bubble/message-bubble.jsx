@@ -11,29 +11,36 @@ const MessageBubble = ({ message, myUser }) => {
         isMyMessage ? styles.myMessageContainer : styles.otherMessageContainer
       }
     >
-      <Text style={styles.text}>{message.messageText}</Text>
+      <Text style={
+        isMyMessage ? styles.textSelf : styles.text
+      }
+      >{message.messageText}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   myMessageContainer: {
-    backgroundColor: colorPalate.accent,
-    borderRadius: 8,
+    backgroundColor: colorPalate.lightGrey,
+    borderRadius: 15,
     padding: 12,
     margin: 8,
     alignSelf: "flex-start",
   },
   otherMessageContainer: {
-    backgroundColor: colorPalate.primary,
-    borderRadius: 8,
+    backgroundColor: colorPalate.primaryLight,
+    borderRadius: 15,
     padding: 12,
     margin: 8,
     alignSelf: "flex-end",
   },
   text: {
-    fontSize: 18,
+    fontSize: 16,
     color: colorPalate.white,
+  },
+  textSelf: {
+    fontSize: 16,
+    color: colorPalate.black,
   },
 });
 

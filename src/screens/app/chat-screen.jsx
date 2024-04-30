@@ -29,6 +29,9 @@ import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import RegularText from "../../components/texts/regular-text/regular-text";
 import ChatInput from "../../components/inputs/chat-input/chat-input";
 import Messages from "../../components/scroll/messages/messages";
+import { colorPalate } from "../../utils/ui/colors";
+import RegularTextBold from "../../components/texts/regular-text/regular-text-bold";
+import SmallTextBold from "../../components/texts/small-text/small-text-bold";
 
 const ChatScreen = () => {
   //Navigation handler
@@ -62,7 +65,6 @@ const ChatScreen = () => {
   const sendMessage = async () => {
     // Dismiss the keyboard and set loading state to true
     Keyboard.dismiss();
-    setLoading(true);
 
     if (msg === "") {
       setSnackBarText("אין בהודעה תוכן");
@@ -72,6 +74,8 @@ const ChatScreen = () => {
       }, 3000);
       return;
     }
+    else setLoading(true);
+
 
     // Create a new message object
     const newMessage = {
@@ -144,29 +148,31 @@ const ChatScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <GoBackButton
-        onPress={() => {
-          navigation.goBack();
-        }}
-      />
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        {otherUser && (
-          <View style={styles.infoRow}>
-            <Image
-              source={{ uri: otherUser.profilePictureUrl }}
-              style={styles.profileImage}
-            />
-            <RegularText
-              text={`${otherUser.firstName} ${otherUser.lastName}`}
-            />
-          </View>
-        )}
+        <View style={styles.header}>
+          <GoBackButton
+            onPress={() => {
+              navigation.goBack();
+            }}
+          />
+          {otherUser && (
+            <View style={styles.infoRow}>
+              <Image
+                source={{ uri: otherUser.profilePictureUrl }}
+                style={styles.profileImage}
+              />
+              <SmallTextBold
+                text={`${otherUser.firstName} ${otherUser.lastName}`}
+              />
+            </View>
+          )}
+        </View>
 
         {messageArray && (
-          <View style={styles.container}>
+          <View style={styles.msgContainer}>
             <Messages arr={messageArray} myUser={myUser} />
           </View>
         )}
@@ -180,7 +186,7 @@ const ChatScreen = () => {
 
         <Snackbar
           visible={snackbarOpen}
-          onDismiss={() => {}}
+          onDismiss={() => { }}
           action={{
             label: "סגור",
             onPress: () => {
@@ -199,6 +205,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  msgContainer: {
+    paddingHorizontal:10,
+    flex: 1,
+  },
+  header: {
+    flexDirection: "row-reverse",
+    justifyContent: "space-between",
+    width: "100%",
+    alignItems: "center",
+    borderBottomWidth:0.8,
+    paddingBottom:10,
+    borderBottomColor:colorPalate.lightGrey,
+  },
   loadingContainer: {
     flex: 1,
     justifyContent: "center",
@@ -211,9 +230,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   profileImage: {
-    width: 65,
-    height: 65,
+    width: 55,
+    height: 55,
     borderRadius: 30,
+    marginRight:10,
+    marginLeft:10,
   },
 });
 
