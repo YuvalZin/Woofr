@@ -12,6 +12,7 @@ import { getUserChats } from "../../utils/api/chat";
 import BigText from "../../components/texts/big-text/big-text";
 import Chats from "../../components/scroll/chats/chats";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
+import BigTextBold from "../../components/texts/big-text/big-text-bold";
 
 const ChatsScreen = ({ navigation }) => {
   // Use useSelector to access the Redux store state
@@ -47,7 +48,7 @@ const ChatsScreen = ({ navigation }) => {
 
     const fetchAndPollChats = async () => {
       await loadChats();
-      intervalId = setInterval(loadChats, 1000 * 15);
+      // intervalId = setInterval(loadChats, 1000 * 15);
     };
 
     fetchAndPollChats();
@@ -61,7 +62,7 @@ const ChatsScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <BigText text={"שיחות"} />
+        <BigTextBold text={"שיחות"} />
       </View>
       {loading ? (
         <LoadingIndicator />
@@ -75,11 +76,13 @@ const ChatsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 20,
+    width:"98%",
+
   },
   header: {
     justifyContent: "flex-start",
-    padding: 8,
-    width: "100%",
+    padding: 20,
   },
 });
 

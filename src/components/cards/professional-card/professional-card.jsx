@@ -75,7 +75,15 @@ const ProfessionalCard = ({ data, onCardPress }) => {
       <View style={styles.bottomContainer}>
         <SmallText text={vetData.description} style={styles.descriptionText} />
       </View>
-      <RatingBar disabled={true} rating={vetData.ratingScore} />
+      <TouchableOpacity
+        onPress={() => {
+          onRatingPress();
+        }}
+      >
+        <RatingBar disabled={true} rating={vetData.ratingScore} onPress={() => {
+        }} />
+      </TouchableOpacity>
+
     </View>
   );
 };

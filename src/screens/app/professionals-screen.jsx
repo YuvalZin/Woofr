@@ -87,9 +87,9 @@ const ProfessionalsScreen = () => {
       <ScrollView
         nestedScrollEnabled={true}
         style={styles.container}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
+        // refreshControl={
+        //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        // }
       >
         {vets.length > 0 && (
           <ProfessionalSlider arr={vets} onCardPress={moveToProfile} />
