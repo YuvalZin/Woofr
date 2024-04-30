@@ -26,9 +26,6 @@ import { getUserPosts } from "../../utils/api/posts";
 import { colorPalate } from "../../utils/ui/colors";
 
 //Custom components
-import BigText from "../../components/texts/big-text/big-text";
-import SmallText from "../../components/texts/small-text/small-text";
-import RegularButton from "../../components/buttons/regular-button/regular-button";
 import RegularButtonSmall from "../../components/buttons/regular-button/regular-button-small";
 import EmptyCard from "../../components/cards/empty-card/empty-card";
 import PostSlider from "../../components//scroll/posts-slider/post-slider";
@@ -78,14 +75,6 @@ const ProfileScreen = () => {
     setFollower(fetchFollowers);
   };
 
-  const handleFetchFollowing = () => {
-    navigation.navigate('follows', { follows: following });; 
-  };
-  
-  const handleFetchFollowers = () => {
-    navigation.navigate('follows', { follows: followers });; 
-  };
-  
   // Execute the provided callback when the component gains focus
   useFocusEffect(
     useCallback(() => {
@@ -99,6 +88,10 @@ const ProfileScreen = () => {
     // Set refreshing to true immediately
     setMyPosts([]);
     setRefreshing(true);
+  };
+
+  const moveToFollows = (arr, title) => {
+    navigation.navigate("profile-follows", { arr: arr, title: title });
   };
 
   useEffect(() => {
@@ -127,7 +120,9 @@ const ProfileScreen = () => {
             <View style={styles.header}>
               <View>
                 <View style={{ marginBottom: 10 }}>
-                  <RegularTextBold text={`${myUser.firstName} ${myUser.lastName}`} />
+                  <RegularTextBold
+                    text={`${myUser.firstName} ${myUser.lastName}`}
+                  />
                 </View>
                 <Image
                   source={{ uri: myUser.profilePictureUrl }}
@@ -136,17 +131,24 @@ const ProfileScreen = () => {
               </View>
               <View style={styles.followingContainer}>
                 <TouchableOpacity
-                  onPress={handleFetchFollowing}
-                  style={{ flexDirection: "column", alignItems: "center" }}>
+                  onPress={() => {
+                    moveToFollows(following, "עוקב אחרי");
+                  }}
+                  style={{ flexDirection: "column", alignItems: "center" }}
+                >
                   <RegularTextBold text={`${following.length}`} />
                   <RegularText text={`עוקב`} />
                 </TouchableOpacity>
-                <TouchableOpacity style={{ flexDirection: "column", alignItems: "center" }}>
+                <TouchableOpacity
+                  style={{ flexDirection: "column", alignItems: "center" }}
+                  onPress={() => {
+                    moveToFollows(followers, "עוקבים אחרי");
+                  }}
+                >
                   <RegularTextBold text={`${followers.length}`} />
                   <RegularText text={`במעקב`} />
                 </TouchableOpacity>
               </View>
-
             </View>
             <View style={styles.buttonsContainer}>
               <View style={styles.buttonView}>
@@ -174,16 +176,14 @@ const ProfileScreen = () => {
               }}
             />
             <View style={styles.postsArea}>
-
               {myPosts.length > 0 && (
                 <PostSlider
                   arr={myPosts}
-                  onImgPress={() => { }}
+                  onImgPress={() => {}}
                   setRender={onRefresh}
                 />
               )}
             </View>
-
           </View>
         ) : (
           <EmptyCard
@@ -230,13 +230,11 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     borderRadius: 80,
     marginBottom: 8,
-
   },
   buttonsContainer: {
     flexDirection: "row",
     marginBottom: 2,
     paddingHorizontal: 29,
-
   },
   buttonView: {
     flex: 1,
