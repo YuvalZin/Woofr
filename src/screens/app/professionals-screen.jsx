@@ -3,6 +3,7 @@ import {
   StyleSheet,
   SafeAreaView,
   ScrollView,
+  View,
   RefreshControl,
 } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
@@ -14,6 +15,7 @@ import { selectAuth } from "../../redux/authSlice";
 import { getVets } from "../../utils/api/vet";
 import ProfessionalSlider from "../../components/scroll/professional-slider/professional-slider";
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
+import BigText from "../../components/texts/big-text/big-text";
 
 const ProfessionalsScreen = () => {
   //Navigation handler
@@ -23,24 +25,7 @@ const ProfessionalsScreen = () => {
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
 
-  const [resultsFilter, setResultsFilter] = useState({
-    id: "string",
-    userId: "string",
-    displayName: "string",
-    address: "string",
-    phone: "string",
-    profileImage: "string",
-    description: "string",
-    specialization: null,
-    ratingScore: 0,
-    availability24_7: null,
-    sellsProducts: null,
-    vetToHome: null,
-    notes: "string",
-    verificationStatus: "string",
-    activeWoofr: true,
-    city: null,
-  });
+  
 
   // State to control refreshing
   const [refreshing, setRefreshing] = useState(false);
@@ -86,6 +71,16 @@ const ProfessionalsScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.header}>
+          <GoBackButton
+            onPress={() => {
+              navigation.goBack();
+            }}
+          />
+          <View>
+            <BigText text={"וטרינרים"} />
+          </View>
+        </View>
       <ScrollView
         nestedScrollEnabled={true}
         style={styles.container}
@@ -93,11 +88,7 @@ const ProfessionalsScreen = () => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <GoBackButton
-          onPress={() => {
-            navigation.goBack();
-          }}
-        />
+        
         {vets.length > 0 && (
           <ProfessionalSlider arr={vets} setRender={onRefresh} />
         )}
@@ -110,6 +101,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  header: {
+    flexDirection: "row-reverse",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    width: "100%",
+    alignItems: "center",
+  }
 });
 
 export default ProfessionalsScreen;

@@ -38,7 +38,7 @@ const VetSlider = ({ arr, setRender }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 30,
+    paddingTop: 15,
     paddingBottom: 100,
     flex: 1,
     width: "100%",

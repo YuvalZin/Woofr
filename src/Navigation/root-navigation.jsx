@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 
 //Import react-native navigation element
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer,DefaultTheme} from "@react-navigation/native";
 
 //Import navigation for the root
 import AuthNavigation from "./auth-navigation";
@@ -21,7 +21,13 @@ const RootNavigation = () => {
   const { isAuthenticated } = useSelector(selectAuth);
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
-
+  const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background:'white'
+    },
+  };
   useEffect(() => {
     // Fetch user data from SecureStore
     const fetchUserFromSecureStore = async () => {
@@ -48,7 +54,7 @@ const RootNavigation = () => {
   }
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       {isAuthenticated ? <AppNavigation /> : <AuthNavigation />}
     </NavigationContainer>
   );

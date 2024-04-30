@@ -42,3 +42,22 @@ export const getVets = async (vetFilters) => {
     console.error("Error:", error);
   }
 };
+export const getVetById = async (id) => {
+  try {
+    const apiUrl = `${vetUrl}/${id}`;
+    const response = await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed get vet by id");
+    }
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};

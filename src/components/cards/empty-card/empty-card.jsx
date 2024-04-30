@@ -17,21 +17,14 @@ const EmptyCard = ({ text, iconName }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 15,
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
-    backgroundColor: "#f0f0f0",
+    padding: 30,
+    backgroundColor: "white",
     borderRadius: 10,
-    marginHorizontal: 20,
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    width:"100%",
+    
   },
 });
 

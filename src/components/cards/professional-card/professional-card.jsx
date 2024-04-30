@@ -76,7 +76,7 @@ const ProfessionalCard = ({ data }) => {
       <View style={styles.bottomContainer}>
         <SmallText text={vetData.description} style={styles.descriptionText} />
       </View>
-      <RatingBar rating={vetData.ratingScore} />
+      <RatingBar disabled={true} rating={vetData.ratingScore} />
     </View>
   );
 };

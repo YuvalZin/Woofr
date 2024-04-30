@@ -80,6 +80,7 @@ const SignupScreen = () => {
     email: "benyx13@gmail.com",
     password: "Aa123456",
     confirm: "Aa123456",
+    type:"",
   });
 
   // Check if the app runs on iPhone

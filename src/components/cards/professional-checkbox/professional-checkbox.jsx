@@ -12,16 +12,16 @@ const ProfessionalCheckbox = ({ availability, sells, toHome }) => {
   return (
     <View style={styles.row}>
       <View style={styles.col}>
-        <SmallText text={"זמין כל הזמן"} />
+        <SmallText text={"זמינות 24/7"} />
         <Checkbox value={availability} color={colorPalate.primary} />
       </View>
 
       <View style={styles.col}>
-        <SmallText text={"מוכר מוצרים"} />
+        <SmallText text={"מכירת מוצרים"} />
         <Checkbox value={sells} color={colorPalate.primary} />
       </View>
       <View style={styles.col}>
-        <SmallText text={"מגיע עד הבית"} />
+        <SmallText text={"שירות ביקורי בית"} />
         <Checkbox value={toHome} color={colorPalate.primary} />
       </View>
     </View>

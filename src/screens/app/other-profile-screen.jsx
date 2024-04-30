@@ -31,33 +31,31 @@ import { startChat } from "../../utils/api/chat";
 import { getUserPosts } from "../../utils/api/posts";
 
 //Custom components
-import BigText from "../../components/texts/big-text/big-text";
-import RegularButton from "../../components/buttons/regular-button/regular-button";
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import PostSlider from "../../components/scroll/posts-slider/post-slider";
-import SmallText from "../../components/texts/small-text/small-text";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 import RegularText from "../../components/texts/regular-text/regular-text";
-import ProfessionalCheckbox from "../../components/cards/professional-checkbox/professional-checkbox";
+import RegularTextBold from "../../components/texts/regular-text/regular-text -bold";
+import RegularButtonSmall from "../../components/buttons/regular-button/regular-button-small";
+import ProfessionalProfile from "../../components/professional-profile"
+import { getVetById, getVets } from "../../utils/api/vet";
 
 const UserProfileScreen = () => {
-  const info = {
-    displayName: "וטרינר הארץ",
-    address: "בן צבי 12",
-    phone: "0507799799",
-    description: "וטרינטר ותיק אוהב חיות במחירים מצויים לכל חברי האפליקציה",
-    specialization: "מזון חיות",
-    ratingScore: 0,
-    availability24_7: true,
-    sellsProducts: false,
-    vetToHome: true,
-    notes: "מחירים פצצה לכל בעלי החיות",
-    verificationStatus: "",
-    activeWoofr: false,
-    city: "נתניה",
-  };
-
-  const pro = true;
+  // const info = {
+  //   displayName: "וטרינר הארץ",
+  //   address: "בן צבי 12",
+  //   phone: "0507799799",
+  //   description: "וטרינטר ותיק אוהב חיות במחירים מצויים לכל חברי האפליקציה",
+  //   specialization: "מומחה עיניים",
+  //   ratingScore: 4,
+  //   availability24_7: true,
+  //   sellsProducts: false,
+  //   vetToHome: true,
+  //   notes: "מחירים פצצה לכל בעלי החיות",
+  //   verificationStatus: "",
+  //   activeWoofr: false,
+  //   city: "נתניה",
+  // };
 
   //Importing the useNavigation hook from React Navigation to access navigation prop
   const navigation = useNavigation();
@@ -72,6 +70,8 @@ const UserProfileScreen = () => {
 
   // Define state variable 'userProfile' using the 'useState' hook, initialized as null.
   const [userProfile, setUserProfile] = useState(null);
+  const [userType, setUserType] = useState("user");
+  const [professional, setProfessional] = useState();
 
   // Define state variable 'posts' using the 'useState' hook, initialized as an empty array.
   const [posts, setPosts] = useState([]);
@@ -123,6 +123,11 @@ const UserProfileScreen = () => {
   const fetchUserData = async () => {
     const response = await GetUserInfo(id);
     setUserProfile(response);
+    if (response.type == "vet") {
+      const vetData = await getVetById(id);
+      setProfessional(vetData);
+      console.log(professional);
+    }
   };
 
   // Asynchronously fetches user posts based on the provided 'id' and updates the 'posts' state.
@@ -157,78 +162,50 @@ const UserProfileScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <GoBackButton
-        onPress={() => {
-          navigation.goBack();
-        }}
-      />
+      <View style={styles.header}>
+        <GoBackButton
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
+        {userProfile && (
+          <View>
+            <RegularTextBold text={userProfile.firstName + " " + userProfile.lastName} />
+          </View>
+        )}
+
+      </View>
       {userProfile ? (
         <ScrollView style={styles.container}>
-          <View style={styles.imageContainer}>
-            {pro ? <BigText text={info.displayName} /> : null}
-
-            <Image
-              source={{ uri: userProfile.profilePictureUrl }}
-              style={styles.profileImage}
-            />
-
-            {pro ? (
-              <View style={styles.infoContainer}>
-                <ProfessionalCheckbox
-                  availability={info.availability24_7}
-                  sells={info.sellsProducts}
-                  toHome={info.vetToHome}
-                />
-
-                <View style={styles.infoRow}>
-                  <Ionicons
-                    name="home-outline"
-                    color={colorPalate.primary}
-                    size={18}
-                  />
-                  <RegularText text={`${info.city} ${info.address}`} />
-                </View>
-
-                <View style={styles.infoRow}>
-                  <Ionicons
-                    name="call-outline"
-                    color={colorPalate.primary}
-                    size={18}
-                  />
-                  <RegularText text={`${info.phone}`} />
-                </View>
-
-                <View style={styles.descriptionContainer}>
-                  <SmallText text={`${info.description}`} />
-                </View>
-              </View>
-            ) : (
-              <BigText
-                text={`${userProfile.firstName} ${userProfile.lastName}`}
+          <View style={styles.topArea}>
+            <View>
+              <Image
+                source={{ uri: userProfile.profilePictureUrl }}
+                style={styles.profileImage}
               />
-            )}
-
+            </View>
             <View style={styles.followingContainer}>
-              <SmallText text={`עוקב ${following.length}`} />
-              <SmallText text={`במעקב ${followers.length} `} />
+              <RegularText text={`${following.length}\nעוקב`} />
+              <RegularText text={`${followers.length}\nבמעקב`} />
             </View>
           </View>
 
           <View style={styles.buttonsContainer}>
-            <View style={styles.buttonContainer}>
-              <RegularButton
-                text={followThis ? "הסר עוקב" : "עוקב"}
+            <View style={styles.buttonView}>
+              <RegularButtonSmall
+                text={followThis ? "הסר עוקב" : "עקוב"}
                 width={120}
-                color={colorPalate.primary}
+                color={colorPalate.primaryLight}
+                textColor={"white"}
                 iconName={"person-add-outline"}
                 onPress={followHandler}
               />
             </View>
-            <View style={styles.buttonContainer}>
-              <RegularButton
+            <View style={styles.buttonView}>
+              <RegularButtonSmall
                 text={"שלח הודעה"}
                 width={120}
-                color={colorPalate.primary}
+                color={"#e6e6e6"}
                 iconName={"mail-outline"}
                 onPress={() => {
                   moveToChat(userProfile.email);
@@ -236,19 +213,38 @@ const UserProfileScreen = () => {
               />
             </View>
           </View>
+          {professional && (
+            <ProfessionalProfile data={professional} />
+          )}
 
-          <PostSlider arr={posts} onImgPress={() => {}} />
-        </ScrollView>
+          <View style={styles.postsArea}>
+            <PostSlider arr={posts} onImgPress={() => { }} />
+          </View>
+
+        </ScrollView >
       ) : (
         <LoadingIndicator />
       )}
-    </SafeAreaView>
+    </SafeAreaView >
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  postsArea: {
+    borderTopWidth:0.5,
+    borderTopColor:colorPalate.lightGrey,
+    width: "100%",
+    backgroundColor: "#f5f5f5",
+    paddingBottom: 30,
+  },
+  topArea: {
+    paddingHorizontal: 25,
+    paddingBottom: 15,
+    flexDirection: "row",
+    alignItems: "flex-start",
   },
   loadingContainer: {
     justifyContent: "center",
@@ -260,33 +256,36 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   profileImage: {
-    width: 160,
-    height: 160,
+    width: 92,
+    height: 92,
     resizeMode: "cover",
     borderRadius: 80,
   },
-  infoContainer: {
-    flexDirection: "column",
-    width: "100%",
-    padding: 8,
-  },
+
   infoRow: {
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 2,
   },
   followingContainer: {
+    flex: 1,
     flexDirection: "row",
+    justifyContent: "center",
+    alignSelf: "flex-end",
+    paddingBottom: 5,
     gap: 30,
   },
   buttonsContainer: {
-    padding: 8,
     flexDirection: "row",
-    justifyContent: "space-evenly",
-    width: "100%",
+    marginBottom: 10,
+    paddingHorizontal: 29,
   },
   buttonContainer: {
     width: 180,
+  },
+  buttonView: {
+    flex: 1,
+    padding: 8,
   },
   buttonItem: {
     flex: 1,
@@ -295,6 +294,13 @@ const styles = StyleSheet.create({
   bio: {
     fontSize: 16,
     textAlign: "center",
+  },
+  header: {
+    flexDirection: "row-reverse",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    width: "100%",
+    alignItems: "center",
   },
 });
 

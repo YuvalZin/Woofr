@@ -7,15 +7,15 @@ import {
   View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useFonts, Assistant_400Regular } from '@expo-google-fonts/assistant';
+import { useFonts, Assistant_700Bold } from '@expo-google-fonts/assistant';
 
 // App color palate
 import { colorPalate } from "../../../utils/ui/colors";
 
-const RegularButton = ({ text, onPress, color, iconName, loading = false }) => {
-  // Load the Assistant font
+const RegularButtonSmall = ({ textColor,text, onPress, color, iconName, loading = false }) => {
+  // Load the Assistant bold font
   const [fontsLoaded] = useFonts({
-    Assistant_400Regular,
+    Assistant_700Bold,
   });
 
   if (!fontsLoaded) {
@@ -29,8 +29,8 @@ const RegularButton = ({ text, onPress, color, iconName, loading = false }) => {
     >
       {!loading ? (
         <>
-          <Text style={styles.text}>{text}</Text>
-          {iconName && <Ionicons name={iconName} size={24} color="white" />}
+          <Text style={[styles.text,{color:textColor}]}>{text}</Text>
+          {iconName && <Ionicons name={iconName} size={24} color = {textColor} />}
         </>
       ) : (
         <ActivityIndicator color={colorPalate.white} size={32} />
@@ -41,22 +41,21 @@ const RegularButton = ({ text, onPress, color, iconName, loading = false }) => {
 
 const styles = StyleSheet.create({
   button: {
-    padding: 10,
-    borderRadius: 5,
+    padding: 5,
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
     elevation: 5,
+    borderRadius: 10,
     flexDirection: "row",
     gap: 5,
   },
   text: {
-    fontSize: 21,
+    fontSize: 16,
     textAlign: "left",
     padding: 4,
-    fontFamily: 'Assistant_400Regular', // Use Assistant regular font
-    color: colorPalate.white,
+    fontFamily: 'Assistant_700Bold', // Use Assistant bold font
   },
 });
 
-export default RegularButton;
+export default RegularButtonSmall;

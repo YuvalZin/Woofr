@@ -39,7 +39,8 @@ const PostSlider = ({ arr, onImgPress, setRender }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "95%",
+    
+    width: "100%",
   },
   loadingContainer: {
     justifyContent: "center",

@@ -27,6 +27,7 @@ import AddPost from "../../components/buttons/add-post/add-post";
 import BigText from "../../components/texts/big-text/big-text";
 import ExploreSlider from "../../components/scroll/explore-slider/explore-slider";
 import RegularText from "../../components/texts/regular-text/regular-text";
+import { colorPalate } from "../../utils/ui/colors";
 
 const HomeScreen = () => {
   //Navigation handler
@@ -106,25 +107,25 @@ const HomeScreen = () => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <AddPost
-          onPress={() => {
-            navigation.navigate("home-post");
-          }}
-        />
+        
         <TouchableOpacity
           style={styles.touchableContainer}
           onPress={moveToProfessionals}
         >
-          <BigText text={"גלה עוד בעלי מקצוע"} />
+          <BigText text={"woofr pro"} />
           <Ionicons name="caret-back-outline" size={24} color={"black"} />
         </TouchableOpacity>
 
         <ExploreSlider arr={exploreArray} onPress={moveToProfile} />
 
         <View style={styles.touchableContainer} onPress={moveToProfessionals}>
-          <BigText text={"מה נובח עכשיו"} />
         </View>
-
+        <AddPost
+          onPress={() => {
+            navigation.navigate("home-post");
+          }}
+        />
+        <View style={styles.postsArea}>
         {posts.length > 0 && (
           <PostSlider
             arr={posts}
@@ -132,20 +133,28 @@ const HomeScreen = () => {
             setRender={onRefresh}
           />
         )}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  postsArea:{
+    width:"100%",
+    backgroundColor:"#f5f5f5",
+  },
   container: {
     flex: 1,
+    backgroundColor:"white"
   },
   header: {
     justifyContent: "flex-start",
     alignItems: "flex-start",
     padding: 8,
     width: "100%",
+    backgroundColor:"white"
+
   },
   logo: {
     width: 120,

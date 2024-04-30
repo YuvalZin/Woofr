@@ -15,6 +15,8 @@ import { colorPalate } from "../../../utils/ui/colors";
 //Import api calls
 import { GetUserInfo } from "../../../utils/api/user";
 import { deletePost, getPostLikes, likePost } from "../../../utils/api/posts";
+import RegularTextBold from "../../texts/regular-text/regular-text -bold";
+import { AntDesign } from '@expo/vector-icons';
 
 const Post = ({ data, onImgPress, setRender }) => {
   const [userData, setUserData] = useState({
@@ -121,12 +123,26 @@ const Post = ({ data, onImgPress, setRender }) => {
           />
         </TouchableOpacity>
         <View style={styles.userInfo}>
-          <RegularText
+          <RegularTextBold
             text={`${userData.firstName} ${userData.lastName}`}
             style={styles.username}
           />
           <SmallText text={timeStr} style={styles.infoText} />
         </View>
+        
+        {isMyPost && (
+        <View style={styles.deleteIcon}>
+          <TouchableOpacity
+            onPress={() => deletePostById(data.id)}
+          >
+            <AntDesign name="delete" size={22} color="lightgrey" />
+          </TouchableOpacity>
+        </View>
+        )}
+
+      </View>
+      <View style={styles.input}>
+        <RegularText text={data.content} />
       </View>
 
       {data.mediaUrl !== "" && (
@@ -135,19 +151,8 @@ const Post = ({ data, onImgPress, setRender }) => {
         </View>
       )}
 
-      <RegularText text={data.content} />
 
       <View style={styles.buttonsContainer}>
-        {isMyPost && (
-          <View style={styles.buttonContainer}>
-            <IconButton
-              iconName={"trash-outline"}
-              color={colorPalate.warning}
-              iconSize={22}
-              onPress={() => deletePostById(data.id)}
-            />
-          </View>
-        )}
         <View style={styles.buttonContainer}>
           <IconButton
             iconName={!likeThis ? "heart" : "heart-dislike"}
@@ -157,7 +162,7 @@ const Post = ({ data, onImgPress, setRender }) => {
           />
         </View>
         <View style={styles.buttonContainer}>
-          <SmallText text={`${likes.length}`} />
+          <SmallText text={`${likes.length} ` + 'לייקים'} />
         </View>
       </View>
     </View>
@@ -165,13 +170,23 @@ const Post = ({ data, onImgPress, setRender }) => {
 };
 
 const styles = StyleSheet.create({
+  input: {
+    flex: 1,
+    padding: 5,
+    alignItems: "flex-start",
+  },
   container: {
+    flex: 1,
+    width: "100%",
     backgroundColor: "#fff",
-    marginBottom: 10,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: "grey",
     padding: 8,
+
+    marginBottom: 15,
+  },
+  deleteIcon: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-end",
   },
   header: {
     padding: 6,
@@ -196,17 +211,18 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   postImage: {
-    width: 330,
-    height: 330,
+    width: 380,
+    height: 380,
     resizeMode: "cover",
   },
   userInfo: {
     justifyContent: "center",
     alignItems: "flex-start",
-    marginRight: 10,
+    marginRight: 12,
   },
   username: {
-    marginBottom: 5,
+    marginBottom: 3,
+
   },
   infoText: {
     color: "#888",

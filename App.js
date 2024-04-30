@@ -8,6 +8,7 @@ export default function App() {
   // Ensure RTL direction is set
   I18nManager.forceRTL(true);
   I18nManager.isRTL = true;
+  
 
   return (
     <Provider store={store}>

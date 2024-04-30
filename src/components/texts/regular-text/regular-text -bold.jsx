@@ -1,12 +1,13 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
-import { useFonts, Assistant_400Regular } from '@expo-google-fonts/assistant';
+import { useFonts, Assistant_400Regular,Assistant_700Bold  } from '@expo-google-fonts/assistant';
 
-const SmallText = ({ text, english = false }) => {
+const RegularTextBold = ({ text, english = false }) => {
   const textAlign = !english ? "left" : "right";
 
   const [fontsLoaded] = useFonts({
     Assistant_400Regular,
+    Assistant_700Bold
   });
 
   if (!fontsLoaded) {
@@ -14,7 +15,7 @@ const SmallText = ({ text, english = false }) => {
   }
 
   return (
-    <Text style={[styles.text, { textAlign, fontFamily: 'Assistant_400Regular' }]}>
+    <Text style={[styles.text, { fontFamily: 'Assistant_700Bold' }]}>
       {text}
     </Text>
   );
@@ -22,10 +23,10 @@ const SmallText = ({ text, english = false }) => {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 16,
-    fontWeight: "normal",
-    textAlign: "left",
+    fontSize: 20,
+textAlign:"center",
+    padding: 4,
   },
 });
 
-export default SmallText;
+export default RegularTextBold;

@@ -18,11 +18,8 @@ const GoBackButton = ({ onPress }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
     paddingLeft: 10,
     marginTop: 10,
-    width: "100%",
   },
   button: {
     padding: 10,

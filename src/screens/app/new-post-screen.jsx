@@ -134,26 +134,20 @@ const NewPostScreen = () => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={{ flex: 1 }}>
         <KeyboardAvoidingView style={styles.container}>
-          <GoBackButton
-            onPress={() => {
-              navigation.goBack();
-            }}
-          />
           <View style={styles.header}>
-            <BigText text={"צור פוסט חדש"} />
+            <GoBackButton
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+            <View>
+              <BigText text={"צור פוסט חדש"} />
+            </View>
           </View>
-
           {!loading ? (
             <>
               <View style={styles.textInputContainer}>
-                {selectedImage && (
-                  <View style={styles.imagePreview}>
-                    <Image
-                      source={{ uri: selectedImage }}
-                      style={styles.previewImage}
-                    />
-                  </View>
-                )}
+                
 
                 <TextInput
                   style={styles.textInput}
@@ -162,6 +156,14 @@ const NewPostScreen = () => {
                   value={post.content}
                   onChangeText={(value) => setPost({ ...post, content: value })}
                 />
+                {selectedImage && (
+                  <View style={styles.imagePreview}>
+                    <Image
+                      source={{ uri: selectedImage }}
+                      style={styles.previewImage}
+                    />
+                  </View>
+                )}
               </View>
 
               <View style={styles.buttonsContainer}>
@@ -169,24 +171,23 @@ const NewPostScreen = () => {
                   <RegularButton
                     text={"בחר תמונה"}
                     onPress={pickImage}
-                    color={colorPalate.primary}
-                    iconName={"camera-outline"}
+                    color={colorPalate.primaryLight}
+                    iconName={"image"}
                   />
                 </View>
 
                 <View style={styles.buttonContainer}>
                   <RegularButton
-                    text={"העלאה"}
+                    text={"פרסם"}
                     onPress={uploadPost}
                     color={colorPalate.primary}
-                    iconName={"cloud-upload-outline"}
                   />
                 </View>
               </View>
 
               <Snackbar
                 visible={snackbarOpen}
-                onDismiss={() => {}}
+                onDismiss={() => { }}
                 action={{
                   label: "סגור",
                   onPress: () => {
@@ -212,36 +213,38 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   header: {
+    flexDirection:"row-reverse",
+    justifyContent:"space-between",
     padding: 8,
     width: "100%",
-    alignItems: "flex-start",
+    alignItems: "center",
   },
   textInputContainer: {
-    borderColor: "grey",
-    borderWidth: 1,
-    borderRadius: 12,
+    borderColor: "#e8e8e8",
+    borderRadius: 5,
+    borderWidth: 2,
     width: "95%",
     padding: 12,
   },
   textInput: {
-    height: 100,
+    height: 150,
     textAlign: "right",
     padding: 3,
     fontSize: 16,
   },
   buttonsContainer: {
     flexDirection: "row",
+    justifyContent: "space-around",
+
     gap: 30,
     padding: 12,
     marginTop: 10,
   },
-  buttonContainer: {
-    width: 180,
-  },
+
   previewImage: {
-    width: 200,
+    width: "100%",
     height: 200,
-    borderRadius: 10,
+    borderRadius: 5,
   },
 });
 

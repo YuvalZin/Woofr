@@ -29,9 +29,12 @@ import { colorPalate } from "../../utils/ui/colors";
 import BigText from "../../components/texts/big-text/big-text";
 import SmallText from "../../components/texts/small-text/small-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
+import RegularButtonSmall from "../../components/buttons/regular-button/regular-button-small";
 import EmptyCard from "../../components/cards/empty-card/empty-card";
 import PostSlider from "../../components//scroll/posts-slider/post-slider";
 import AddPost from "../../components/buttons/add-post/add-post";
+import RegularTextBold from "../../components/texts/regular-text/regular-text -bold";
+import RegularText from "../../components/texts/regular-text/regular-text";
 
 const ProfileScreen = () => {
   //Navigation handler
@@ -112,24 +115,27 @@ const ProfileScreen = () => {
       >
         {myUser ? (
           <View style={styles.container}>
-            <View style={{ alignItems: "center" }}>
+            <View style={styles.header}>
               <View>
+                <View style={{ marginBottom: 10 }}>
+                  <RegularTextBold text={`${myUser.firstName} ${myUser.lastName}`} />
+                </View>
                 <Image
                   source={{ uri: myUser.profilePictureUrl }}
                   style={styles.profileImage}
                 />
               </View>
-              <BigText text={`${myUser.firstName} ${myUser.lastName}`} />
               <View style={styles.followingContainer}>
-                <SmallText text={`עוקב ${following.length}`} />
-                <SmallText text={`במעקב ${followers.length} `} />
+                <RegularText text={`${following.length}\nעוקב`} />
+                <RegularText text={`${followers.length}\nבמעקב`} />
               </View>
+
             </View>
             <View style={styles.buttonsContainer}>
               <View style={styles.buttonView}>
-                <RegularButton
+                <RegularButtonSmall
                   text={"עריכת פרופיל"}
-                  color={colorPalate.primary}
+                  color={"#e6e6e6"}
                   iconName={"create-outline"}
                   onPress={() => {
                     navigation.navigate("profile-edit");
@@ -137,9 +143,9 @@ const ProfileScreen = () => {
                 />
               </View>
               <View style={styles.buttonView}>
-                <RegularButton
+                <RegularButtonSmall
                   text={`התנתק`}
-                  color={colorPalate.warning}
+                  color={"#e6e6e6"}
                   iconName={"log-out-outline"}
                   onPress={() => logoutUser()}
                 />
@@ -150,13 +156,17 @@ const ProfileScreen = () => {
                 navigation.navigate("profile-post");
               }}
             />
-            {myPosts.length > 0 && (
-              <PostSlider
-                arr={myPosts}
-                onImgPress={() => {}}
-                setRender={onRefresh}
-              />
-            )}
+            <View style={styles.postsArea}>
+
+              {myPosts.length > 0 && (
+                <PostSlider
+                  arr={myPosts}
+                  onImgPress={() => { }}
+                  setRender={onRefresh}
+                />
+              )}
+            </View>
+
           </View>
         ) : (
           <EmptyCard
@@ -174,24 +184,40 @@ const styles = StyleSheet.create({
     marginTop: 20,
     flex: 1,
   },
+  postsArea:{
+    width:"100%",
+    backgroundColor:"#f5f5f5",
+    paddingBottom:30,
+  },
+  header: {
+    paddingHorizontal: 25,
+    paddingBottom: 15,
+    flexDirection: "row",
+    alignItems: "flex-start",
+  },
   loadingContainer: {
     justifyContent: "center",
     alignItems: "center",
   },
   followingContainer: {
+    flex: 1,
     flexDirection: "row",
+    justifyContent: "center",
+    alignSelf: "flex-end",
+    paddingBottom: 5,
     gap: 30,
   },
   profileImage: {
-    width: 160,
-    height: 160,
+    width: 92,
+    height: 92,
     resizeMode: "cover",
     borderRadius: 80,
   },
   buttonsContainer: {
     flexDirection: "row",
-    justifyContent: "space-evenly",
-    width: "100%",
+    marginBottom: 10,
+    paddingHorizontal: 29,
+
   },
   buttonView: {
     flex: 1,

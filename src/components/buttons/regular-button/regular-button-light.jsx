@@ -1,3 +1,5 @@
+// regular-button.tsx
+
 import React from "react";
 import {
   ActivityIndicator,
@@ -7,21 +9,11 @@ import {
   View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useFonts, Assistant_400Regular } from '@expo-google-fonts/assistant';
 
-// App color palate
+//App color palate
 import { colorPalate } from "../../../utils/ui/colors";
 
 const RegularButton = ({ text, onPress, color, iconName, loading = false }) => {
-  // Load the Assistant font
-  const [fontsLoaded] = useFonts({
-    Assistant_400Regular,
-  });
-
-  if (!fontsLoaded) {
-    return null; // or any loading indicator while fonts are loading
-  }
-
   return (
     <TouchableOpacity
       style={[styles.button, { backgroundColor: color }]}
@@ -42,7 +34,6 @@ const RegularButton = ({ text, onPress, color, iconName, loading = false }) => {
 const styles = StyleSheet.create({
   button: {
     padding: 10,
-    borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
@@ -54,7 +45,6 @@ const styles = StyleSheet.create({
     fontSize: 21,
     textAlign: "left",
     padding: 4,
-    fontFamily: 'Assistant_400Regular', // Use Assistant regular font
     color: colorPalate.white,
   },
 });
