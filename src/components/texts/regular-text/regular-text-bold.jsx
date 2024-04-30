@@ -23,7 +23,7 @@ const RegularTextBold = ({ text, english = false }) => {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 20,
+    fontSize: 22,
 textAlign:"center",
     padding: 4,
   },

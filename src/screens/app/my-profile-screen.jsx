@@ -35,6 +35,7 @@ import PostSlider from "../../components//scroll/posts-slider/post-slider";
 import AddPost from "../../components/buttons/add-post/add-post";
 import RegularTextBold from "../../components/texts/regular-text/regular-text-bold";
 import RegularText from "../../components/texts/regular-text/regular-text";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const ProfileScreen = () => {
   //Navigation handler
@@ -77,6 +78,14 @@ const ProfileScreen = () => {
     setFollower(fetchFollowers);
   };
 
+  const handleFetchFollowing = () => {
+    navigation.navigate('follows', { follows: following });; 
+  };
+  
+  const handleFetchFollowers = () => {
+    navigation.navigate('follows', { follows: followers });; 
+  };
+  
   // Execute the provided callback when the component gains focus
   useFocusEffect(
     useCallback(() => {
@@ -126,8 +135,16 @@ const ProfileScreen = () => {
                 />
               </View>
               <View style={styles.followingContainer}>
-                <RegularText text={`${following.length}\nעוקב`} />
-                <RegularText text={`${followers.length}\nבמעקב`} />
+                <TouchableOpacity
+                  onPress={handleFetchFollowing}
+                  style={{ flexDirection: "column", alignItems: "center" }}>
+                  <RegularTextBold text={`${following.length}`} />
+                  <RegularText text={`עוקב`} />
+                </TouchableOpacity>
+                <TouchableOpacity style={{ flexDirection: "column", alignItems: "center" }}>
+                  <RegularTextBold text={`${followers.length}`} />
+                  <RegularText text={`במעקב`} />
+                </TouchableOpacity>
               </View>
 
             </View>
@@ -184,14 +201,14 @@ const styles = StyleSheet.create({
     marginTop: 20,
     flex: 1,
   },
-  postsArea:{
-    width:"100%",
-    backgroundColor:"#f5f5f5",
-    paddingBottom:30,
+  postsArea: {
+    width: "100%",
+    backgroundColor: "#f5f5f5",
+    paddingBottom: 30,
   },
   header: {
     paddingHorizontal: 25,
-    paddingBottom: 15,
+
     flexDirection: "row",
     alignItems: "flex-start",
   },
@@ -204,7 +221,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignSelf: "flex-end",
-    paddingBottom: 5,
+    paddingBottom: 20,
     gap: 30,
   },
   profileImage: {
@@ -212,10 +229,12 @@ const styles = StyleSheet.create({
     height: 92,
     resizeMode: "cover",
     borderRadius: 80,
+    marginBottom: 8,
+
   },
   buttonsContainer: {
     flexDirection: "row",
-    marginBottom: 10,
+    marginBottom: 2,
     paddingHorizontal: 29,
 
   },

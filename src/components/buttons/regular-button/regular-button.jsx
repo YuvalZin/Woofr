@@ -41,13 +41,15 @@ const RegularButton = ({ text, onPress, color, iconName, loading = false }) => {
 
 const styles = StyleSheet.create({
   button: {
-    padding: 10,
+    padding: 7,
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
     elevation: 5,
     flexDirection: "row",
+    borderBottomWidth:5,
+    borderBottomColor:colorPalate.primary,
     gap: 5,
   },
   text: {

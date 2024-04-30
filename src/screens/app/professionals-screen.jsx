@@ -30,7 +30,7 @@ const ProfessionalsScreen = () => {
 
   // Initialize state for storing the user's posts
   const [vets, setVets] = useState([]);
-  
+
   const [resultsFilter, setResultsFilter] = useState({
     id: "string",
     userId: "string",
@@ -49,7 +49,7 @@ const ProfessionalsScreen = () => {
     activeWoofr: true,
     city: null,
   });
-  
+
   //fetch posts to display on homepage
   const fetchVets = async () => {
     const res = await getVets(resultsFilter);
@@ -89,15 +89,15 @@ const ProfessionalsScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.header}>
-          <GoBackButton
-            onPress={() => {
-              navigation.goBack();
-            }}
-          />
-          <View>
-            <BigText text={"וטרינרים"} />
-          </View>
+        <GoBackButton
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
+        <View>
+          <BigText text={"וטרינרים"} />
         </View>
+      </View>
       <ScrollView
         nestedScrollEnabled={true}
         style={styles.container}
@@ -105,7 +105,7 @@ const ProfessionalsScreen = () => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        
+
         {vets.length > 0 && (
           <ProfessionalSlider arr={vets} setRender={onRefresh} />
         )}

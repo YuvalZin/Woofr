@@ -24,7 +24,7 @@ const RegularText = ({ text, english = false ,color,onPress}) => {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 20,
+    fontSize: 18,
     padding: 4,
   },
 });

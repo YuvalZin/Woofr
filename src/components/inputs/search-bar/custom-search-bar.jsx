@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View, TouchableOpacity } from "react-native";
 
 //Color palate for the app
 import { colorPalate } from "../../../utils/ui/colors";
+import { FontAwesome5 } from '@expo/vector-icons';
 
 //Custom components
 import IconButton from "../../buttons/icon-button/icon-button";
@@ -21,24 +22,25 @@ const CustomSearchBar = ({ onPressSearch }) => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        value={value}
-        onChangeText={(newValue) => {
-          if (newValue !== value) {
-            setValue(newValue);
-          }
-        }}
-        style={styles.input}
-        placeholder="חפש משתמשים..."
-        placeholderTextColor="#A9A9A9"
-      />
-      <View style={styles.button}>
-        <IconButton
-          onPress={handleSearch}
-          color={colorPalate.primary}
-          iconName={"search"}
-          iconSize={21}
+      <View style={styles.searchBar}>
+        <TextInput
+          value={value}
+          onChangeText={(newValue) => {
+            if (newValue !== value) {
+              setValue(newValue);
+            }
+          }}
+          style={styles.input}
+          placeholder="חיפוש"
+          placeholderTextColor="#A9A9A9"
         />
+        <View style={styles.button}>
+          <TouchableOpacity
+            onPress={() => deletePostById(data.id)}
+          >
+            <FontAwesome5 name="search" size={21} color={'#A9A9A9'} />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -46,20 +48,20 @@ const CustomSearchBar = ({ onPressSearch }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#F5F5F5",
-    borderRadius: 10,
+    marginTop: 20,
+    backgroundColor: "white",
     marginBottom: 3,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
     flexDirection: "row",
     alignItems: "center",
     margin: 3,
+    paddingHorizontal: 20,
+  },
+  searchBar: {
+    borderRadius: 10,
+
+    backgroundColor: colorPalate.lightGrey,
+    width: "100%",
+    flexDirection: "row"
   },
   input: {
     flex: 1,
@@ -71,7 +73,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,
-    left: 10,
   },
 });
 

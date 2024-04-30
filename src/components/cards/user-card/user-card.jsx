@@ -27,11 +27,11 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 8,
     elevation: 5,
-    marginBottom: 10,
+    marginBottom: 5,
   },
   image: {
-    width: 50,
-    height: 50,
+    width: 45,
+    height: 45,
     borderRadius: 25,
   },
   textContainer: {
