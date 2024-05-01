@@ -23,19 +23,19 @@ export const getProReviews = async (id) => {
 };
 
 
-export const insertPost = async (postData) => {
+export const insertReview = async (review) => {
   try {
-    const apiUrl = `${reviewUrl}/InsertPost`;
+    const apiUrl = `${reviewUrl}/InsertReview`;
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json; charset=UTF-8",
       },
-      body: JSON.stringify(postData),
+      body: JSON.stringify(review),
     });
 
     if (!response.ok) {
-      throw new Error("Failed to upload post");
+      throw new Error("Failed to insert review");
     }
     const responseData = await response.json();
     return responseData;

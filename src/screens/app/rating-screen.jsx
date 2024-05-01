@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, View, ScrollView, TextInput,Button } from "react-native";
+import { SafeAreaView, StyleSheet, View, ScrollView, TextInput, Button } from "react-native";
 
 //App color palate
 import { colorPalate } from "../../utils/ui/colors";
@@ -16,10 +16,12 @@ import RegularTextBold from "../../components/texts/regular-text/regular-text-bo
 import RatingBar from "../../components/cards/rating-bar/rating-bar";
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import ReviewSlider from "../../components/scroll/review-slider/review-slider"
-import { getProReviews } from "../../utils/api/review";
+import { getProReviews, insertReview } from "../../utils/api/review";
 import BigText from "../../components/texts/big-text/big-text";
 import RegularText from "../../components/texts/regular-text/regular-text";
 import AddReview from "../../components/buttons/add-review/add-review";
+import { Snackbar } from "react-native-paper";
+
 const RatingScreen = () => {
   //Importing the useNavigation hook from React Navigation to access navigation prop
   const navigation = useNavigation();
@@ -31,19 +33,29 @@ const RatingScreen = () => {
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
 
+  // State for storing text to be displayed in the and visibility of the snackbar
+  const [snackBarText, setSnackBarText] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   //State to hold reviews
   const [prosReviews, setProsReviews] = useState([]);
   const [proProfile, setProProfile] = useState([]);
 
+
   const [review, setReview] = useState({
     id: uuid.v4().toString(),
     userId: myUser.id,
-    proUserId: "",
+    proUserId: data.userId,
     reviewText: "",
     rating: 0,
     datePosted: new Date(),
   });
+
+  const handleRating = (value) => {
+    // Update the rating when it changes
+    setReview({ ...review, rating: value });
+  };
+
   const fetchProsReviews = async (id) => {
     setProProfile(data);
     const res = await getProReviews(id);
@@ -52,8 +64,43 @@ const RatingScreen = () => {
 
   useEffect(() => {
     fetchProsReviews(data.userId);
-  }, [data]);
+  }, []);
 
+
+  // Function to handle Snackbar
+  const showSnackbar = (message, duration) => {
+    setSnackBarText(message);
+    setSnackbarOpen(true);
+
+    // Close the snackbar after the specified duration
+    setTimeout(() => {
+      setSnackbarOpen(false);
+    }, duration);
+  };
+  const uploadReview = async () => {
+    // if (!rating) {
+    //   showSnackbar("חייב לבחור דירוג בין 1 ל5 כוכבים", 3000);
+    //   return;
+    // }
+    // if (review.reviewText.length < 10) {
+    //   showSnackbar("ביקורת חייבת להכיל לפחות 10 תווים", 3000);
+    //   return;
+    // }
+    // Set the screen to loading state
+    // setLoading(true);
+    console.log(review);
+    //API post method to upload the image
+    const res = await insertReview(review);
+
+    if (res) {
+      // showSnackbar("הפוסט עלה בהצלחה", 1500);
+      fetchProsReviews(data.userId);
+      // navigation.goBack();
+    } else {
+      // setLoading(false);
+      // showSnackbar("משהו לא עבד נסה שוב", 3000);
+    }
+  };
   return (
     <SafeAreaView>
       <View style={styles.header}>
@@ -74,8 +121,8 @@ const RatingScreen = () => {
           <RegularText color={"white"}
             text={`דרגו את ${proProfile.displayName} (1 לא מומלץ - 5 מצוין)`}
           />
-          <View style={{paddingBottom:20}}>
-            <RatingBar disabled={false} rating={1} />
+          <View style={{ paddingBottom: 20 }}>
+            <RatingBar disabled={false} rating={0} onFinishRating={handleRating} />
           </View>
           <View style={styles.textInputContainer}>
             <TextInput
@@ -86,7 +133,7 @@ const RatingScreen = () => {
               onChangeText={(value) => setReview({ ...review, reviewText: value })}
             />
           </View>
-          <AddReview/>
+          <AddReview onPress={uploadReview} />
         </View>
         {prosReviews.length > 0 && <ReviewSlider arr={prosReviews} />}
       </ScrollView>
@@ -109,7 +156,7 @@ const styles = StyleSheet.create({
     borderBottomColor: colorPalate.lightGrey,
   },
   textInputContainer: {
-    backgroundColor:"white",
+    backgroundColor: "white",
     borderColor: "#e8e8e8",
     borderRadius: 5,
     borderWidth: 2,

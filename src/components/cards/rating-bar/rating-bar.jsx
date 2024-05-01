@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { AirbnbRating } from "react-native-ratings";
 
-const RatingBar = ({ rating, disabled }) => {
+const RatingBar = ({ rating, disabled ,onFinishRating}) => {
   return (
     <View style={styles.container}>
       <AirbnbRating
@@ -11,6 +11,7 @@ const RatingBar = ({ rating, disabled }) => {
         reviews={[]}
         defaultRating={rating}
         size={20}
+        onFinishRating={onFinishRating}
       />
     </View>
   );
