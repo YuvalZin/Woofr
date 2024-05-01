@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View, Alert } from "react-native";
 
-//
+//Redux handler state management
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../../redux/authSlice";
 
-//Custom Components
-import RegularText from "../../texts/regular-text/regular-text";
-import SmallText from "../../texts/small-text/small-text";
-import IconButton from "../../buttons/icon-button/icon-button";
-
-import { colorPalate } from "../../../utils/ui/colors";
-
 //Import api calls
 import { GetUserInfo } from "../../../utils/api/user";
-import { deletePost, getPostLikes, likePost } from "../../../utils/api/posts";
+import { AntDesign } from "@expo/vector-icons";
+
+//Custom Components
 import RegularTextBold from "../../texts/regular-text/regular-text-bold";
-import { AntDesign } from '@expo/vector-icons';
+import RegularText from "../../texts/regular-text/regular-text";
 import RatingBar from "../rating-bar/rating-bar";
+import SmallText from "../../texts/small-text/small-text";
 
 const ReviewCard = ({ data, onImgPress, setRender }) => {
   const [userData, setUserData] = useState({
@@ -109,18 +105,15 @@ const ReviewCard = ({ data, onImgPress, setRender }) => {
 
         {isMyReview && (
           <View style={styles.deleteIcon}>
-            <TouchableOpacity
-              onPress={() => deleteReviewById(data.id)}
-            >
+            <TouchableOpacity onPress={() => deleteReviewById(data.id)}>
               <AntDesign name="delete" size={22} color="lightgrey" />
             </TouchableOpacity>
           </View>
         )}
-
       </View>
       <View style={styles.input}>
         <RegularText text={data.reviewText} />
-                <RatingBar rating={data.rating} />
+        <RatingBar rating={data.rating} disabled={true} />
       </View>
     </View>
   );
@@ -131,14 +124,13 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 15,
     alignItems: "flex-start",
-    
   },
   container: {
     flex: 1,
     width: "100%",
     backgroundColor: "#fff",
     padding: 8,
-    padding:20,
+    padding: 20,
     marginBottom: 15,
   },
   deleteIcon: {
@@ -161,7 +153,6 @@ const styles = StyleSheet.create({
     borderRadius: 35,
   },
 
-
   userInfo: {
     justifyContent: "center",
     alignItems: "flex-start",
@@ -169,14 +160,12 @@ const styles = StyleSheet.create({
   },
   username: {
     marginBottom: 3,
-
   },
   infoText: {
     color: "#888",
     fontSize: 12,
     marginRight: 3,
   },
-
 });
 
 export default ReviewCard;

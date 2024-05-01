@@ -116,7 +116,7 @@ const EditInformation = () => {
       firstName: userData.firstName,
       lastName: userData.lastName,
       token: myUser.token,
-      type: ""
+      type: "",
     };
 
     if (image) {
@@ -152,11 +152,6 @@ const EditInformation = () => {
 
   const deleteUser = () => {
     setLoading(true);
-
-    //Api call using to delete account
-    //
-    //
-
     // Delete the authentication token from SecureStore
     SecureStore.deleteItemAsync("token");
     // Dispatch the logout action to the Redux store
@@ -170,7 +165,6 @@ const EditInformation = () => {
         {!loading ? (
           <ScrollView>
             <KeyboardAvoidingView style={styles.container}>
-
               <View style={styles.header}>
                 <GoBackButton onPress={moveBack} />
                 <View>
@@ -225,10 +219,12 @@ const EditInformation = () => {
                   onPress={handelUpdate}
                 />
               </View>
-                  
-              <View style={[styles.buttonContainer,{width:200,marginTop:90}]}>
+
+              <View
+                style={[styles.buttonContainer, { width: 200, marginTop: 90 }]}
+              >
                 <RegularButtonSmall
-                  text={"מעבר לפרופיל עסקי"}
+                  text={myUser.type ? "עדכן את העסק" : "מעבר לפרופיל עסקי"}
                   style={styles.button}
                   color={colorPalate.primaryLight}
                   onPress={() => {
@@ -237,7 +233,7 @@ const EditInformation = () => {
                 />
               </View>
 
-              <View style={[styles.buttonContainer,{width:200}]}>
+              <View style={[styles.buttonContainer, { width: 200 }]}>
                 <RegularButtonSmall
                   text={"מחיקת משתמש"}
                   color={colorPalate.lightGrey}
@@ -247,7 +243,7 @@ const EditInformation = () => {
 
               <Snackbar
                 visible={snackbarOpen}
-                onDismiss={() => { }}
+                onDismiss={() => {}}
                 action={{
                   label: "סגור",
                   onPress: () => {
@@ -272,7 +268,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
-  
+
   header: {
     flexDirection: "row-reverse",
     justifyContent: "space-between",
@@ -291,8 +287,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 6,
-    marginTop:32,
-    marginBottom:12,
+    marginTop: 32,
+    marginBottom: 12,
   },
   circle: {
     width: 150,
@@ -303,7 +299,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     justifyContent: "center",
     alignItems: "center",
-
   },
   imagePreview: {
     width: 150,
@@ -316,7 +311,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: 288,
   },
-
 });
 
 export default EditInformation;

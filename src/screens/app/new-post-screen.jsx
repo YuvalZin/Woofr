@@ -24,7 +24,7 @@ import * as ImagePicker from "expo-image-picker";
 //Snack bar to show user information
 import { Snackbar } from "react-native-paper";
 
-//Api handler for firebase
+//Api handler from different files
 import { uploadImage } from "../../utils/api/image";
 import { insertPost } from "../../utils/api/posts";
 
@@ -33,7 +33,6 @@ import { colorPalate } from "../../utils/ui/colors";
 
 //Custom components
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
-import BigText from "../../components/texts/big-text/big-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 import BigTextBold from "../../components/texts/big-text/big-text-bold";
@@ -148,8 +147,6 @@ const NewPostScreen = () => {
           {!loading ? (
             <>
               <View style={styles.textInputContainer}>
-                
-
                 <TextInput
                   style={styles.textInput}
                   multiline
@@ -188,7 +185,7 @@ const NewPostScreen = () => {
 
               <Snackbar
                 visible={snackbarOpen}
-                onDismiss={() => { }}
+                onDismiss={() => {}}
                 action={{
                   label: "סגור",
                   onPress: () => {
@@ -214,8 +211,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   header: {
-    flexDirection:"row-reverse",
-    justifyContent:"space-between",
+    flexDirection: "row-reverse",
+    justifyContent: "space-between",
     padding: 8,
     width: "100%",
     alignItems: "center",

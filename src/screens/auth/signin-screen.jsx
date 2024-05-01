@@ -40,8 +40,8 @@ const SigninScreen = () => {
 
   //State to store the login data
   const [loginData, setLoginData] = useState({
-    email: "beny@gmail.com",
-    password: "Aa123456",
+    email: "",
+    password: "",
   });
 
   // State for managing the snackbar: storing text content to be displayed and controlling visibility
