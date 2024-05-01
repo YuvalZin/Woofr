@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
 
 // Importing the getVets function from the API utilities
-import { getVets } from "../../utils/api/vet";
+import { getPros } from "../../utils/api/pro";
 
 // Importing the colorPalate from the UI utilities
 import { colorPalate } from "../../utils/ui/colors";
@@ -25,6 +25,7 @@ import BigText from "../../components/texts/big-text/big-text";
 import ProfessionalFilter from "../../components/inputs/professional-filter/professional-filter";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import CollapseButton from "../../components/buttons/collapse-button/collapse-button";
+import RegularText from "../../components/texts/regular-text/regular-text";
 
 const ProfessionalsScreen = () => {
   //Navigation handler
@@ -35,7 +36,7 @@ const ProfessionalsScreen = () => {
   const myUser = JSON.parse(auth.user);
 
   // Initialize state for storing the user's posts
-  const [vets, setVets] = useState([]);
+  const [pros, setPros] = useState([]);
 
   const [showFilters, setShowFilters] = useState(true);
 
@@ -57,12 +58,13 @@ const ProfessionalsScreen = () => {
     verificationStatus: "string",
     activeWoofr: true,
     city: null,
+    type:"all",
   });
 
   //fetch posts to display on homepage
-  const fetchVets = async () => {
-    const res = await getVets(resultsFilter);
-    setVets(res);
+  const fetchPros = async () => {
+    const res = await getPros(resultsFilter);
+    setPros(res);
   };
 
   //Function to move to profile
@@ -81,7 +83,7 @@ const ProfessionalsScreen = () => {
 
   // useEffect hook to fetch posts when the refreshing state changes
   useEffect(() => {
-    fetchVets();
+    fetchPros();
   }, []);
 
   return (
@@ -93,7 +95,7 @@ const ProfessionalsScreen = () => {
           }}
         />
         <View>
-          <BigText text={"וטרינרים"} />
+          <RegularText text={"woofr Pros - התחברו למומחים"} />
         </View>
       </View>
 
@@ -119,9 +121,9 @@ const ProfessionalsScreen = () => {
       />
 
       <ScrollView nestedScrollEnabled={true} style={styles.container}>
-        {vets.length > 0 && (
+        {pros.length > 0 && (
           <ProfessionalSlider
-            arr={vets}
+            arr={pros}
             onCardPress={moveToProfile}
             onRatingPress={moveToRating}
           />

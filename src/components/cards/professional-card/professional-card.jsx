@@ -7,7 +7,7 @@ import SmallText from "../../texts/small-text/small-text";
 import RatingBar from "../rating-bar/rating-bar";
 
 const ProfessionalCard = ({ data, onCardPress, onRatingPress }) => {
-  const [vetData, setVetData] = useState({
+  const [proData, setproData] = useState({
     id: "string",
     displayName: "string",
     address: "string",
@@ -26,12 +26,12 @@ const ProfessionalCard = ({ data, onCardPress, onRatingPress }) => {
     userId: "string",
   });
 
-  const fetchVetInfo = async () => {
-    setVetData(data);
+  const fetchProInfo = async () => {
+    setproData(data);
   };
 
   useEffect(() => {
-    fetchVetInfo();
+    fetchProInfo();
   }, []);
 
   return (
@@ -45,36 +45,36 @@ const ProfessionalCard = ({ data, onCardPress, onRatingPress }) => {
         >
           <Image
             source={{
-              uri: vetData.profileImage,
+              uri: proData.profileImage,
             }}
             style={styles.avatar}
           />
         </TouchableOpacity>
         <View style={styles.userInfo}>
           <RegularText
-            text={`${vetData.displayName}`}
+            text={`${proData.displayName}`}
             style={styles.username}
           />
           <RegularText
-            text={`${vetData.specialization}`}
+            text={`${proData.specialization}`}
             style={styles.bottomText}
           />
           <SmallText
-            text={`${vetData.address}, ${vetData.phone}`}
+            text={`${proData.address}, ${proData.phone}`}
             style={styles.infoText}
           />
         </View>
       </View>
 
       <View style={styles.bottomContainer}>
-        <SmallText text={vetData.description} style={styles.descriptionText} />
+        <SmallText text={proData.description} style={styles.descriptionText} />
       </View>
       <TouchableOpacity
         onPress={() => {
-          onRatingPress(vetData);
+          onRatingPress(proData);
         }}
       >
-        <RatingBar disabled={true} rating={vetData.ratingScore} />
+        <RatingBar disabled={true} rating={proData.ratingScore} />
       </TouchableOpacity>
     </View>
   );

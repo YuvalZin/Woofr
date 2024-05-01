@@ -49,9 +49,7 @@ const styles = StyleSheet.create({
     paddingTop: 28,
   },
   button: {
-    backgroundColor: colorPalate.primaryLight,
-    borderBottomWidth: 8,
-    borderColor: colorPalate.primary,
+    backgroundColor: colorPalate.primary,
     padding: 6,
     borderRadius: 10,
     width: "100%",

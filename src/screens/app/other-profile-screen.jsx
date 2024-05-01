@@ -29,7 +29,6 @@ import {
 } from "../../utils/api/user";
 import { startChat } from "../../utils/api/chat";
 import { getUserPosts } from "../../utils/api/posts";
-import { getVetById } from "../../utils/api/vet";
 
 //Custom components
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
@@ -94,6 +93,7 @@ const UserProfileScreen = () => {
 
   const moveToRating = (id) => {
     if (myUser.id !== id) {
+      professional.profileImage = userProfile.profileImage;
       navigation.navigate("home-rating", { data: professional });
     }
   };
@@ -113,9 +113,9 @@ const UserProfileScreen = () => {
   const fetchUserData = async () => {
     const response = await GetUserInfo(id);
     setUserProfile(response);
-    if (response.type == "vet") {
-      const vetData = await getVetById(id);
-      setProfessional(vetData);
+    if (response.type == "commercial") {
+      const proData = await getProById(id);
+      setProfessional(proData);
     }
   };
 

@@ -214,9 +214,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
     alignItems: "center",
-    borderBottomWidth:0.8,
+
     paddingBottom:10,
-    borderBottomColor:colorPalate.lightGrey,
+    borderBottomWidth:5,
+    borderBottomColor:"#F0F2F5",
   },
   loadingContainer: {
     flex: 1,

@@ -13,6 +13,7 @@ import BigText from "../../components/texts/big-text/big-text";
 import Chats from "../../components/scroll/chats/chats";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 import BigTextBold from "../../components/texts/big-text/big-text-bold";
+import { colorPalate } from "../../utils/ui/colors";
 
 const ChatsScreen = ({ navigation }) => {
   // Use useSelector to access the Redux store state
@@ -78,11 +79,14 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     width:"98%",
-
   },
   header: {
     justifyContent: "flex-start",
     padding: 20,
+    borderBottomWidth:5,
+    borderBottomColor:"#F0F2F5",
+
+
   },
 });
 

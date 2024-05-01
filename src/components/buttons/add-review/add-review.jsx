@@ -39,12 +39,11 @@ const styles = StyleSheet.create({
     paddingTop: 28,
   },
   button: {
-    backgroundColor: colorPalate.primaryLight,
-    borderBottomWidth: 3,
+    backgroundColor: colorPalate.primary,
+    borderWidth: 3,
     borderColor: colorPalate.white,
-    padding: 6,
-    borderRadius: 10,
-    width: "100%",
+   alignSelf:"center",
+    width: "94%",
   },
   row: {
     flexDirection: "row",

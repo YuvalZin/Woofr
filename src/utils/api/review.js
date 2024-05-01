@@ -35,10 +35,12 @@ export const insertReview = async (review) => {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to insert review");
+      alert("You already reviewd that profile!");
     }
+    else{
     const responseData = await response.json();
     return responseData;
+    }
   } catch (error) {
     console.error("Error:", error);
   }

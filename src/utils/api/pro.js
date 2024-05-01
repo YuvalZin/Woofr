@@ -22,7 +22,7 @@ export const insertVet = async (vetData) => {
   }
 };
 
-export const getVets = async (vetFilters) => {
+export const getPros = async (vetFilters) => {
   try {
     const apiUrl = `${vetUrl}/GetVerifiedVets`;
     const response = await fetch(apiUrl, {
@@ -42,7 +42,7 @@ export const getVets = async (vetFilters) => {
     console.error("Error:", error);
   }
 };
-export const getVetById = async (id) => {
+export const getProById = async (id) => {
   try {
     const apiUrl = `${vetUrl}/${id}`;
     const response = await fetch(apiUrl, {

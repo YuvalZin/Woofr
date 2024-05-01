@@ -51,7 +51,7 @@ const ProfessionalFilter = ({ data, setData }) => {
           />
         </View>
         <View style={styles.col}>
-          <SmallText text={"שירות ביקורי בית"} />
+          <SmallText text={"עד בית הלקוח"} />
           <Checkbox
             value={data.vetToHome || false}
             color={colorPalate.primary}
@@ -65,7 +65,7 @@ const ProfessionalFilter = ({ data, setData }) => {
         <View style={styles.selectRow}>
           <CustomTextInput
             value={data.city}
-            placeholder="עיר ..."
+            placeholder="עיר "
             style={styles.input}
             width={formWidth}
             onChangeText={(value) => {

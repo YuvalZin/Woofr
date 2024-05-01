@@ -33,6 +33,7 @@ import AddPost from "../../components/buttons/add-post/add-post";
 import RegularTextBold from "../../components/texts/regular-text/regular-text-bold";
 import RegularText from "../../components/texts/regular-text/regular-text";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { StatusBar } from "react-native";
 
 const ProfileScreen = () => {
   //Navigation handler
@@ -105,7 +106,11 @@ const ProfileScreen = () => {
   }, [refreshing]);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+
+    <SafeAreaView style={{flex:1}}>
+      <SafeAreaView>  
+          <StatusBar backgroundColor={"black"} />
+          </SafeAreaView>
       <ScrollView
         refreshControl={
           <RefreshControl
@@ -118,16 +123,16 @@ const ProfileScreen = () => {
         {myUser ? (
           <View style={styles.container}>
             <View style={styles.header}>
-              <View>
-                <View style={{ marginBottom: 10 }}>
-                  <RegularTextBold
-                    text={`${myUser.firstName} ${myUser.lastName}`}
-                  />
-                </View>
+              <View style={{alignItems:"center",marginTop:5}}>
                 <Image
                   source={{ uri: myUser.profilePictureUrl }}
                   style={styles.profileImage}
                 />
+                <View>
+                  <RegularTextBold
+                    text={`${myUser.firstName} ${myUser.lastName}`}
+                  />
+                </View>
               </View>
               <View style={styles.followingContainer}>
                 <TouchableOpacity
@@ -198,7 +203,7 @@ const ProfileScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginTop: 8,
     flex: 1,
   },
   postsArea: {
@@ -208,9 +213,9 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: 25,
-
     flexDirection: "row",
     alignItems: "flex-start",
+    
   },
   loadingContainer: {
     justifyContent: "center",
@@ -225,11 +230,12 @@ const styles = StyleSheet.create({
     gap: 30,
   },
   profileImage: {
-    width: 92,
-    height: 92,
+    width: 78,
+    height: 78,
     resizeMode: "cover",
     borderRadius: 80,
-    marginBottom: 8,
+    marginBottom: 3,
+    marginTop: 3,
   },
   buttonsContainer: {
     flexDirection: "row",

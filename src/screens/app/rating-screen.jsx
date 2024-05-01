@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, View, ScrollView, TextInput, Button } from "react-native";
+import { SafeAreaView, StyleSheet, View, ScrollView, TextInput,Image,TouchableOpacity, Button } from "react-native";
 
 //App color palate
 import { colorPalate } from "../../utils/ui/colors";
@@ -121,6 +121,17 @@ const RatingScreen = () => {
           <RegularText color={"white"}
             text={`דרגו את ${proProfile.displayName} (1 לא מומלץ - 5 מצוין)`}
           />
+          <TouchableOpacity
+            style={styles.avatarContainer}
+          >
+            <Image
+              source={{
+                uri: proProfile.profileImage,
+              }}
+              style={styles.avatar}
+            />
+          </TouchableOpacity>
+
           <View style={{ paddingBottom: 20 }}>
             <RatingBar disabled={false} rating={0} onFinishRating={handleRating} />
           </View>
@@ -160,14 +171,25 @@ const styles = StyleSheet.create({
     borderColor: "#e8e8e8",
     borderRadius: 5,
     borderWidth: 2,
-    width: "95%",
+    width: "85%",
     padding: 12,
+
   },
   textInput: {
-    height: 100,
+    height: 80,
     textAlign: "right",
     padding: 3,
     fontSize: 16,
+  },
+  avatarContainer: {
+    marginTop:20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 100,
   },
 });
 
