@@ -73,7 +73,7 @@ const ProfessionalFilter = ({ data, setData }) => {
             }}
           />
 
-          <View style={styles.dropdownContainer}>
+          <View>
             <DropDownPicker
               open={openDropdown}
               value={data.specialization ? data.specialization : null}

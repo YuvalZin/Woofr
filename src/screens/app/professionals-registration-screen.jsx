@@ -20,6 +20,9 @@ import { useNavigation } from "@react-navigation/native";
 // Importing Checkbox component from expo-checkbox
 import Checkbox from "expo-checkbox";
 
+//
+import { specializations } from "../../utils/data/specialization";
+
 //Form validator for professional
 import { professionalValidate } from "../../utils/scripts/professionals-validate";
 
@@ -30,6 +33,7 @@ import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import CustomTextInput from "../../components/inputs/custom-text-input/custom-text-input";
 import SmallText from "../../components/texts/small-text/small-text";
+import DropDownPicker from "react-native-dropdown-picker";
 
 const ProfessionalsRegistrationScreen = () => {
   // Use useSelector to access the Redux store state
@@ -45,6 +49,9 @@ const ProfessionalsRegistrationScreen = () => {
   // State for managing the snackbar: storing text content to be displayed and controlling visibility
   const [snackBarText, setSnackBarText] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  // State for managing the visibility of the dropdown
+  const [openDropdown, setOpenDropdown] = useState(false);
 
   const [professional, setProfessional] = useState({
     id: uuid.v4().toString(),
@@ -103,6 +110,7 @@ const ProfessionalsRegistrationScreen = () => {
           }}
         />
       </View>
+
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.header}>
@@ -114,6 +122,32 @@ const ProfessionalsRegistrationScreen = () => {
             />
           </View>
 
+          <View
+            style={{
+              width: formWidth,
+              marginBottom: openDropdown ? 200 : 0,
+              alignItems: "left",
+            }}
+          >
+            <DropDownPicker
+              open={openDropdown}
+              value={
+                professional.specialization ? professional.specialization : null
+              }
+              items={specializations}
+              setOpen={setOpenDropdown}
+              placeholder="בחר מקצוע"
+              dropDownDirection="BOTTOM"
+              listMode="SCROLLVIEW"
+              onSelectItem={(item) => {
+                setProfessional({
+                  ...professional,
+                  specialization: item.value,
+                });
+              }}
+            />
+          </View>
+
           <View>
             <CustomTextInput
               value={professional.displayName}
@@ -122,15 +156,6 @@ const ProfessionalsRegistrationScreen = () => {
               width={formWidth}
               onChangeText={(value) => {
                 setProfessional({ ...professional, displayName: value });
-              }}
-            />
-            <CustomTextInput
-              value={professional.specialization}
-              placeholder="מקצוע"
-              style={styles.input}
-              width={formWidth}
-              onChangeText={(value) => {
-                setProfessional({ ...professional, specialization: value });
               }}
             />
 

@@ -18,7 +18,7 @@ const CollapseButton = ({ text, value, setValue }) => {
         <Ionicons
           size={40}
           color={colorPalate.grey}
-          name={value ? "chevron-down-outline" : "chevron-up-outline"}
+          name={value ? "chevron-up-outline" : "chevron-down-outline"}
         />
       </View>
     </TouchableOpacity>
