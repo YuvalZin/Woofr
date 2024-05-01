@@ -17,6 +17,7 @@ import { GetUserInfo } from "../../../utils/api/user";
 import { deletePost, getPostLikes, likePost } from "../../../utils/api/posts";
 import RegularTextBold from "../../texts/regular-text/regular-text-bold";
 import { AntDesign } from '@expo/vector-icons';
+import RatingBar from "../rating-bar/rating-bar";
 
 const ReviewCard = ({ data, onImgPress, setRender }) => {
   const [userData, setUserData] = useState({
@@ -105,20 +106,21 @@ const ReviewCard = ({ data, onImgPress, setRender }) => {
           />
           <SmallText text={timeStr} style={styles.infoText} />
         </View>
-        
+
         {isMyReview && (
-        <View style={styles.deleteIcon}>
-          <TouchableOpacity
-            onPress={() => deleteReviewById(data.id)}
-          >
-            <AntDesign name="delete" size={22} color="lightgrey" />
-          </TouchableOpacity>
-        </View>
+          <View style={styles.deleteIcon}>
+            <TouchableOpacity
+              onPress={() => deleteReviewById(data.id)}
+            >
+              <AntDesign name="delete" size={22} color="lightgrey" />
+            </TouchableOpacity>
+          </View>
         )}
 
       </View>
       <View style={styles.input}>
         <RegularText text={data.reviewText} />
+                <RatingBar rating={data.rating} />
       </View>
     </View>
   );
@@ -129,13 +131,14 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 15,
     alignItems: "flex-start",
+    
   },
   container: {
     flex: 1,
     width: "100%",
     backgroundColor: "#fff",
     padding: 8,
-
+    padding:20,
     marginBottom: 15,
   },
   deleteIcon: {
@@ -145,7 +148,6 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 6,
-    marginBottom: 10,
     flexDirection: "row",
   },
   avatarContainer: {
@@ -158,18 +160,8 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 35,
   },
-  postImageContainer: {
-    flex: 1,
-    overflow: "hidden",
-    borderRadius: 8,
-    alignItems: "center",
-    padding: 8,
-  },
-  postImage: {
-    width: 380,
-    height: 380,
-    resizeMode: "cover",
-  },
+
+
   userInfo: {
     justifyContent: "center",
     alignItems: "flex-start",
@@ -184,15 +176,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginRight: 3,
   },
-  buttonsContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-  },
-  buttonContainer: {
-    padding: 4,
-    justifyContent: "center",
-    alignItems: "center",
-  },
+
 });
 
 export default ReviewCard;

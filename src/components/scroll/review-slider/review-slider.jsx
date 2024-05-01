@@ -4,6 +4,7 @@ import { StyleSheet, FlatList, View } from "react-native";
 // Custom components
 import Post from "../../cards/post/post";
 import EmptyCard from "../../cards/empty-card/empty-card";
+import ReviewCard from "../../cards/review-card/review-card"
 
 const ReviewSlider = ({ arr, onImgPress, setRender }) => {
   const renderPostItem = ({ item }) => {
@@ -38,9 +39,13 @@ const ReviewSlider = ({ arr, onImgPress, setRender }) => {
 
 const styles = StyleSheet.create({
   container: {
+    marginBottom:66,
+    paddingVertical:15,
     flex: 1,
-    
+    paddingHorizontal:0,
     width: "100%",
+    backgroundColor:"#F0F2F5"
+
   },
   loadingContainer: {
     justifyContent: "center",
