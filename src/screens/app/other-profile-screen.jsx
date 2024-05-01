@@ -29,6 +29,7 @@ import {
 } from "../../utils/api/user";
 import { startChat } from "../../utils/api/chat";
 import { getUserPosts } from "../../utils/api/posts";
+import { getProById } from "../../utils/api/pro";
 
 //Custom components
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
@@ -93,7 +94,8 @@ const UserProfileScreen = () => {
 
   const moveToRating = (id) => {
     if (myUser.id !== id) {
-      professional.profileImage = userProfile.profileImage;
+      console.log(userProfile);
+      professional.profileImage = userProfile.profilePictureUrl;
       navigation.navigate("home-rating", { data: professional });
     }
   };

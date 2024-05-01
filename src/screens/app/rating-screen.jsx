@@ -58,6 +58,7 @@ const RatingScreen = () => {
 
   const fetchProsReviews = async (id) => {
     setProProfile(data);
+    console.log(data);
     const res = await getProReviews(id);
     setProsReviews(res);
   };

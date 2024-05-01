@@ -108,7 +108,7 @@ const ProfessionalsScreen = () => {
               text={"חפש"}
               iconName={"search-outline"}
               color={colorPalate.primary}
-              onPress={fetchVets}
+              onPress={fetchPros}
             />
           </View>
         </>

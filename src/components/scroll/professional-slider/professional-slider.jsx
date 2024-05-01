@@ -5,7 +5,7 @@ import { StyleSheet, FlatList, View } from "react-native";
 import ProfessionalCard from "../../cards/professional-card/professional-card";
 import EmptyCard from "../../cards/empty-card/empty-card";
 
-const VetSlider = ({ arr, onCardPress, onRatingPress }) => {
+const ProSlider = ({ arr, onCardPress, onRatingPress }) => {
   const renderPostItem = ({ item }) => {
     return (
       <ProfessionalCard
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VetSlider;
+export default ProSlider;
