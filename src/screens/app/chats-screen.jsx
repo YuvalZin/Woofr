@@ -9,10 +9,10 @@ import { selectAuth } from "../../redux/authSlice";
 import { getUserChats } from "../../utils/api/chat";
 
 //Custom components
-import BigText from "../../components/texts/big-text/big-text";
 import Chats from "../../components/scroll/chats/chats";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 import BigTextBold from "../../components/texts/big-text/big-text-bold";
+import { useFocusEffect } from "@react-navigation/native";
 
 const ChatsScreen = ({ navigation }) => {
   // Use useSelector to access the Redux store state
@@ -41,14 +41,13 @@ const ChatsScreen = ({ navigation }) => {
     }
   };
 
-  // Effect to fetch messages when the component mounts
   // and poll for new messages every 15 seconds
   useEffect(() => {
     let intervalId;
 
     const fetchAndPollChats = async () => {
       await loadChats();
-      // intervalId = setInterval(loadChats, 1000 * 15);
+      intervalId = setInterval(loadChats, 1000 * 30);
     };
 
     fetchAndPollChats();
@@ -58,6 +57,16 @@ const ChatsScreen = ({ navigation }) => {
       clearInterval(intervalId); // Use intervalId for cleanup
     };
   }, []);
+
+  // Use useFocusEffect to reload chats when returning to this screen
+  useFocusEffect(
+    React.useCallback(() => {
+      const reloadChatsOnFocus = async () => {
+        await loadChats();
+      };
+      reloadChatsOnFocus();
+    }, [])
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -77,8 +86,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    width:"98%",
-
+    width: "98%",
   },
   header: {
     justifyContent: "flex-start",

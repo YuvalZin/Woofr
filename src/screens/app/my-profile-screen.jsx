@@ -6,6 +6,7 @@ import {
   StyleSheet,
   View,
   RefreshControl,
+  StatusBar,
 } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 

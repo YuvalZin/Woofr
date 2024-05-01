@@ -39,7 +39,6 @@ import { colorPalate } from "../../utils/ui/colors";
 import uuid from "react-native-uuid";
 
 //Custom components
-import BigText from "../../components/texts/big-text/big-text";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import RegularText from "../../components/texts/regular-text/regular-text";
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
@@ -73,13 +72,13 @@ const SignupScreen = () => {
   // State object to manage user data
   const [userData, setUserData] = useState({
     id: uuid.v4().toString(),
-    firstName: "בני",
-    lastName: "חנונוב",
-    gender: "male",
+    firstName: "",
+    lastName: "",
+    gender: "",
     birthday: new Date(),
-    email: "benyx13@gmail.com",
-    password: "Aa123456",
-    confirm: "Aa123456",
+    email: "",
+    password: "",
+    confirm: "",
     type: "",
   });
 
