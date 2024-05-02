@@ -21,7 +21,6 @@ import { colorPalate } from "../../utils/ui/colors";
 //Custom components
 import ProfessionalSlider from "../../components/scroll/professional-slider/professional-slider";
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
-import BigText from "../../components/texts/big-text/big-text";
 import ProfessionalFilter from "../../components/inputs/professional-filter/professional-filter";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import CollapseButton from "../../components/buttons/collapse-button/collapse-button";
@@ -58,13 +57,13 @@ const ProfessionalsScreen = () => {
     verificationStatus: "string",
     activeWoofr: true,
     city: null,
-    type:"all",
+    type: "all",
   });
 
   //fetch posts to display on homepage
   const fetchPros = async () => {
     const res = await getPros(resultsFilter);
-    setPros(res);
+    // setPros(res);
   };
 
   //Function to move to profile

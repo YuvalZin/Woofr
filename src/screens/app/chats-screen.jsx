@@ -12,7 +12,6 @@ import { getUserChats } from "../../utils/api/chat";
 import Chats from "../../components/scroll/chats/chats";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 import BigTextBold from "../../components/texts/big-text/big-text-bold";
-import { colorPalate } from "../../utils/ui/colors";
 import { useFocusEffect } from "@react-navigation/native";
 
 const ChatsScreen = ({ navigation }) => {
@@ -87,15 +86,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    width:"98%",
+    width: "98%",
   },
   header: {
     justifyContent: "flex-start",
     padding: 20,
-    borderBottomWidth:5,
-    borderBottomColor:"#F0F2F5",
-
-
+    borderBottomWidth: 5,
+    borderBottomColor: "#F0F2F5",
   },
 });
 

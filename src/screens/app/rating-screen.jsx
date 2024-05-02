@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, View, ScrollView, TextInput,Image,TouchableOpacity, Button } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  ScrollView,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  Button,
+} from "react-native";
 
 //App color palate
 import { colorPalate } from "../../utils/ui/colors";
@@ -64,7 +73,6 @@ const RatingScreen = () => {
   //Fetch reviews base pro id
   const fetchProsReviews = async (id) => {
     setProProfile(data);
-    console.log(data);
     const res = await getProReviews(id);
     setProsReviews(res);
   };
@@ -121,9 +129,7 @@ const RatingScreen = () => {
             color={"white"}
             text={`דרגו את ${proProfile.displayName} (1 לא מומלץ - 5 מצוין)`}
           />
-          <TouchableOpacity
-            style={styles.avatarContainer}
-          >
+          <TouchableOpacity style={styles.avatarContainer}>
             <Image
               source={{
                 uri: proProfile.profileImage,
@@ -191,7 +197,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     width: "85%",
     padding: 12,
-
   },
   textInput: {
     height: 80,
@@ -200,7 +205,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   avatarContainer: {
-    marginTop:20,
+    marginTop: 20,
     alignItems: "center",
     justifyContent: "center",
   },

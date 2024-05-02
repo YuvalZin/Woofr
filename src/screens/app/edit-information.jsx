@@ -224,7 +224,9 @@ const EditInformation = () => {
                 style={[styles.buttonContainer, { width: 200, marginTop: 90 }]}
               >
                 <RegularButtonSmall
-                  text={myUser.type ? "עדכן את העסק" : "מעבר לפרופיל עסקי"}
+                  text={
+                    myUser.type === null ? "הפוך לפרופיל עסקי" : "עדכן את העסק"
+                  }
                   style={styles.button}
                   color={colorPalate.primaryLight}
                   onPress={() => {

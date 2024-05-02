@@ -94,7 +94,6 @@ const UserProfileScreen = () => {
 
   const moveToRating = (id) => {
     if (myUser.id !== id) {
-      console.log(userProfile);
       professional.profileImage = userProfile.profilePictureUrl;
       navigation.navigate("home-rating", { data: professional });
     }

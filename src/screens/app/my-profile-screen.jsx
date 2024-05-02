@@ -7,6 +7,7 @@ import {
   View,
   RefreshControl,
   StatusBar,
+  TouchableOpacity,
 } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
@@ -33,8 +34,6 @@ import PostSlider from "../../components//scroll/posts-slider/post-slider";
 import AddPost from "../../components/buttons/add-post/add-post";
 import RegularTextBold from "../../components/texts/regular-text/regular-text-bold";
 import RegularText from "../../components/texts/regular-text/regular-text";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { StatusBar } from "react-native";
 
 const ProfileScreen = () => {
   //Navigation handler
@@ -107,11 +106,10 @@ const ProfileScreen = () => {
   }, [refreshing]);
 
   return (
-
-    <SafeAreaView style={{flex:1}}>
-      <SafeAreaView>  
-          <StatusBar backgroundColor={"black"} />
-          </SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView>
+        <StatusBar backgroundColor={"black"} />
+      </SafeAreaView>
       <ScrollView
         refreshControl={
           <RefreshControl
@@ -124,7 +122,7 @@ const ProfileScreen = () => {
         {myUser ? (
           <View style={styles.container}>
             <View style={styles.header}>
-              <View style={{alignItems:"center",marginTop:5}}>
+              <View style={{ alignItems: "center", marginTop: 5 }}>
                 <Image
                   source={{ uri: myUser.profilePictureUrl }}
                   style={styles.profileImage}
@@ -216,7 +214,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     flexDirection: "row",
     alignItems: "flex-start",
-    
   },
   loadingContainer: {
     justifyContent: "center",

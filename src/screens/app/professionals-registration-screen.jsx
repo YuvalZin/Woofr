@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 
 //Redux state management
@@ -19,6 +19,9 @@ import { useNavigation } from "@react-navigation/native";
 
 // Importing Checkbox component from expo-checkbox
 import Checkbox from "expo-checkbox";
+
+//
+import { getProById, insertVet } from "../..//utils/api/pro";
 
 //
 import { specializations } from "../../utils/data/specialization";
@@ -55,20 +58,20 @@ const ProfessionalsRegistrationScreen = () => {
 
   const [professional, setProfessional] = useState({
     id: uuid.v4().toString(),
-    displayName: "בני מזון כלבים",
-    address: "בן צבי 12",
-    phone: "0507799799",
+    displayName: "",
+    address: "",
+    phone: "",
     profileImage: myUser.profilePictureUrl,
-    description: "מוכר מזון איכותי לחיות",
-    specialization: "מזון חיות",
+    description: "",
+    specialization: "",
     ratingScore: 0,
     availability24_7: false,
     sellsProducts: false,
     vetToHome: false,
-    notes: "מחירים פצצה לכל בעלי החיות",
+    notes: "",
     verificationStatus: "",
-    activeWoofr: false,
-    city: "נתניה",
+    activeWoofr: true,
+    city: "",
     userId: myUser.id,
   });
 
@@ -86,7 +89,7 @@ const ProfessionalsRegistrationScreen = () => {
     }, duration);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setButtonLoading(true);
     // Validate the user data using signupValidator
     const formCheck = professionalValidate(professional);
@@ -96,10 +99,33 @@ const ProfessionalsRegistrationScreen = () => {
       //Open and Set snackbar text to display the error message
       showSnackbar(formCheck.errorMessage, 3000);
       setButtonLoading(false);
+      return;
+    }
+
+    if (myUser.type === null) {
+      const res = await insertVet(professional);
+
+      if (res) {
+        navigation.goBack();
+      } else {
+        showSnackbar("הייתה בעיה ליצור משתמש פרו", 3000);
+        setButtonLoading(false);
+      }
     } else {
-      setButtonLoading(false);
+      //Api to update pro data
     }
   };
+
+  // Fetch data when component mounts
+  useEffect(() => {
+    if (myUser.type !== null) {
+      const fetchData = async () => {
+        const res = await getProById(myUser.id);
+      };
+
+      fetchData();
+    }
+  }, [myUser.id]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
