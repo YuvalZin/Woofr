@@ -21,6 +21,7 @@ import { getProsForHomePage } from "../../utils/api/pro";
 
 //Import app logo
 import LogoImage from "../../../assets/logo-wofer2.png";
+import headingImage from "../../utils/images/semi-heading.png";
 
 //Custom Component
 import PostSlider from "../../components/scroll/posts-slider/post-slider";
@@ -116,7 +117,7 @@ const HomeScreen = () => {
           style={styles.touchableContainer}
           onPress={moveToProfessionals}
         >
-          <BigText text={"woofr pro"} />
+          <Image source={headingImage} style={styles.heading} />
           <Ionicons name="caret-back-outline" size={24} color={"black"} />
         </TouchableOpacity>
 
@@ -149,6 +150,12 @@ const styles = StyleSheet.create({
   postsArea: {
     width: "100%",
     backgroundColor: "#f5f5f5",
+  },
+  heading: {
+    marginLeft:10,
+    width: 220,
+    height: 70,
+    resizeMode: "contain",
   },
   container: {
     flex: 1,

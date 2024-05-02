@@ -24,6 +24,8 @@ import ProfessionalFilter from "../../components/inputs/professional-filter/prof
 import RegularButton from "../../components/buttons/regular-button/regular-button";
 import CollapseButton from "../../components/buttons/collapse-button/collapse-button";
 import RegularText from "../../components/texts/regular-text/regular-text";
+import RegularTextBold from "../../components/texts/regular-text/regular-text-bold";
+import RegularButtonFullW from "../../components/buttons/regular-button/regular-button-full";
 
 const ProfessionalsScreen = () => {
   //Navigation handler
@@ -92,7 +94,7 @@ const ProfessionalsScreen = () => {
           }}
         />
         <View>
-          <RegularText text={"woofr Pros - התחברו למומחים"} />
+          <RegularTextBold text={"woofr Pros - התחברו למומחים"} />
         </View>
       </View>
 
@@ -101,10 +103,10 @@ const ProfessionalsScreen = () => {
           <ProfessionalFilter data={resultsFilter} setData={setResultsFilter} />
 
           <View style={styles.buttonContainer}>
-            <RegularButton
-              text={"חפש"}
+            <RegularButtonFullW
+              text={"סינון תוצאות"}
               iconName={"search-outline"}
-              color={colorPalate.primary}
+              color={colorPalate.lightGrey}
               onPress={fetchPros}
             />
           </View>
@@ -114,7 +116,7 @@ const ProfessionalsScreen = () => {
       <CollapseButton
         value={showFilters}
         setValue={setShowFilters}
-        text={showFilters ? "הסתר פילטרים" : "הצג פילטרים"}
+        text={showFilters ? "הסתר פילטרים" : "סינון תוצאות"}
       />
 
       <ScrollView nestedScrollEnabled={true} style={styles.container}>
@@ -140,6 +142,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     width: "100%",
     alignItems: "center",
+
   },
   buttonContainer: {
     padding: 4,

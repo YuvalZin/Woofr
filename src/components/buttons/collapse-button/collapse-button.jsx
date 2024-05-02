@@ -14,9 +14,9 @@ const CollapseButton = ({ text, value, setValue }) => {
       }}
     >
       <View style={styles.col}>
-        <SmallText text={text} />
+        <SmallText color={"white"} text={text} />
         <Ionicons
-          size={40}
+          size={20}
           color={colorPalate.grey}
           name={value ? "chevron-up-outline" : "chevron-down-outline"}
         />
@@ -28,12 +28,13 @@ const CollapseButton = ({ text, value, setValue }) => {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    padding: 4,
   },
   col: {
-    flexDirection: "column",
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    paddingVertical:15,
+    backgroundColor:colorPalate.primary,
   },
 });
 

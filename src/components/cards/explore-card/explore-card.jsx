@@ -75,9 +75,12 @@ const styles = StyleSheet.create({
   header: {
     position: "absolute",
     left: 0,
-    top: 0,
+    top: 28,
     backgroundColor: colorPalate.primary,
-    padding: 8,
+    padding: 3,
+    paddingRight:10,
+    borderTopRightRadius:15,
+    borderBottomRightRadius:15,
     color: colorPalate.primary,
   },
   textContainer: {
@@ -85,14 +88,14 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
-    padding: 8,
+    padding: 20,
     width: 320,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+
   },
   title: {
     color: colorPalate.white,
-    fontSize: 25,
+    fontSize: 18,
+
     fontWeight: "bold",
     padding: 3,
     textAlign: "left",

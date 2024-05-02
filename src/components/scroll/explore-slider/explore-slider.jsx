@@ -10,7 +10,7 @@ const ExploreSlider = ({ arr, onPress }) => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <FlatList
         horizontal
         pagingEnabled
@@ -23,6 +23,11 @@ const ExploreSlider = ({ arr, onPress }) => {
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+container:{
+  justifyContent:"flex-start",
+  alignItems:"flex-start",
+}
+});
 
 export default ExploreSlider;
