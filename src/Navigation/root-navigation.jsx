@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 
 //Import react-native navigation element
-import { NavigationContainer,DefaultTheme} from "@react-navigation/native";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 
 //Import navigation for the root
 import AuthNavigation from "./auth-navigation";
@@ -25,7 +25,7 @@ const RootNavigation = () => {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      background:'white'
+      background: "white",
     },
   };
   useEffect(() => {

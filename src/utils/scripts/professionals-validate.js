@@ -3,8 +3,8 @@ export const professionalValidate = (form) => {
     return { isValid: false, errorMessage: "שם עסק חייב להכין 3 תוויים לפחות" };
   }
 
-  if (form.specialization.length < 3) {
-    return { isValid: false, errorMessage: "מקצוע חייב להחיל לפחות 3 תווים" };
+  if (form.type.length < 3) {
+    return { isValid: false, errorMessage: "חייב לבחור תחום שירות" };
   }
 
   if (form.city.length < 3) {

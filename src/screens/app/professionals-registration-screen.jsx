@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 
 //Redux state management
-import { useSelector } from "react-redux";
-import { selectAuth } from "../../redux/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { login, selectAuth } from "../../redux/authSlice";
 
 // Importing uuid module from react-native-uuid
 import uuid from "react-native-uuid";
@@ -21,7 +21,7 @@ import { useNavigation } from "@react-navigation/native";
 import Checkbox from "expo-checkbox";
 
 //
-import { getProById, insertVet } from "../..//utils/api/pro";
+import { getProById, insertProfessional } from "../..//utils/api/pro";
 
 //
 import { types } from "../../utils/data/types";
@@ -42,6 +42,7 @@ const ProfessionalsRegistrationScreen = () => {
   // Use useSelector to access the Redux store state
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
+  const dispatch = useDispatch();
 
   //Navigation handler
   const navigation = useNavigation();
@@ -65,13 +66,13 @@ const ProfessionalsRegistrationScreen = () => {
     description: "",
     type: "",
     ratingScore: 0,
-    availability24_7: false,
-    sellsProducts: false,
-    toHome: false,
+    availability24_7: true,
+    sellsProducts: true,
+    toHome: true,
     notes: "",
-    verificationStatus: "",
+    verificationStatus: "verified",
     activeWoofr: true,
-    city: "",
+    City: "",
     userId: myUser.id,
   });
 
@@ -102,25 +103,37 @@ const ProfessionalsRegistrationScreen = () => {
       return;
     }
 
-    if (myUser.type === null) {
-      const res = await insertVet(professional);
+    if (myUser.type === "user") {
+      const insertPro = await insertProfessional(professional);
 
-      if (res) {
+      if (insertPro) {
+        let newUser = { ...myUser, type: "commercial" };
+        dispatch(login(JSON.stringify(newUser)));
         navigation.goBack();
       } else {
         showSnackbar("הייתה בעיה ליצור משתמש פרו", 3000);
         setButtonLoading(false);
       }
     } else {
-      //Api to update pro data
+      const updatePro = await insertProfessional(professional);
+
+      if (updatePro) {
+        navigation.goBack();
+      } else {
+        showSnackbar("הייתה בעיה בעדכון", 3000);
+        setButtonLoading(false);
+      }
     }
   };
+
+  console.log(professional);
 
   // Fetch data when component mounts
   useEffect(() => {
     if (myUser.type !== null) {
       const fetchData = async () => {
         const res = await getProById(myUser.id);
+        setProfessional(res);
       };
 
       fetchData();
@@ -157,9 +170,7 @@ const ProfessionalsRegistrationScreen = () => {
           >
             <DropDownPicker
               open={openDropdown}
-              value={
-                professional.type ? professional.type : null
-              }
+              value={professional.type ? professional.type : null}
               items={types}
               setOpen={setOpenDropdown}
               placeholder="בחר מקצוע"
@@ -186,12 +197,12 @@ const ProfessionalsRegistrationScreen = () => {
             />
 
             <CustomTextInput
-              value={professional.city}
+              value={professional.City}
               placeholder="עיר"
               style={styles.input}
               width={formWidth}
               onChangeText={(value) => {
-                setProfessional({ ...professional, city: value });
+                setProfessional({ ...professional, City: value });
               }}
             />
             <CustomTextInput

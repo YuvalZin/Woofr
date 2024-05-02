@@ -1,14 +1,17 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
-import { useFonts, Assistant_400Regular,Assistant_700Bold  } from '@expo-google-fonts/assistant';
+import {
+  useFonts,
+  Assistant_400Regular,
+  Assistant_700Bold,
+} from "@expo-google-fonts/assistant";
 
-const RegularText = ({ text, english = false ,color,onPress}) => {
+const RegularText = ({ text, english = false, color, onPress }) => {
   const textAlign = !english ? "left" : "right";
-   
 
   const [fontsLoaded] = useFonts({
     Assistant_400Regular,
-    Assistant_700Bold
+    Assistant_700Bold,
   });
 
   if (!fontsLoaded) {
@@ -16,7 +19,17 @@ const RegularText = ({ text, english = false ,color,onPress}) => {
   }
 
   return (
-    <Text onPress= {onPress} style={[styles.text, { color:color,textAlign:textAlign,fontFamily: 'Assistant_400Regular' }]}>
+    <Text
+      onPress={onPress}
+      style={[
+        styles.text,
+        {
+          color: color,
+          textAlign: textAlign,
+          fontFamily: "Assistant_400Regular",
+        },
+      ]}
+    >
       {text}
     </Text>
   );

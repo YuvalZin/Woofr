@@ -1,10 +1,15 @@
+import { colorPalate } from "../ui/colors";
+
 // Array containing specialization options
 export const types = [
-  { label: "וטרינר", value: "וטרינר" }
+  { label: "וטרינר", value: "וטרינר", color: colorPalate.primary },
+  {
+    label: "מזון וציוד לחיות מחמד",
+    value: "מזון וציוד לחיות מחמד",
+    color: colorPalate.primary,
+  },
+  { label: "פנסיונים", value: "פנסיונים", color: colorPalate.warning },
+  { label: "מספרות", value: "מספרות", color: colorPalate.secondary },
+  { label: "אילוף וייעוץ", value: "אילוף וייעוץ", color: colorPalate.grey },
+  { label: "דוג ווקר", value: "דוג ווקר", color: colorPalate.accent },
 ];
-  // { label: "התנהגות בעלי חיים", value: "התנהגות בעלי חיים" },
-  // { label: "טיפוח חיות מחמד", value: "טיפוח חיות מחמד" },
-  // { label: "תזונת חיות מחמד", value: "תזונת חיות מחמד" },
-  // { label: "אימון בעלי חיים", value: "אימון בעלי חיים" },
-  // { label: "צילום חיות מחמד", value: "צילום חיות מחמד" },
-  // { label: "רווחה של בעלי חיים", value: "רווחה של בעלי חיים" },

@@ -1,40 +1,54 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   View,
-  Image,
+  Text,
   TouchableOpacity,
   Dimensions,
+  ImageBackground,
 } from "react-native";
+
+//Import types data
+import { types } from "../../../utils/data/types";
 
 // Import app colors palate
 import { colorPalate } from "../../../utils/ui/colors";
 
-// Custom components
-import RegularText from "../../texts/regular-text/regular-text";
-import SmallText from "../../texts/small-text/small-text";
-
 const ExploreCard = ({ data, onPress }) => {
   const screenWidth = Dimensions.get("window").width;
+
+  // Find the corresponding type object from the types array
+  const selectedType = types.find((item) => item.label === data.type);
+
+  // Extract color from the selected type object or use a default color
+  const color = selectedType ? selectedType.color : colorPalate.primary;
 
   return (
     <TouchableOpacity
       style={[styles.container, { width: screenWidth }]}
       onPress={() => {
-        onPress("ccc9dc85-be13-4435-a23e-37250c2c9kkk");
+        onPress(data.userId);
       }}
     >
       <View style={styles.cardBackground}>
-        <Image
+        <ImageBackground
           source={{
-            uri: "https://media.istockphoto.com/id/1423830925/photo/young-vet-using-tablet-pc-at-her-work.jpg?s=612x612&w=0&k=20&c=fBBv9PcVYkJVgKC0xhsGBK8Y-1eHP6B37cK8GOh0k8s=",
+            uri: data.profileImage,
           }}
           style={styles.img}
         />
 
+        <View style={[styles.header, { backgroundColor: color }]}>
+          <Text style={styles.title}>{data.type}</Text>
+        </View>
+
         <View style={styles.textContainer}>
-          <RegularText text={"דוקטור רחמנוב"} />
-          <SmallText text={"וטרינר מיוחד שעושה קסמים."} />
+          <Text style={styles.title}>{data.displayName}</Text>
+          <Text style={styles.desc}>
+            {data.description.length > 80
+              ? data.description.slice(0, 80) + "..."
+              : data.description}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -45,25 +59,49 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
-    padding: 6,
   },
   cardBackground: {
     borderRadius: 8,
-    overflow: "hidden",
-    width: 340,
     alignItems: "center",
-    padding: 4,
-    elevation: 5,
+    elevation: 3,
+    borderRadius: 20,
   },
   img: {
-    width: 310,
-    height: 310,
+    width: 320,
+    height: 320,
     resizeMode: "cover",
     borderRadius: 20,
   },
+  header: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    backgroundColor: colorPalate.primary,
+    padding: 8,
+    color: colorPalate.primary,
+  },
   textContainer: {
-    justifyContent: "center",
-    alignItems: "center",
+    position: "absolute",
+    left: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    padding: 8,
+    width: 320,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+  },
+  title: {
+    color: colorPalate.white,
+    fontSize: 25,
+    fontWeight: "bold",
+    padding: 3,
+    textAlign: "left",
+  },
+  desc: {
+    color: colorPalate.white,
+    fontSize: 15,
+    padding: 4,
+    textAlign: "left",
   },
 });
 

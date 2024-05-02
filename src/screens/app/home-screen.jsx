@@ -17,6 +17,7 @@ import { selectAuth } from "../../redux/authSlice";
 
 //Importing function from the API file
 import { getHomePagePosts } from "../../utils/api/posts";
+import { getProsForHomePage } from "../../utils/api/pro";
 
 //Import app logo
 import LogoImage from "../../../assets/logo-wofer2.png";
@@ -43,10 +44,18 @@ const HomeScreen = () => {
   // Initialize state for storing the user's posts
   const [posts, setPosts] = useState([]);
 
+  const [pros, setPros] = useState([]);
+
   //fetch posts to display on homepage
   const fetchPosts = async () => {
     const res = await getHomePagePosts(myUser.id);
     setPosts(res);
+  };
+
+  //fetch posts to display on homepage
+  const fetchPro = async () => {
+    const res = await getProsForHomePage();
+    setPros(res);
   };
 
   // Function to handle refresh
@@ -54,6 +63,7 @@ const HomeScreen = () => {
     setRefreshing(true);
     setPosts([]);
     fetchPosts();
+    fetchPro();
     setTimeout(() => {
       setRefreshing(false);
     }, 1000);
@@ -75,21 +85,16 @@ const HomeScreen = () => {
   // useEffect hook to fetch posts when the refreshing state changes
   useEffect(() => {
     fetchPosts();
+    fetchPro();
   }, [refreshing]);
 
   // useFocusEffect hook to fetch posts when the component gains focus
   useFocusEffect(
     useCallback(() => {
       fetchPosts();
+      fetchPro();
     }, [])
   );
-
-  const exploreArray = [
-    { id: "0", name: "", desc: "" },
-    { id: "1", name: "", desc: "" },
-    { id: "2", name: "", desc: "" },
-    { id: "3", name: "", desc: "" },
-  ];
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -107,7 +112,6 @@ const HomeScreen = () => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        
         <TouchableOpacity
           style={styles.touchableContainer}
           onPress={moveToProfessionals}
@@ -116,23 +120,25 @@ const HomeScreen = () => {
           <Ionicons name="caret-back-outline" size={24} color={"black"} />
         </TouchableOpacity>
 
-        <ExploreSlider arr={exploreArray} onPress={moveToProfile} />
+        <ExploreSlider arr={pros} onPress={moveToProfile} />
 
-        <View style={styles.touchableContainer} onPress={moveToProfessionals}>
-        </View>
+        <View
+          style={styles.touchableContainer}
+          onPress={moveToProfessionals}
+        ></View>
         <AddPost
           onPress={() => {
             navigation.navigate("home-post");
           }}
         />
         <View style={styles.postsArea}>
-        {posts.length > 0 && (
-          <PostSlider
-            arr={posts}
-            onImgPress={moveToProfile}
-            setRender={onRefresh}
-          />
-        )}
+          {posts.length > 0 && (
+            <PostSlider
+              arr={posts}
+              onImgPress={moveToProfile}
+              setRender={onRefresh}
+            />
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -140,21 +146,20 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  postsArea:{
-    width:"100%",
-    backgroundColor:"#f5f5f5",
+  postsArea: {
+    width: "100%",
+    backgroundColor: "#f5f5f5",
   },
   container: {
     flex: 1,
-    backgroundColor:"white"
+    backgroundColor: "white",
   },
   header: {
     justifyContent: "flex-start",
     alignItems: "flex-start",
     padding: 8,
     width: "100%",
-    backgroundColor:"white"
-
+    backgroundColor: "white",
   },
   logo: {
     width: 120,
