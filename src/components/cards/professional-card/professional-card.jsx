@@ -14,11 +14,11 @@ const ProfessionalCard = ({ data, onCardPress, onRatingPress }) => {
     phone: "string",
     profileImage: "string",
     description: "string",
-    specialization: "string",
+    type: "string",
     ratingScore: 0,
     availability24_7: true,
     sellsProducts: true,
-    vetToHome: true,
+    toHome: true,
     notes: "string",
     verificationStatus: "string",
     activeWoofr: true,
@@ -56,7 +56,7 @@ const ProfessionalCard = ({ data, onCardPress, onRatingPress }) => {
             style={styles.username}
           />
           <RegularText
-            text={`${proData.specialization}`}
+            text={`${proData.type}`}
             style={styles.bottomText}
           />
           <SmallText

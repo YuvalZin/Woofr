@@ -5,9 +5,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 
 import { colorPalate } from "../../../utils/ui/colors";
 
-import { specializations } from "../../../utils/data/specialization";
-
-import RegularButton from "../../buttons/regular-button/regular-button";
+import { types } from "../../../utils/data/types";
 
 // Custom components
 import SmallText from "../../texts/small-text/small-text";
@@ -53,10 +51,10 @@ const ProfessionalFilter = ({ data, setData }) => {
         <View style={styles.col}>
           <SmallText text={"עד בית הלקוח"} />
           <Checkbox
-            value={data.vetToHome || false}
+            value={data.toHome || false}
             color={colorPalate.primary}
             onValueChange={(value) => {
-              handleCheckBox("vetToHome", value);
+              handleCheckBox("toHome", value);
             }}
           />
         </View>
@@ -76,15 +74,15 @@ const ProfessionalFilter = ({ data, setData }) => {
           <View>
             <DropDownPicker
               open={openDropdown}
-              value={data.specialization ? data.specialization : null}
-              items={specializations}
+              value={data.type ? data.type : null}
+              items={types}
               setOpen={setOpenDropdown}
               placeholder="בחר מקצוע"
               style={styles.dropdown}
               containerStyle={styles.dropdownContainerStyle}
               dropDownDirection="BOTTOM"
               onSelectItem={(item) => {
-                setData({ ...data, specialization: item.value });
+                setData({ ...data, type: item.value });
               }}
             />
           </View>

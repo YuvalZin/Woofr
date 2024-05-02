@@ -4,7 +4,6 @@ import {
   SafeAreaView,
   ScrollView,
   View,
-  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -48,22 +47,21 @@ const ProfessionalsScreen = () => {
     phone: "string",
     profileImage: "string",
     description: "string",
-    specialization: null,
+    type: null,
     ratingScore: 0,
     availability24_7: null,
     sellsProducts: null,
-    vetToHome: null,
+    toHome: null,
     notes: "string",
     verificationStatus: "string",
     activeWoofr: true,
     city: null,
-    type: "all",
   });
 
   //fetch posts to display on homepage
   const fetchPros = async () => {
     const res = await getPros(resultsFilter);
-    // setPros(res);
+    setPros(res);
   };
 
   //Function to move to profile

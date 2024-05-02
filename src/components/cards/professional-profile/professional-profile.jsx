@@ -29,13 +29,13 @@ const ProfessionalProfile = ({ data, onRatingPress }) => {
     <View style={styles.container}>
       <View style={styles.infoContainer}>
         <RegularTextBold
-          text={`${proData.displayName} | ${proData.specialization}`}
+          text={`${proData.displayName} | ${proData.type}`}
           style={styles.username}
         />
         <ProfessionalCheckbox
           availability={proData.availability24_7}
           sells={proData.sellsProducts}
-          toHome={proData.vetToHome}
+          toHome={proData.toHome}
         />
 
         <View style={styles.infoRow}>

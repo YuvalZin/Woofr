@@ -54,7 +54,6 @@ const UserProfileScreen = () => {
 
   // Define state variable 'userProfile' using the 'useState' hook, initialized as null.
   const [userProfile, setUserProfile] = useState(null);
-  const [userType, setUserType] = useState("user");
   const [professional, setProfessional] = useState();
 
   // Define state variable 'posts' using the 'useState' hook, initialized as an empty array.

@@ -24,7 +24,7 @@ import Checkbox from "expo-checkbox";
 import { getProById, insertVet } from "../..//utils/api/pro";
 
 //
-import { specializations } from "../../utils/data/specialization";
+import { types } from "../../utils/data/types";
 
 //Form validator for professional
 import { professionalValidate } from "../../utils/scripts/professionals-validate";
@@ -63,11 +63,11 @@ const ProfessionalsRegistrationScreen = () => {
     phone: "",
     profileImage: myUser.profilePictureUrl,
     description: "",
-    specialization: "",
+    type: "",
     ratingScore: 0,
     availability24_7: false,
     sellsProducts: false,
-    vetToHome: false,
+    toHome: false,
     notes: "",
     verificationStatus: "",
     activeWoofr: true,
@@ -158,9 +158,9 @@ const ProfessionalsRegistrationScreen = () => {
             <DropDownPicker
               open={openDropdown}
               value={
-                professional.specialization ? professional.specialization : null
+                professional.type ? professional.type : null
               }
-              items={specializations}
+              items={types}
               setOpen={setOpenDropdown}
               placeholder="בחר מקצוע"
               dropDownDirection="BOTTOM"
@@ -168,7 +168,7 @@ const ProfessionalsRegistrationScreen = () => {
               onSelectItem={(item) => {
                 setProfessional({
                   ...professional,
-                  specialization: item.value,
+                  type: item.value,
                 });
               }}
             />
@@ -265,11 +265,11 @@ const ProfessionalsRegistrationScreen = () => {
             <View style={styles.section}>
               <Checkbox
                 style={styles.checkbox}
-                value={professional.vetToHome}
+                value={professional.toHome}
                 onValueChange={() => {
                   setProfessional({
                     ...professional,
-                    vetToHome: !professional.vetToHome,
+                    toHome: !professional.toHome,
                   });
                 }}
               />
