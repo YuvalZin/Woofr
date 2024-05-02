@@ -159,6 +159,8 @@ const RatingScreen = () => {
           <AddReview onPress={uploadReview} />
         </View>
         {prosReviews.length > 0 && <ReviewSlider arr={prosReviews} />}
+      </ScrollView>
+      <View style={styles.snackbar}>
         <Snackbar
           visible={snackbarOpen}
           onDismiss={() => setSnackbarOpen(false)}
@@ -171,7 +173,7 @@ const RatingScreen = () => {
         >
           {snackBarText}
         </Snackbar>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
@@ -213,6 +215,12 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 100,
+  },
+  snackbar: {
+    position: "relative",
+    bottom: 70,
+    right: 0,
+    zIndex: 10,
   },
 });
 

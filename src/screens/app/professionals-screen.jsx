@@ -63,7 +63,7 @@ const ProfessionalsScreen = () => {
   //fetch posts to display on homepage
   const fetchPros = async () => {
     const res = await getPros(resultsFilter);
-    // setPros(res);
+    setPros(res);
   };
 
   //Function to move to profile
