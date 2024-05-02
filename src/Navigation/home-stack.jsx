@@ -8,7 +8,8 @@ import ChatScreen from "../screens/app/chat-screen";
 import NewPostScreen from "../screens/app/new-post-screen";
 import ProfessionalsScreen from "../screens/app/professionals-screen";
 import RatingScreen from "../screens/app/rating-screen";
-
+import FollowsScreen from "../screens/app/follows-screen";
+import OtherProfileScreen from "../screens/app/other-profile-screen"
 const Stack = createStackNavigator();
 
 const HomeStack = () => {
@@ -42,6 +43,16 @@ const HomeStack = () => {
       <Stack.Screen
         name="home-rating"
         component={RatingScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="other-profile-follows"
+        component={FollowsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="profile-other"
+        component={OtherProfileScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

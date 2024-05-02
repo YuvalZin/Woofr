@@ -101,7 +101,7 @@ const NewPostScreen = () => {
     // Set the screen to loading state
     setLoading(true);
 
-    var imgLink = "";
+    var imgLink = "null";
 
     if (selectedImage) {
       imgLink = await uploadImage(

@@ -92,7 +92,7 @@ const ProfileScreen = () => {
   };
 
   const moveToFollows = (arr, title) => {
-    navigation.navigate("profile-follows", { arr: arr, title: title });
+    navigation.navigate("other-profile-follows", { arr: arr, title: title });
   };
 
   useEffect(() => {
@@ -134,22 +134,22 @@ const ProfileScreen = () => {
                 </View>
               </View>
               <View style={styles.followingContainer}>
+              <TouchableOpacity
+                  style={{ flexDirection: "column", alignItems: "center" }}
+                  onPress={() => {
+                    moveToFollows(followers, "העוקבים שלי");
+                  }}
+                >
+                  <RegularTextBold text={`${followers.length}`} />
+                  <RegularText text={`עוקבים`} />
+                </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    moveToFollows(following, "עוקב אחרי");
+                    moveToFollows(following, "הנעקבים שלי");
                   }}
                   style={{ flexDirection: "column", alignItems: "center" }}
                 >
                   <RegularTextBold text={`${following.length}`} />
-                  <RegularText text={`עוקב`} />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{ flexDirection: "column", alignItems: "center" }}
-                  onPress={() => {
-                    moveToFollows(followers, "עוקבים אחרי");
-                  }}
-                >
-                  <RegularTextBold text={`${followers.length}`} />
                   <RegularText text={`במעקב`} />
                 </TouchableOpacity>
               </View>

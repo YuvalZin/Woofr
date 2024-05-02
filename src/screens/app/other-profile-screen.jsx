@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   View,
+  TouchableOpacity,
 } from "react-native";
 
 // Import necessary hooks from React Navigation
@@ -89,6 +90,9 @@ const UserProfileScreen = () => {
         },
       ]);
     }
+  };
+  const moveToFollows = (arr, title) => {
+    navigation.navigate("other-profile-follows", { arr: arr, title: title });
   };
 
   const moveToRating = (id) => {
@@ -175,9 +179,25 @@ const UserProfileScreen = () => {
               />
             </View>
             <View style={styles.followingContainer}>
-              <RegularText text={`${following.length}\nעוקב`} />
-              <RegularText text={`${followers.length}\nבמעקב`} />
-            </View>
+              <TouchableOpacity
+                  style={{ flexDirection: "column", alignItems: "center" }}
+                  onPress={() => {
+                    moveToFollows(followers, "העוקבים שלי");
+                  }}
+                >
+                  <RegularTextBold text={`${followers.length}`} />
+                  <RegularText text={`עוקבים`} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    moveToFollows(following, "הנעקבים שלי");
+                  }}
+                  style={{ flexDirection: "column", alignItems: "center" }}
+                >
+                  <RegularTextBold text={`${following.length}`} />
+                  <RegularText text={`במעקב`} />
+                </TouchableOpacity>
+              </View>
           </View>
 
           <View style={styles.buttonsContainer}>

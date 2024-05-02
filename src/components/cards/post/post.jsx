@@ -161,7 +161,7 @@ const Post = ({ data, onImgPress, setRender }) => {
         <RegularText text={data.content} />
       </View>
 
-      {data.mediaUrl !== "" && (
+      {data.mediaUrl != "null" && (
         <View style={styles.postImageContainer}>
           <Image source={{ uri: data.mediaUrl }} style={styles.postImage} />
         </View>
@@ -188,6 +188,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     paddingHorizontal: 15,
+    paddingBottom: 20,
     alignItems: "flex-start",
   },
   container: {
