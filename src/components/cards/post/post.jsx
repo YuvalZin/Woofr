@@ -5,18 +5,22 @@ import { Image, StyleSheet, TouchableOpacity, View, Alert } from "react-native";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../../redux/authSlice";
 
-//Custom Components
-import RegularText from "../../texts/regular-text/regular-text";
-import SmallText from "../../texts/small-text/small-text";
-import IconButton from "../../buttons/icon-button/icon-button";
-
+//
 import { colorPalate } from "../../../utils/ui/colors";
+
+//Snack bar to show user information
+import { Snackbar } from "react-native-paper";
 
 //Import api calls
 import { GetUserInfo } from "../../../utils/api/user";
 import { deletePost, getPostLikes, likePost } from "../../../utils/api/posts";
 import RegularTextBold from "../../texts/regular-text/regular-text-bold";
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign } from "@expo/vector-icons";
+
+//Custom Components
+import RegularText from "../../texts/regular-text/regular-text";
+import SmallText from "../../texts/small-text/small-text";
+import IconButton from "../../buttons/icon-button/icon-button";
 
 const Post = ({ data, onImgPress, setRender }) => {
   const [userData, setUserData] = useState({
@@ -32,6 +36,21 @@ const Post = ({ data, onImgPress, setRender }) => {
   // Use useSelector to access the Redux store state
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
+
+  // State for storing text to be displayed in the and visibility of the snackbar
+  const [snackBarText, setSnackBarText] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  // Function to handle Snackbar
+  const showSnackbar = (message, duration) => {
+    setSnackBarText(message);
+    setSnackbarOpen(true);
+
+    // Close the snackbar after the specified duration
+    setTimeout(() => {
+      setSnackbarOpen(false);
+    }, duration);
+  };
 
   const likeHandle = async (post_id, user_id) => {
     const res = await likePost(post_id, user_id);
@@ -129,17 +148,14 @@ const Post = ({ data, onImgPress, setRender }) => {
           />
           <SmallText text={timeStr} style={styles.infoText} />
         </View>
-        
-        {isMyPost && (
-        <View style={styles.deleteIcon}>
-          <TouchableOpacity
-            onPress={() => deletePostById(data.id)}
-          >
-            <AntDesign name="delete" size={22} color="lightgrey" />
-          </TouchableOpacity>
-        </View>
-        )}
 
+        {isMyPost && (
+          <View style={styles.deleteIcon}>
+            <TouchableOpacity onPress={() => deletePostById(data.id)}>
+              <AntDesign name="delete" size={22} color="lightgrey" />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
       <View style={styles.input}>
         <RegularText text={data.content} />
@@ -151,7 +167,6 @@ const Post = ({ data, onImgPress, setRender }) => {
         </View>
       )}
 
-
       <View style={styles.buttonsContainer}>
         <View style={styles.buttonContainer}>
           <IconButton
@@ -162,7 +177,7 @@ const Post = ({ data, onImgPress, setRender }) => {
           />
         </View>
         <View style={styles.buttonContainer}>
-          <SmallText text={`${likes.length} ` + 'לייקים'} />
+          <SmallText text={`${likes.length} ` + "לייקים"} />
         </View>
       </View>
     </View>
@@ -222,7 +237,6 @@ const styles = StyleSheet.create({
   },
   username: {
     marginBottom: 3,
-
   },
   infoText: {
     color: "#888",

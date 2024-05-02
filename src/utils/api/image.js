@@ -5,7 +5,6 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 export const uploadImage = async (image, path) => {
   if (image) {
     // Create a reference to the Firebase Storage location where you want to store the image
-    // const storageRef = ref(imageDB, `profile/${myUser.id}`);
     const storageRef = ref(imageDB, path);
 
     try {
