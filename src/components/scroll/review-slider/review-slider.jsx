@@ -2,12 +2,12 @@ import React from "react";
 import { StyleSheet, FlatList, View } from "react-native";
 
 // Custom components
-import Post from "../../cards/post/post";
 import EmptyCard from "../../cards/empty-card/empty-card";
-import ReviewCard from "../../cards/review-card/review-card"
+import ReviewCard from "../../cards/review-card/review-card";
 
 const ReviewSlider = ({ arr, onImgPress, setRender }) => {
-  const renderPostItem = ({ item }) => {
+  //Function to render review
+  const renderReviewItem = ({ item }) => {
     return (
       <ReviewCard
         key={item.id}
@@ -26,7 +26,7 @@ const ReviewSlider = ({ arr, onImgPress, setRender }) => {
             scrollEnabled={false}
             keyExtractor={(item) => item.id}
             data={arr}
-            renderItem={({ item, index }) => renderPostItem({ item, index })}
+            renderItem={({ item, index }) => renderReviewItem({ item, index })}
             showsHorizontalScrollIndicator={false}
           />
         ) : (
@@ -39,13 +39,12 @@ const ReviewSlider = ({ arr, onImgPress, setRender }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom:66,
-    paddingVertical:15,
+    marginBottom: 66,
+    paddingVertical: 15,
     flex: 1,
-    paddingHorizontal:0,
+    paddingHorizontal: 0,
     width: "100%",
-    backgroundColor:"#F0F2F5"
-
+    backgroundColor: "#F0F2F5",
   },
   loadingContainer: {
     justifyContent: "center",

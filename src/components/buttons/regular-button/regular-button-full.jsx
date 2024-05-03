@@ -4,22 +4,20 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { useFonts, Assistant_400Regular } from '@expo-google-fonts/assistant';
+import { useFonts, Assistant_400Regular } from "@expo-google-fonts/assistant";
 
 // App color palate
 import { colorPalate } from "../../../utils/ui/colors";
 
-const RegularButtonFullW = ({ text, onPress, color, iconName, loading = false }) => {
+const RegularButtonFullW = ({ text, onPress, color, loading = false }) => {
   // Load the Assistant font
   const [fontsLoaded] = useFonts({
     Assistant_400Regular,
   });
 
   if (!fontsLoaded) {
-    return null; // or any loading indicator while fonts are loading
+    return null;
   }
 
   return (
@@ -51,7 +49,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "left",
     padding: 4,
-    fontFamily: 'Assistant_400Regular', // Use Assistant regular font
+    fontFamily: "Assistant_400Regular", // Use Assistant regular font
     color: "black",
   },
 });

@@ -4,10 +4,9 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useFonts, Assistant_400Regular } from '@expo-google-fonts/assistant';
+import { useFonts, Assistant_400Regular } from "@expo-google-fonts/assistant";
 
 // App color palate
 import { colorPalate } from "../../../utils/ui/colors";
@@ -48,15 +47,15 @@ const styles = StyleSheet.create({
     width: "100%",
     elevation: 5,
     flexDirection: "row",
-    borderBottomWidth:5,
-    borderBottomColor:colorPalate.primary,
+    borderBottomWidth: 5,
+    borderBottomColor: colorPalate.primary,
     gap: 5,
   },
   text: {
     fontSize: 21,
     textAlign: "left",
     padding: 4,
-    fontFamily: 'Assistant_400Regular', // Use Assistant regular font
+    fontFamily: "Assistant_400Regular", // Use Assistant regular font
     color: colorPalate.white,
   },
 });

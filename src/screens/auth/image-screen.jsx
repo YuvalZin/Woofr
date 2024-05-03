@@ -6,7 +6,6 @@ import {
   View,
   Image,
   StatusBar,
-  Alert,
 } from "react-native";
 
 //Import image picker
@@ -22,17 +21,19 @@ import { colorPalate } from "../../utils/ui/colors";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/authSlice";
 
+//Snack bar to show user information
+import { Snackbar } from "react-native-paper";
+
 //Importing function from the user API file
 import { uploadImageURL } from "../../utils/api/user";
 import { uploadImage } from "../../utils/api/image";
 
 //Custom components
-import BigText from "../../components/texts/big-text/big-text";
+import SmallTextBold from "../../components/texts/small-text/small-text-bold";
 import RegularText from "../../components/texts/regular-text/regular-text";
 import RegularTextBold from "../../components/texts/regular-text/regular-text-bold";
-import SmallTextBold from "../../components/texts/small-text/small-text-bold";
-import RegularButton from "../../components/buttons/regular-button/regular-button";
 import BigTextBold from "../../components/texts/big-text/big-text-bold";
+import RegularButton from "../../components/buttons/regular-button/regular-button";
 
 const ImageScreen = ({}) => {
   //State to save the image
@@ -41,6 +42,21 @@ const ImageScreen = ({}) => {
 
   //State to show the button loading
   const [buttonLoading, setButtonLoading] = useState(false);
+
+  // State for storing text to be displayed in the and visibility of the snackbar
+  const [snackBarText, setSnackBarText] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  // Function to handle Snackbar
+  const showSnackbar = (message, duration) => {
+    setSnackBarText(message);
+    setSnackbarOpen(true);
+
+    // Close the snackbar after the specified duration
+    setTimeout(() => {
+      setSnackbarOpen(false);
+    }, duration);
+  };
 
   const pickImage = async () => {
     // Launch the image library and await the result
@@ -72,21 +88,11 @@ const ImageScreen = ({}) => {
           setButtonLoading(false);
           dispatch(login(JSON.stringify(updatedProfile)));
         } else {
-          Alert.alert("משהו השתבש", "הייתה בעיה לעלות את התמונה", [
-            {
-              text: "שחרר",
-              style: "cancel",
-            },
-          ]);
+          showSnackbar("הייתה בעיה לעלות את התמונה", 3000);
         }
       }
     } else {
-      Alert.alert("חסרה תמונה", "על מנת לעלות תמונה צריך לבחור קודם תמונה", [
-        {
-          text: "שחרר",
-          style: "cancel",
-        },
-      ]);
+      showSnackbar("בחר תמונה שתרצה לעלות בבקשה", 3000);
     }
   };
 
@@ -118,9 +124,7 @@ const ImageScreen = ({}) => {
       <View style={styles.container}>
         <View style={styles.header}>
           <BigTextBold text={"תמונה שווה אלף מילים"} />
-          <RegularText
-            text={"לבנות רושם ראשוני חזק עם תמונת פרופיל נהדרת"}
-          />
+          <RegularText text={"לבנות רושם ראשוני חזק עם תמונת פרופיל נהדרת"} />
         </View>
 
         {image ? (
@@ -140,11 +144,24 @@ const ImageScreen = ({}) => {
             text={"הוסף"}
             onPress={addImage}
           />
-          
+
           <TouchableOpacity onPress={skipImageUpload} style={styles.skip}>
             <SmallTextBold text={"דלג"} />
           </TouchableOpacity>
         </View>
+
+        <Snackbar
+          visible={snackbarOpen}
+          onDismiss={() => {}}
+          action={{
+            label: "סגור",
+            onPress: () => {
+              setSnackbarOpen(false);
+            },
+          }}
+        >
+          {snackBarText}
+        </Snackbar>
       </View>
     </SafeAreaView>
   );
@@ -163,7 +180,7 @@ const styles = StyleSheet.create({
     direction: "rtl",
     textAlign: "left",
     paddingHorizontal: 20,
-    marginBottom:55,
+    marginBottom: 55,
   },
   circle: {
     width: 300,
@@ -174,8 +191,7 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom:55,
-
+    marginBottom: 55,
   },
   imagePreview: {
     width: 300,
@@ -185,8 +201,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderWidth: 4,
 
-    marginBottom:55,
-
+    marginBottom: 55,
   },
   buttonContainer: {
     justifyContent: "center",

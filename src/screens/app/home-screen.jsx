@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
+
+//Import icons
 import { Ionicons } from "@expo/vector-icons";
 
 //Redux state management
@@ -26,10 +28,8 @@ import headingImage from "../../utils/images/semi-heading.png";
 //Custom Component
 import PostSlider from "../../components/scroll/posts-slider/post-slider";
 import AddPost from "../../components/buttons/add-post/add-post";
-import BigText from "../../components/texts/big-text/big-text";
 import ExploreSlider from "../../components/scroll/explore-slider/explore-slider";
 import RegularText from "../../components/texts/regular-text/regular-text";
-import { colorPalate } from "../../utils/ui/colors";
 
 const HomeScreen = () => {
   //Navigation handler
@@ -45,6 +45,7 @@ const HomeScreen = () => {
   // Initialize state for storing the user's posts
   const [posts, setPosts] = useState([]);
 
+  // Initialize state for storing the pros
   const [pros, setPros] = useState([]);
 
   //fetch posts to display on homepage
@@ -79,6 +80,7 @@ const HomeScreen = () => {
     }
   };
 
+  //Function to navigate to processionals screen
   const moveToProfessionals = () => {
     navigation.navigate("home-professionals");
   };
@@ -152,7 +154,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
   },
   heading: {
-    marginLeft:10,
+    marginLeft: 10,
     width: 220,
     height: 70,
     resizeMode: "contain",

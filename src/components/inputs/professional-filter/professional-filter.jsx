@@ -25,7 +25,7 @@ const ProfessionalFilter = ({ data, setData }) => {
   };
 
   return (
-    <View style={[styles.container, { flex: openDropdown ? 1 : 0 }]}>
+    <View style={[styles.container, { flex: openDropdown ? 1.3 : 0 }]}>
       <View style={styles.row}>
         <View style={styles.col}>
           <SmallText text={"זמינות 24/7"} />
@@ -81,6 +81,7 @@ const ProfessionalFilter = ({ data, setData }) => {
               style={styles.dropdown}
               containerStyle={styles.dropdownContainerStyle}
               dropDownDirection="BOTTOM"
+              listMode="SCROLLVIEW"
               onSelectItem={(item) => {
                 setData({ ...data, type: item.value });
               }}

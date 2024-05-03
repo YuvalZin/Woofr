@@ -1,7 +1,7 @@
-// regular-button.tsx
-
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
+
+//Import icons
 import { Ionicons } from "@expo/vector-icons";
 
 const IconButton = ({ onPress, color, iconName, iconSize }) => {

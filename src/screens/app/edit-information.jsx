@@ -14,9 +14,8 @@ import { useNavigation } from "@react-navigation/native";
 
 //Redux state management
 import { useSelector } from "react-redux";
-import { login, selectAuth } from "../../redux/authSlice";
 import { useDispatch } from "react-redux";
-import { logout } from "../../redux/authSlice";
+import { login, selectAuth, logout } from "../../redux/authSlice";
 
 //Snack bar to show user information
 import { Snackbar } from "react-native-paper";
@@ -32,7 +31,6 @@ import * as ImagePicker from "expo-image-picker";
 
 //Custom components
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
-import BigText from "../../components/texts/big-text/big-text";
 import CustomTextInput from "../../components/inputs/custom-text-input/custom-text-input";
 import PasswordInput from "../../components/inputs/password-input/password-input";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
@@ -41,7 +39,12 @@ import RegularText from "../../components/texts/regular-text/regular-text";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 
 //Importing function from the API file
-import { editProfile, GetUserData, uploadImageURL } from "../../utils/api/user";
+import {
+  editProfile,
+  GetUserData,
+  uploadImageURL,
+  deleteProfile,
+} from "../../utils/api/user";
 import { uploadImage } from "../../utils/api/image";
 import BigTextBold from "../../components/texts/big-text/big-text-bold";
 
@@ -150,13 +153,25 @@ const EditInformation = () => {
     }
   };
 
-  const deleteUser = () => {
+  const deleteUser = async () => {
     setLoading(true);
-    // Delete the authentication token from SecureStore
-    SecureStore.deleteItemAsync("token");
-    // Dispatch the logout action to the Redux store
-    setLoading(false);
-    dispatch(logout());
+
+    try {
+      const res = await deleteProfile(myUser.token);
+      // Delete the authentication token from SecureStore
+
+      if (res) {
+        await SecureStore.deleteItemAsync("token");
+        // Dispatch the logout action to the Redux store
+        dispatch(logout());
+      } else {
+        setLoading(false);
+        showSnackbar("הייתה בעיה למחוק את הפרופיל", 3000);
+      }
+    } catch (error) {
+      // Handle any errors that occur during the deletion process
+      console.error("Error deleting token:", error);
+    }
   };
 
   return (

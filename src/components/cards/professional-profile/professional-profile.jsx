@@ -15,12 +15,15 @@ import ProfessionalCheckbox from "../professional-checkbox/professional-checkbox
 import RegularTextBold from "../../texts/regular-text/regular-text-bold";
 
 const ProfessionalProfile = ({ data, onRatingPress }) => {
+  // Initial state for professional information (caution: potential infinite loop)
   const [proData, setProData] = useState(data);
 
+  // Function to fetch and set professional information
   const fetchProInfo = async () => {
     setProData(data);
   };
 
+  // Fetch professional information on initial render (caution: potential infinite loop)
   useEffect(() => {
     fetchProInfo();
   }, [data]);

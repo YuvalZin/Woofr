@@ -1,5 +1,3 @@
-// WelcomeScreen.js
-
 import React, { useRef, useState } from "react";
 import { Animated, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -7,14 +5,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 //Array of features
 import { features } from "../../utils/data/features";
 
+//Navigation handler
+import { useNavigation } from "@react-navigation/native";
+import { colorPalate } from "../../utils/ui/colors";
+
 //Custom components
 import FeatureSlider from "../../components/scroll/feature-slider/feature-slider";
 import Pagination from "../../components/animation/pagination/pagination";
 import RegularButton from "../../components/buttons/regular-button/regular-button";
-
-//Navigation handler
-import { useNavigation } from "@react-navigation/native";
-import { colorPalate } from "../../utils/ui/colors";
 import Logo from "../../components/image/logo/logo";
 
 const WelcomeScreen = () => {
@@ -25,8 +23,9 @@ const WelcomeScreen = () => {
   // Navigation object for navigating between screens
   const navigation = useNavigation();
 
+  // Function to navigate to the Signin screen
   const moveToSignin = () => {
-    navigation.navigate("Signin");
+    navigation.navigate("signin");
   };
 
   return (

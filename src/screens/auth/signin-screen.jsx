@@ -21,12 +21,12 @@ import { loginUser, GetUserData } from "../../utils/api/user";
 import { colorPalate } from "../../utils/ui/colors";
 
 //Custom components
-import RegularButton from "../../components/buttons/regular-button/regular-button";
 import RegularText from "../../components/texts/regular-text/regular-text";
+import BigTextBold from "../../components/texts/big-text/big-text-bold";
 import CustomTextInput from "../../components/inputs/custom-text-input/custom-text-input";
 import PasswordInput from "../../components/inputs/password-input/password-input";
+import RegularButton from "../../components/buttons/regular-button/regular-button";
 import Logo from "../../components/image/logo/logo";
-import BigTextBold from "../../components/texts/big-text/big-text-bold";
 
 const SigninScreen = () => {
   // Importing the useNavigation hook from React Navigation to access navigation prop
@@ -40,8 +40,8 @@ const SigninScreen = () => {
 
   //State to store the login data
   const [loginData, setLoginData] = useState({
-    email: "",
-    password: "",
+    email: "shon@gmail.com",
+    password: "Aa123456",
   });
 
   // State for managing the snackbar: storing text content to be displayed and controlling visibility
@@ -84,7 +84,7 @@ const SigninScreen = () => {
 
   // Function to navigate to the Signup screen
   const moveToSignup = () => {
-    navigation.navigate("Signup");
+    navigation.navigate("signup");
   };
 
   return (

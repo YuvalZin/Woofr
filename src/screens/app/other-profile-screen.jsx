@@ -21,6 +21,9 @@ import uuid from "react-native-uuid";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/authSlice";
 
+//Snack bar to show user information
+import { Snackbar } from "react-native-paper";
+
 //Importing function from the API file
 import {
   GetUserInfo,
@@ -53,6 +56,10 @@ const UserProfileScreen = () => {
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
 
+  // State for storing text to be displayed in the and visibility of the snackbar
+  const [snackBarText, setSnackBarText] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
   // Define state variable 'userProfile' using the 'useState' hook, initialized as null.
   const [userProfile, setUserProfile] = useState(null);
   const [professional, setProfessional] = useState();
@@ -66,6 +73,17 @@ const UserProfileScreen = () => {
 
   // State variable to track whether to follow a user or not
   const [followThis, setFollowThis] = useState(false);
+
+  // Function to handle Snackbar
+  const showSnackbar = (message, duration) => {
+    setSnackBarText(message);
+    setSnackbarOpen(true);
+
+    // Close the snackbar after the specified duration
+    setTimeout(() => {
+      setSnackbarOpen(false);
+    }, duration);
+  };
 
   // Initiates a new chat between the current user and the user profile being viewed.
   const moveToChat = async () => {
@@ -82,13 +100,7 @@ const UserProfileScreen = () => {
       // If the chat initiation is successful, navigate to the chat screen with the chat data.
       navigation.navigate("chat", { data: res });
     } else {
-      // If there's an error, display an alert.
-      Alert.alert("משהו השתבש", "לא ניתן ליצור צ'אט", [
-        {
-          text: "שחרר",
-          style: "cancel",
-        },
-      ]);
+      showSnackbar("הייתה בעיה לעבור לצאט", 3000);
     }
   };
   const moveToFollows = (arr, title) => {
@@ -180,24 +192,24 @@ const UserProfileScreen = () => {
             </View>
             <View style={styles.followingContainer}>
               <TouchableOpacity
-                  style={{ flexDirection: "column", alignItems: "center" }}
-                  onPress={() => {
-                    moveToFollows(followers, "העוקבים שלי");
-                  }}
-                >
-                  <RegularTextBold text={`${followers.length}`} />
-                  <RegularText text={`עוקבים`} />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    moveToFollows(following, "הנעקבים שלי");
-                  }}
-                  style={{ flexDirection: "column", alignItems: "center" }}
-                >
-                  <RegularTextBold text={`${following.length}`} />
-                  <RegularText text={`במעקב`} />
-                </TouchableOpacity>
-              </View>
+                style={{ flexDirection: "column", alignItems: "center" }}
+                onPress={() => {
+                  moveToFollows(followers, "העוקבים שלי");
+                }}
+              >
+                <RegularTextBold text={`${followers.length}`} />
+                <RegularText text={`עוקבים`} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  moveToFollows(following, "הנעקבים שלי");
+                }}
+                style={{ flexDirection: "column", alignItems: "center" }}
+              >
+                <RegularTextBold text={`${following.length}`} />
+                <RegularText text={`במעקב`} />
+              </TouchableOpacity>
+            </View>
           </View>
 
           <View style={styles.buttonsContainer}>
@@ -229,7 +241,18 @@ const UserProfileScreen = () => {
               onRatingPress={moveToRating}
             />
           )}
-
+          <Snackbar
+            visible={snackbarOpen}
+            onDismiss={() => {}}
+            action={{
+              label: "סגור",
+              onPress: () => {
+                setSnackbarOpen(false);
+              },
+            }}
+          >
+            {snackBarText}
+          </Snackbar>
           <View style={styles.postsArea}>
             <PostSlider arr={posts} onImgPress={() => {}} />
           </View>

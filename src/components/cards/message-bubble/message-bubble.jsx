@@ -1,20 +1,22 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 
+//Import app color palate
 import { colorPalate } from "../../../utils/ui/colors";
 
 const MessageBubble = ({ message, myUser }) => {
+  // Check if the current message belongs to the logged-in user
   const isMyMessage = message.senderId === (myUser && myUser.id);
+
   return (
     <View
       style={
         isMyMessage ? styles.myMessageContainer : styles.otherMessageContainer
       }
     >
-      <Text style={
-        isMyMessage ? styles.textSelf : styles.text
-      }
-      >{message.messageText}</Text>
+      <Text style={isMyMessage ? styles.textSelf : styles.text}>
+        {message.messageText}
+      </Text>
     </View>
   );
 };

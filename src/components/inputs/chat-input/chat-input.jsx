@@ -4,11 +4,13 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Text,
   ActivityIndicator,
 } from "react-native";
 
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+//Import icons
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
+//Import app color palate
 import { colorPalate } from "../../../utils/ui/colors";
 
 const ChatInput = ({ value, setValue, onClick, loading }) => {
@@ -23,11 +25,15 @@ const ChatInput = ({ value, setValue, onClick, loading }) => {
         placeholder="כתוב פה את ההודעה שלך..."
         placeholderTextColor="#A9A9A9"
       />
-      <TouchableOpacity style={{margin:3}} onPress={onClick}>
+      <TouchableOpacity style={{ margin: 3 }} onPress={onClick}>
         {loading ? (
           <ActivityIndicator color={colorPalate.white} />
         ) : (
-          <MaterialCommunityIcons name="send-circle" size={40} color={colorPalate.primary} />
+          <MaterialCommunityIcons
+            name="send-circle"
+            size={40}
+            color={colorPalate.primary}
+          />
         )}
       </TouchableOpacity>
     </View>
@@ -50,7 +56,6 @@ const styles = StyleSheet.create({
     textAlign: "right",
     padding: 14,
   },
- 
 });
 
 export default ChatInput;

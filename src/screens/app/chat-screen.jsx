@@ -26,11 +26,8 @@ import uuid from "react-native-uuid";
 
 //Custom components
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
-import RegularText from "../../components/texts/regular-text/regular-text";
 import ChatInput from "../../components/inputs/chat-input/chat-input";
 import Messages from "../../components/scroll/messages/messages";
-import { colorPalate } from "../../utils/ui/colors";
-import RegularTextBold from "../../components/texts/regular-text/regular-text-bold";
 import SmallTextBold from "../../components/texts/small-text/small-text-bold";
 
 const ChatScreen = () => {
@@ -58,6 +55,17 @@ const ChatScreen = () => {
   const [snackBarText, setSnackBarText] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
+  // Function to handle Snackbar
+  const showSnackbar = (message, duration) => {
+    setSnackBarText(message);
+    setSnackbarOpen(true);
+
+    // Close the snackbar after the specified duration
+    setTimeout(() => {
+      setSnackbarOpen(false);
+    }, duration);
+  };
+
   // State variable to track loading state
   const [loading, setLoading] = useState(false);
 
@@ -67,15 +75,9 @@ const ChatScreen = () => {
     Keyboard.dismiss();
 
     if (msg === "") {
-      setSnackBarText("אין בהודעה תוכן");
-      setSnackbarOpen(true);
-      setTimeout(() => {
-        setSnackbarOpen(false);
-      }, 3000);
+      showSnackbar("אין בהודעה תוכן", 3000);
       return;
-    }
-    else setLoading(true);
-
+    } else setLoading(true);
 
     // Create a new message object
     const newMessage = {
@@ -96,48 +98,58 @@ const ChatScreen = () => {
       setMsg("");
     } else {
       setLoading(false);
-      Alert.alert("משהו השתבש", "הייתה בעיה בעת שליחת ההודעה", [
-        {
-          text: "שחרר",
-          style: "cancel",
-        },
-      ]);
+      showSnackbar("הייתה בעיה לשלוח את ההודעה", 3000);
     }
   };
 
+  // Function to fetch user data
   const fetchUserData = async () => {
-    const otherId =
-      data &&
-      myUser &&
-      (data.participant1ID === myUser.id
-        ? data.participant2ID
-        : data.participant1ID);
+    // Ensure both 'data' and 'myUser' are available before proceeding
+    if (data && myUser) {
+      // Determine the ID of the other participant based on the current user's ID
+      const otherId =
+        data.participant1ID === myUser.id
+          ? data.participant2ID
+          : data.participant1ID;
 
-    if (otherId) {
-      const response = await GetUserInfo(otherId);
-      setOtherUser(response);
+      // Only attempt to fetch data if the other user ID is valid
+      if (otherId) {
+        const response = await GetUserInfo(otherId);
+        setOtherUser(response);
+      }
+    } else {
+      // Handle the case where data or myUser is not yet available (optional)
+      console.warn("Data or myUser not available for fetching user data");
     }
   };
 
+  // Function to fetch chat messages
   const fetchMessages = async () => {
     if (data && data.chatID) {
+      // Fetch messages for the specified chat ID and current user ID
       const response = await getChatMessages(data.chatID, myUser.id);
+      // Update the state with the fetched messages
       setMessageArray(response);
+    } else {
+      console.warn("Data or chatID not available for fetching messages");
     }
   };
 
+  //Use effect to fetch user data and messages on data change
   useEffect(() => {
     if (data) {
+      // Fetch user data and messages whenever 'data' is available or changes
       fetchUserData();
       fetchMessages();
     }
   }, [data]);
 
+  //Use effect to fetch messages every few secs
   useEffect(() => {
     // Fetch messages when the component mounts
     fetchMessages();
 
-    // Poll for new messages every 10 seconds
+    // Poll for new messages every 5 seconds
     const interval = setInterval(() => {
       fetchMessages();
     }, 5000);
@@ -186,7 +198,7 @@ const ChatScreen = () => {
 
         <Snackbar
           visible={snackbarOpen}
-          onDismiss={() => { }}
+          onDismiss={() => {}}
           action={{
             label: "סגור",
             onPress: () => {
@@ -206,7 +218,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   msgContainer: {
-    paddingHorizontal:10,
+    paddingHorizontal: 10,
     flex: 1,
   },
   header: {
@@ -215,9 +227,9 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
 
-    paddingBottom:10,
-    borderBottomWidth:5,
-    borderBottomColor:"#F0F2F5",
+    paddingBottom: 10,
+    borderBottomWidth: 5,
+    borderBottomColor: "#F0F2F5",
   },
   loadingContainer: {
     flex: 1,
@@ -234,8 +246,8 @@ const styles = StyleSheet.create({
     width: 55,
     height: 55,
     borderRadius: 30,
-    marginRight:10,
-    marginLeft:10,
+    marginRight: 10,
+    marginLeft: 10,
   },
 });
 

@@ -1,5 +1,7 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
+
+//Import fonts
 import {
   useFonts,
   Assistant_400Regular,
@@ -15,7 +17,7 @@ const RegularText = ({ text, english = false, color, onPress }) => {
   });
 
   if (!fontsLoaded) {
-    return <Text>Loading...</Text>; // or any loading indicator
+    return <Text>Loading...</Text>;
   }
 
   return (

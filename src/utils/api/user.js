@@ -171,26 +171,27 @@ export const editProfile = async (userData) => {
   }
 };
 
-export const deleteProfile = async (userData) => {
+export const deleteProfile = async (token) => {
   try {
-    const apiUrl = userUrl;
+    const apiUrl = `${userUrl}/DeleteProfile/${token}`;
     const response = await fetch(apiUrl, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json; charset=UTF-8",
       },
-      body: JSON.stringify(userData),
     });
 
     if (!response.ok) {
-      throw new Error("Failed update user data");
+      throw new Error("Failed to delete user data");
     }
-    const responseData = await response.json();
-    return responseData;
+    // Since there might not be any data returned from a DELETE request
+    // We can just return a success message
+    return { success: true, message: "User data deleted successfully" };
   } catch (error) {
     // Handle any errors that occur during the API request
     console.error("Error:", error);
     // Optionally, show an error message to the user
+    return { success: false, message: "Failed to delete user data" };
   }
 };
 

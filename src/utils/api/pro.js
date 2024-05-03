@@ -24,9 +24,9 @@ export const insertProfessional = async (proData) => {
 
 export const updateProfessional = async (proData) => {
   try {
-    const apiUrl = `${proUrl}/RegisterProfessional`;
+    const apiUrl = `${proUrl}/UpdateProfessional`;
     const response = await fetch(apiUrl, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json; charset=UTF-8",
       },
@@ -34,12 +34,12 @@ export const updateProfessional = async (proData) => {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to register profile");
+      throw new Error("Failed to update professional profile");
     }
     const responseData = await response.json();
     return responseData;
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error occurred while updating professional profile:", error);
   }
 };
 

@@ -72,13 +72,13 @@ const SignupScreen = () => {
   // State object to manage user data
   const [userData, setUserData] = useState({
     id: uuid.v4().toString(),
-    firstName: "",
-    lastName: "",
-    gender: "",
+    firstName: "בני",
+    lastName: "חנונוב",
+    gender: "male",
     birthday: new Date(),
-    email: "",
-    password: "",
-    confirm: "",
+    email: "beny@gmail.com",
+    password: "Aa123456",
+    confirm: "Aa123456",
     type: "",
   });
 
@@ -125,7 +125,7 @@ const SignupScreen = () => {
     if (token) {
       SecureStore.setItem("token", token);
       SecureStore.setItem("id", userData.id);
-      navigation.navigate("Image");
+      navigation.navigate("image");
     } else {
       // Set snackbar text to display the error message
       setSnackBarText("שגיאה בהרשמה");
@@ -147,7 +147,7 @@ const SignupScreen = () => {
       <View style={{ alignItems: "flex-end" }}>
         <GoBackButton
           onPress={() => {
-            navigation.navigate("Signin");
+            navigation.goBack();
           }}
         />
       </View>

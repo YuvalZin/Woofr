@@ -21,7 +21,11 @@ import { useNavigation } from "@react-navigation/native";
 import Checkbox from "expo-checkbox";
 
 //
-import { getProById, insertProfessional } from "../..//utils/api/pro";
+import {
+  getProById,
+  insertProfessional,
+  updateProfessional,
+} from "../..//utils/api/pro";
 
 //
 import { types } from "../../utils/data/types";
@@ -115,7 +119,7 @@ const ProfessionalsRegistrationScreen = () => {
         setButtonLoading(false);
       }
     } else {
-      const updatePro = await insertProfessional(professional);
+      const updatePro = await updateProfessional(professional);
 
       if (updatePro) {
         navigation.goBack();
@@ -125,8 +129,6 @@ const ProfessionalsRegistrationScreen = () => {
       }
     }
   };
-
-  console.log(professional);
 
   // Fetch data when component mounts
   useEffect(() => {

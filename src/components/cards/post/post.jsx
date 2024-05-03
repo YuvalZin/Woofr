@@ -1,57 +1,54 @@
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View, Alert } from "react-native";
 
-//
+//Redux handler state management
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../../redux/authSlice";
 
-//
+//Import app color palate
 import { colorPalate } from "../../../utils/ui/colors";
-
-//Snack bar to show user information
-import { Snackbar } from "react-native-paper";
 
 //Import api calls
 import { GetUserInfo } from "../../../utils/api/user";
 import { deletePost, getPostLikes, likePost } from "../../../utils/api/posts";
-import RegularTextBold from "../../texts/regular-text/regular-text-bold";
+
+//Import the time handlers
+import { calculateTimeAgo } from "../../../utils/scripts/time-handler";
+
+//Import icons
 import { AntDesign } from "@expo/vector-icons";
 
 //Custom Components
-import RegularText from "../../texts/regular-text/regular-text";
 import SmallText from "../../texts/small-text/small-text";
+import RegularText from "../../texts/regular-text/regular-text";
+import RegularTextBold from "../../texts/regular-text/regular-text-bold";
 import IconButton from "../../buttons/icon-button/icon-button";
 
 const Post = ({ data, onImgPress, setRender }) => {
+  // Use useSelector to access the Redux store state
+  const auth = useSelector(selectAuth);
+  const myUser = JSON.parse(auth.user);
+
+  //State to save post user data
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
     profilePictureUrl: null,
   });
+
+  // Stores the formatted time string
   const [timeStr, setTimeStr] = useState("");
+
+  // Tracks whether the current user authored this post
   const [isMyPost, setIsMyPost] = useState();
+
+  // An array containing users who liked the post
   const [likes, setLikes] = useState([]);
+
+  // Indicates whether the current user has liked the post
   const [likeThis, setLikeThis] = useState(false);
 
-  // Use useSelector to access the Redux store state
-  const auth = useSelector(selectAuth);
-  const myUser = JSON.parse(auth.user);
-
-  // State for storing text to be displayed in the and visibility of the snackbar
-  const [snackBarText, setSnackBarText] = useState("");
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-
-  // Function to handle Snackbar
-  const showSnackbar = (message, duration) => {
-    setSnackBarText(message);
-    setSnackbarOpen(true);
-
-    // Close the snackbar after the specified duration
-    setTimeout(() => {
-      setSnackbarOpen(false);
-    }, duration);
-  };
-
+  // Function to handle liking a post
   const likeHandle = async (post_id, user_id) => {
     const res = await likePost(post_id, user_id);
 
@@ -62,6 +59,7 @@ const Post = ({ data, onImgPress, setRender }) => {
     }
   };
 
+  // Function to handle getting  likes on each post
   const getLikes = async () => {
     const res = await getPostLikes(data.id);
     setLikes(res);
@@ -73,6 +71,7 @@ const Post = ({ data, onImgPress, setRender }) => {
     });
   };
 
+  // Function to handle deleting a post
   const deletePostById = async (post_id) => {
     const res = await deletePost(post_id);
     if (res) {
@@ -87,6 +86,7 @@ const Post = ({ data, onImgPress, setRender }) => {
     }
   };
 
+  // Function to handle fetching user data for the post
   const fetchUserInfo = async () => {
     setIsMyPost(data.userId === (myUser && myUser.id));
     if (!isMyPost) {
@@ -98,34 +98,20 @@ const Post = ({ data, onImgPress, setRender }) => {
     }
   };
 
+  // Side effect to update component state after changes
   useEffect(() => {
+    // Fetch user information on initial render and whenever likeThis changes
     fetchUserInfo();
-    var str = calculateTimeAgo();
-    setTimeStr(str);
+
+    // Calculate and set the formatted time string on initial render or data change
+    if (data) {
+      var str = calculateTimeAgo(data.createdAt);
+      setTimeStr(str);
+    }
+
+    // Fetch likes on initial render and whenever data is available
     if (data) getLikes();
   }, [likeThis]);
-
-  const calculateTimeAgo = () => {
-    const now = new Date();
-    const postTime = new Date(data.createdAt);
-    const diff = now - postTime;
-    const seconds = Math.floor(diff / 1000);
-
-    if (seconds < 60) {
-      return "כרגע";
-    } else if (seconds < 3600) {
-      const minutes = Math.floor(seconds / 60);
-      return `${minutes} דקות`;
-    } else if (seconds < 86400) {
-      const hours = Math.floor(seconds / 3600);
-      return `${hours} שעות`;
-    } else {
-      const day = postTime.getDate();
-      const month = postTime.getMonth() + 1;
-      const year = postTime.getFullYear().toString().slice(-2);
-      return `${day}/${month}/${year}`;
-    }
-  };
 
   return (
     <View style={styles.container}>

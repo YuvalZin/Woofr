@@ -64,13 +64,7 @@ const VetProfileScreen = () => {
       // If the chat initiation is successful, navigate to the chat screen with the chat data.
       navigation.navigate("chat", { data: res });
     } else {
-      // If there's an error, display an alert.
-      Alert.alert("משהו השתבש", "לא ניתן ליצור צ'אט", [
-        {
-          text: "שחרר",
-          style: "cancel",
-        },
-      ]);
+      showSnackbar("הייתה בעיה לעבור לצאט", 3000);
     }
   };
 

@@ -9,6 +9,9 @@ import { selectAuth } from "../../../redux/authSlice";
 import { GetUserInfo } from "../../../utils/api/user";
 import { AntDesign } from "@expo/vector-icons";
 
+// Import the time handlers
+import { calculateTimeAgo } from "../../../utils/scripts/time-handler";
+
 //Custom Components
 import RegularTextBold from "../../texts/regular-text/regular-text-bold";
 import RegularText from "../../texts/regular-text/regular-text";
@@ -55,31 +58,9 @@ const ReviewCard = ({ data, onImgPress, setRender }) => {
 
   useEffect(() => {
     fetchUserInfo();
-    var str = calculateTimeAgo();
+    var str = calculateTimeAgo(data.datePosted);
     setTimeStr(str);
   }, []);
-
-  const calculateTimeAgo = () => {
-    const now = new Date();
-    const postTime = new Date(data.datePosted);
-    const diff = now - postTime;
-    const seconds = Math.floor(diff / 1000);
-
-    if (seconds < 60) {
-      return "כרגע";
-    } else if (seconds < 3600) {
-      const minutes = Math.floor(seconds / 60);
-      return `${minutes} דקות`;
-    } else if (seconds < 86400) {
-      const hours = Math.floor(seconds / 3600);
-      return `${hours} שעות`;
-    } else {
-      const day = postTime.getDate();
-      const month = postTime.getMonth() + 1;
-      const year = postTime.getFullYear().toString().slice(-2);
-      return `${day}/${month}/${year}`;
-    }
-  };
 
   return (
     <View style={styles.container}>

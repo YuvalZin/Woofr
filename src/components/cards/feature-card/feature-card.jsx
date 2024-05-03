@@ -3,9 +3,10 @@ import { StyleSheet, View, useWindowDimensions, Image } from "react-native";
 
 //Import custom components
 import RegularText from "../../texts/regular-text/regular-text";
-import BigText from "../../texts/big-text/big-text";
 import BigTextBold from "../../texts/big-text/big-text-bold";
+
 const FeatureCard = ({ feature }) => {
+  // Get the width of the device screen using the useWindowDimensions hook
   const windowWidth = useWindowDimensions().width;
 
   return (
@@ -35,8 +36,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     objectFit: "contain",
-    alignSelf:"center",
-  
+    alignSelf: "center",
   },
   header: {
     alignItems: "flex-start",

@@ -6,6 +6,7 @@ import Post from "../../cards/post/post";
 import EmptyCard from "../../cards/empty-card/empty-card";
 
 const PostSlider = ({ arr, onImgPress, setRender }) => {
+  //Function to render post
   const renderPostItem = ({ item }) => {
     return (
       <Post
@@ -39,7 +40,7 @@ const PostSlider = ({ arr, onImgPress, setRender }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
+
     width: "100%",
   },
   loadingContainer: {

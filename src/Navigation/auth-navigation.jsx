@@ -1,5 +1,3 @@
-//auth-navigation.jsx
-
 // Navigation handlers
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -17,10 +15,10 @@ const AuthNavigation = () => {
       initialRouteName={"Welcome"}
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name="Welcome" component={WelcomeScreen} />
-      <Stack.Screen name="Signin" component={SigninScreen} />
-      <Stack.Screen name="Signup" component={SignupScreen} />
-      <Stack.Screen name="Image" component={ImageScreen} />
+      <Stack.Screen name="welcome" component={WelcomeScreen} />
+      <Stack.Screen name="signin" component={SigninScreen} />
+      <Stack.Screen name="signup" component={SignupScreen} />
+      <Stack.Screen name="image" component={ImageScreen} />
     </Stack.Navigator>
   );
 };

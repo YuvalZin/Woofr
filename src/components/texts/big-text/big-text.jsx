@@ -1,6 +1,8 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
-import { useFonts, Assistant_400Regular } from '@expo-google-fonts/assistant';
+
+//Import fonts
+import { useFonts, Assistant_400Regular } from "@expo-google-fonts/assistant";
 
 const BigText = ({ text, english = false }) => {
   const textAlign = english ? "right" : "left";
@@ -10,11 +12,13 @@ const BigText = ({ text, english = false }) => {
   });
 
   if (!fontsLoaded) {
-    return <Text>Loading...</Text>; // or any loading indicator
+    return <Text>Loading...</Text>;
   }
 
   return (
-    <Text style={[styles.text, { textAlign, fontFamily: 'Assistant_400Regular' }]}>
+    <Text
+      style={[styles.text, { textAlign, fontFamily: "Assistant_400Regular" }]}
+    >
       {text}
     </Text>
   );

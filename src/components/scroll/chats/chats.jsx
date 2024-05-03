@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 
 //Custom components
@@ -6,6 +6,7 @@ import ChatCard from "../../cards/chat-card/chat-card";
 import EmptyCard from "../../cards/empty-card/empty-card";
 
 const Chats = ({ arr, onClick }) => {
+  //Function to render chat card
   const renderChatItem = ({ item }) => {
     return <ChatCard key={item.chatID} onClick={onClick} chat={item} />;
   };

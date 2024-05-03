@@ -5,8 +5,6 @@ import { StyleSheet, Animated, View, Dimensions } from "react-native";
 const { width } = Dimensions.get("screen");
 
 const Pagination = ({ data, scrollX, dotColor }) => {
-  // Reverse the data array
-
   return (
     <View style={styles.container}>
       {data.map((_, idx) => {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
 //Redux state management
 import { useSelector } from "react-redux";
@@ -12,7 +13,6 @@ import { getUserChats } from "../../utils/api/chat";
 import Chats from "../../components/scroll/chats/chats";
 import LoadingIndicator from "../../components/animation/loading-indicator/loading-indicator";
 import BigTextBold from "../../components/texts/big-text/big-text-bold";
-import { useFocusEffect } from "@react-navigation/native";
 
 const ChatsScreen = ({ navigation }) => {
   // Use useSelector to access the Redux store state

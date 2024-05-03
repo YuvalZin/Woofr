@@ -7,7 +7,7 @@ import SmallText from "../../texts/small-text/small-text";
 import RatingBar from "../rating-bar/rating-bar";
 
 const ProfessionalCard = ({ data, onCardPress, onRatingPress }) => {
-  const [proData, setproData] = useState({
+  const [proData, setProData] = useState({
     id: "string",
     displayName: "string",
     address: "string",
@@ -26,10 +26,12 @@ const ProfessionalCard = ({ data, onCardPress, onRatingPress }) => {
     userId: "string",
   });
 
+  //Function to fetch the professional information
   const fetchProInfo = async () => {
-    setproData(data);
+    setProData(data);
   };
 
+  // Fetch professional information on component mount
   useEffect(() => {
     fetchProInfo();
   }, []);
@@ -55,10 +57,7 @@ const ProfessionalCard = ({ data, onCardPress, onRatingPress }) => {
             text={`${proData.displayName}`}
             style={styles.username}
           />
-          <RegularText
-            text={`${proData.type}`}
-            style={styles.bottomText}
-          />
+          <RegularText text={`${proData.type}`} style={styles.bottomText} />
           <SmallText
             text={`${proData.address}, ${proData.phone}`}
             style={styles.infoText}

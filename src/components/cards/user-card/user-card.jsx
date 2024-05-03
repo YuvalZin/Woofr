@@ -1,6 +1,7 @@
-import { React, useState, useEffect } from "react";
+import { React } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
+//Custom components
 import RegularText from "../../texts/regular-text/regular-text";
 
 const UserCard = ({ data, onClick }) => {

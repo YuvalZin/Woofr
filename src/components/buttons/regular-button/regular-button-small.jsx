@@ -4,15 +4,21 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useFonts, Assistant_700Bold } from '@expo-google-fonts/assistant';
+import { useFonts, Assistant_700Bold } from "@expo-google-fonts/assistant";
 
 // App color palate
 import { colorPalate } from "../../../utils/ui/colors";
 
-const RegularButtonSmall = ({ textColor,text, onPress, color, iconName, loading = false }) => {
+const RegularButtonSmall = ({
+  textColor,
+  text,
+  onPress,
+  color,
+  iconName,
+  loading = false,
+}) => {
   // Load the Assistant bold font
   const [fontsLoaded] = useFonts({
     Assistant_700Bold,
@@ -29,8 +35,8 @@ const RegularButtonSmall = ({ textColor,text, onPress, color, iconName, loading 
     >
       {!loading ? (
         <>
-          <Text style={[styles.text,{color:textColor}]}>{text}</Text>
-          {iconName && <Ionicons name={iconName} size={24} color = {textColor} />}
+          <Text style={[styles.text, { color: textColor }]}>{text}</Text>
+          {iconName && <Ionicons name={iconName} size={24} color={textColor} />}
         </>
       ) : (
         <ActivityIndicator color={colorPalate.white} size={32} />
@@ -54,7 +60,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "left",
     padding: 4,
-    fontFamily: 'Assistant_700Bold', // Use Assistant bold font
+    fontFamily: "Assistant_700Bold", // Use Assistant bold font
   },
 });
 

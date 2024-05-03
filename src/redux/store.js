@@ -1,5 +1,3 @@
-// store.js
-
 // Import the necessary function from Redux Toolkit to configure the store
 import { configureStore } from "@reduxjs/toolkit";
 

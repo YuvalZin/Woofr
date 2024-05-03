@@ -1,12 +1,17 @@
 import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
+
+//Custom components
 import UserCard from "../../cards/user-card/user-card";
 
 const SearchList = ({ users, onClick }) => {
   if (users == null) return null;
+
+  //Function to render user card
   const renderUserItem = ({ item, index }) => (
     <UserCard key={index} data={item} onClick={onClick} />
   );
+
   return users.length > 0 ? (
     <View style={styles.container}>
       <FlatList
@@ -26,7 +31,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderRadius: 10,
     marginTop: 10,
-    paddingHorizontal:20
+    paddingHorizontal: 20,
   },
 });
 

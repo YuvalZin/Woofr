@@ -1,8 +1,10 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
+//Import app color palate
 import { colorPalate } from "../../../utils/ui/colors";
 
+// Import Checkbox component for user interaction with checkboxes
 import Checkbox from "expo-checkbox";
 
 //Custom components

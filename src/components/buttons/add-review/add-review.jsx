@@ -1,13 +1,13 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
-import { useFonts, Assistant_400Regular } from "@expo-google-fonts/assistant";
-import { FontAwesome5 } from "@expo/vector-icons";
 
+// Import fonts and icons
+import { useFonts, Assistant_400Regular } from "@expo-google-fonts/assistant";
+
+//Import app color palate
 import { colorPalate } from "../../../utils/ui/colors";
-import _ from "lodash";
 
 const AddReview = ({ onPress }) => {
-  
   // Load the Assistant font
   const [fontsLoaded] = useFonts({
     Assistant_400Regular,
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     backgroundColor: colorPalate.primary,
     borderWidth: 3,
     borderColor: colorPalate.white,
-   alignSelf:"center",
+    alignSelf: "center",
     width: "94%",
   },
   row: {

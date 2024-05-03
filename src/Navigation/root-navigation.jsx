@@ -1,5 +1,3 @@
-//root-navigation.js
-
 import React, { useEffect, useState } from "react";
 
 //Import react-native navigation element

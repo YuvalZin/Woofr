@@ -1,5 +1,3 @@
-//feature-slider.jsx
-
 import { Animated, FlatList, View } from "react-native";
 import React, { useRef } from "react";
 

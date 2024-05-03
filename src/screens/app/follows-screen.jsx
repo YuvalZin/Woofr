@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, StyleSheet,View } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 
 //Navigation handler
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -24,7 +24,6 @@ const FollowsScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-
         <GoBackButton
           onPress={() => {
             navigation.goBack();

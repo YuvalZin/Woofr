@@ -6,7 +6,8 @@ import ProfessionalCard from "../../cards/professional-card/professional-card";
 import EmptyCard from "../../cards/empty-card/empty-card";
 
 const ProSlider = ({ arr, onCardPress, onRatingPress }) => {
-  const renderPostItem = ({ item }) => {
+  //Function to render professional card
+  const renderProItem = ({ item }) => {
     return (
       <ProfessionalCard
         key={item.id}
@@ -25,7 +26,7 @@ const ProSlider = ({ arr, onCardPress, onRatingPress }) => {
             scrollEnabled={false}
             keyExtractor={(item) => item.id}
             data={arr}
-            renderItem={({ item, index }) => renderPostItem({ item, index })}
+            renderItem={({ item, index }) => renderProItem({ item, index })}
             showsHorizontalScrollIndicator={false}
           />
         ) : (

@@ -1,8 +1,10 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
+
+//Import AirbnbRating component for displaying Airbnb interactive stars ratings
 import { AirbnbRating } from "react-native-ratings";
 
-const RatingBar = ({ rating, disabled ,onFinishRating}) => {
+const RatingBar = ({ rating, disabled, onFinishRating }) => {
   return (
     <View style={styles.container}>
       <AirbnbRating

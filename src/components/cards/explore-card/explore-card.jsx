@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   StyleSheet,
   View,
@@ -15,6 +15,7 @@ import { types } from "../../../utils/data/types";
 import { colorPalate } from "../../../utils/ui/colors";
 
 const ExploreCard = ({ data, onPress }) => {
+  // Get the width of the device screen using the useWindowDimensions hook
   const screenWidth = Dimensions.get("window").width;
 
   // Find the corresponding type object from the types array
@@ -78,9 +79,9 @@ const styles = StyleSheet.create({
     top: 28,
     backgroundColor: colorPalate.primary,
     padding: 3,
-    paddingRight:10,
-    borderTopRightRadius:15,
-    borderBottomRightRadius:15,
+    paddingRight: 10,
+    borderTopRightRadius: 15,
+    borderBottomRightRadius: 15,
     color: colorPalate.primary,
   },
   textContainer: {
@@ -90,7 +91,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     padding: 20,
     width: 320,
-
   },
   title: {
     color: colorPalate.white,
