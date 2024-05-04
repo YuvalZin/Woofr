@@ -4,9 +4,10 @@ import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 //Custom components
 import RegularText from "../../texts/regular-text/regular-text";
 
-const UserCard = ({ data, onClick }) => {
+const UserCard = ({ data, onClick, disable }) => {
   return (
     <TouchableOpacity
+      disabled={disable}
       onPress={() => {
         onClick(data.id);
       }}

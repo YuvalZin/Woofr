@@ -16,7 +16,7 @@ import * as SecureStore from "expo-secure-store";
 
 //Redux state management
 import { useSelector } from "react-redux";
-import authSlice, { selectAuth } from "../../redux/authSlice";
+import { selectAuth } from "../../redux/authSlice";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/authSlice";
 
@@ -91,8 +91,9 @@ const ProfileScreen = () => {
     setRefreshing(true);
   };
 
+  //Function to move to follow screen
   const moveToFollows = (arr, title) => {
-    navigation.navigate("other-profile-follows", { arr: arr, title: title });
+    navigation.navigate("profile-follows", { arr: arr, title: title });
   };
 
   useEffect(() => {
@@ -134,7 +135,7 @@ const ProfileScreen = () => {
                 </View>
               </View>
               <View style={styles.followingContainer}>
-              <TouchableOpacity
+                <TouchableOpacity
                   style={{ flexDirection: "column", alignItems: "center" }}
                   onPress={() => {
                     moveToFollows(followers, "העוקבים שלי");

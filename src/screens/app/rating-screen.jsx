@@ -50,6 +50,17 @@ const RatingScreen = () => {
   const [snackBarText, setSnackBarText] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
+  // Function to handle Snackbar
+  const showSnackbar = (message, duration) => {
+    setSnackBarText(message);
+    setSnackbarOpen(true);
+
+    // Close the snackbar after the specified duration
+    setTimeout(() => {
+      setSnackbarOpen(false);
+    }, duration);
+  };
+
   //State to hold reviews
   const [prosReviews, setProsReviews] = useState([]);
   const [proProfile, setProProfile] = useState([]);
@@ -76,22 +87,6 @@ const RatingScreen = () => {
     const res = await getProReviews(id);
     setProsReviews(res);
   };
-
-  useEffect(() => {
-    fetchProsReviews(data.userId);
-  }, []);
-
-  // Function to handle Snackbar
-  const showSnackbar = (message, duration) => {
-    setSnackBarText(message);
-    setSnackbarOpen(true);
-
-    // Close the snackbar after the specified duration
-    setTimeout(() => {
-      setSnackbarOpen(false);
-    }, duration);
-  };
-
   //Function to upload review
   const uploadReview = async () => {
     //API post method to upload the image
@@ -104,6 +99,11 @@ const RatingScreen = () => {
       return;
     }
   };
+
+  useEffect(() => {
+    fetchProsReviews(data.userId);
+  }, []);
+
   return (
     <SafeAreaView>
       <View style={styles.header}>

@@ -50,6 +50,7 @@ const UserProfileScreen = () => {
 
   // Extracts the 'id' parameter from the current route.
   const route = useRoute();
+  const currentStack = route.name;
   const { id } = route.params;
 
   // Use useSelector to access the Redux store state
@@ -104,7 +105,15 @@ const UserProfileScreen = () => {
     }
   };
   const moveToFollows = (arr, title) => {
-    navigation.navigate("other-profile-follows", { arr: arr, title: title });
+    if (currentStack === "profile-other") {
+      navigation.navigate("profile-follows", { arr: arr, title: title });
+    }
+    if (currentStack === "search-profile") {
+      navigation.navigate("search-follows", { arr: arr, title: title });
+    }
+    if (currentStack === "home-profile") {
+      navigation.navigate("home-follows", { arr: arr, title: title });
+    }
   };
 
   const moveToRating = (id) => {

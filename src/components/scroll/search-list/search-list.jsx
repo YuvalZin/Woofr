@@ -4,12 +4,12 @@ import { FlatList, StyleSheet, View } from "react-native";
 //Custom components
 import UserCard from "../../cards/user-card/user-card";
 
-const SearchList = ({ users, onClick }) => {
+const SearchList = ({ users, onClick, disable = false }) => {
   if (users == null) return null;
 
   //Function to render user card
   const renderUserItem = ({ item, index }) => (
-    <UserCard key={index} data={item} onClick={onClick} />
+    <UserCard key={index} data={item} onClick={onClick} disable={disable} />
   );
 
   return users.length > 0 ? (

@@ -20,14 +20,14 @@ import { useNavigation } from "@react-navigation/native";
 // Importing Checkbox component from expo-checkbox
 import Checkbox from "expo-checkbox";
 
-//
+//Import api files
 import {
   getProById,
   insertProfessional,
   updateProfessional,
 } from "../..//utils/api/pro";
 
-//
+//Import types data
 import { types } from "../../utils/data/types";
 
 //Form validator for professional

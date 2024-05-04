@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 
 //Importing function from the API file
 import { SearchUser } from "../../utils/api/user";
@@ -8,10 +8,8 @@ import { SearchUser } from "../../utils/api/user";
 import { useNavigation } from "@react-navigation/native";
 
 //Custom components
-import BigText from "../../components/texts/big-text/big-text";
 import CustomSearchBar from "../../components/inputs/search-bar/custom-search-bar";
 import SearchList from "../../components/scroll/search-list/search-list";
-import BigTextBold from "../../components/texts/big-text/big-text-bold";
 
 const SearchScreen = () => {
   // Define state variable 'users' using the 'useState' hook, initialized as an empty array
@@ -39,7 +37,6 @@ const SearchScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-
       <CustomSearchBar onPressSearch={fetchSearchResult} />
       <SearchList users={users} onClick={moveToUserProfile} />
     </SafeAreaView>
@@ -48,10 +45,8 @@ const SearchScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    
     flex: 1,
   },
-
 });
 
 export default SearchScreen;

@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-  View,
-} from "react-native";
+import { StyleSheet, SafeAreaView, ScrollView, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 //Redux state management
@@ -21,9 +16,7 @@ import { colorPalate } from "../../utils/ui/colors";
 import ProfessionalSlider from "../../components/scroll/professional-slider/professional-slider";
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import ProfessionalFilter from "../../components/inputs/professional-filter/professional-filter";
-import RegularButton from "../../components/buttons/regular-button/regular-button";
 import CollapseButton from "../../components/buttons/collapse-button/collapse-button";
-import RegularText from "../../components/texts/regular-text/regular-text";
 import RegularTextBold from "../../components/texts/regular-text/regular-text-bold";
 import RegularButtonFullW from "../../components/buttons/regular-button/regular-button-full";
 
@@ -142,7 +135,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     width: "100%",
     alignItems: "center",
-
   },
   buttonContainer: {
     padding: 4,

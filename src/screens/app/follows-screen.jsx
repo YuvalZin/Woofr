@@ -5,7 +5,6 @@ import { SafeAreaView, StyleSheet, View } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import SearchList from "../../components/scroll/search-list/search-list";
-import BigText from "../../components/texts/big-text/big-text";
 import RegularTextBold from "../../components/texts/regular-text/regular-text-bold";
 
 const FollowsScreen = () => {
@@ -15,11 +14,6 @@ const FollowsScreen = () => {
 
   //Importing the useNavigation hook from React Navigation to access navigation prop
   const navigation = useNavigation();
-
-  // Navigates to the user profile screen with the specified 'id'.
-  const moveToUserProfile = (id) => {
-    navigation.navigate("profile-other", { id: id });
-  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -32,7 +26,7 @@ const FollowsScreen = () => {
         <RegularTextBold text={title} />
       </View>
 
-      <SearchList users={arr} onClick={moveToUserProfile} />
+      <SearchList users={arr} onClick={() => {}} disable={true} />
     </SafeAreaView>
   );
 };
