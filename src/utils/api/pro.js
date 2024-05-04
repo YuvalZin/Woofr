@@ -24,7 +24,7 @@ export const insertProfessional = async (proData) => {
 
 export const updateProfessional = async (proData) => {
   try {
-    const apiUrl = `${proUrl}/UpdateProfessional`;
+    const apiUrl = `${proUrl}/UpdateProffesional`;
     const response = await fetch(apiUrl, {
       method: "PUT",
       headers: {
@@ -36,8 +36,9 @@ export const updateProfessional = async (proData) => {
     if (!response.ok) {
       throw new Error("Failed to update professional profile");
     }
-    const responseData = await response.json();
-    return responseData;
+    if (response) {
+      return true;
+    }
   } catch (error) {
     console.error("Error occurred while updating professional profile:", error);
   }
@@ -76,6 +77,13 @@ export const getProById = async (id) => {
     if (!response.ok) {
       throw new Error("Failed get pro by id");
     }
+
+    // Check if response is empty
+    if (response.status === 204) {
+      // No Content
+      return null;
+    }
+
     const responseData = await response.json();
     return responseData;
   } catch (error) {

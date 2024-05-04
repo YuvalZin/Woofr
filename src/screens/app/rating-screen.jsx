@@ -42,6 +42,7 @@ const RatingScreen = () => {
   // Extracts the 'id' parameter from the current route.
   const route = useRoute();
   const { data } = route.params;
+
   //Use useSelector to access the Redux store state
   const auth = useSelector(selectAuth);
   const myUser = JSON.parse(auth.user);
@@ -63,7 +64,6 @@ const RatingScreen = () => {
 
   //State to hold reviews
   const [prosReviews, setProsReviews] = useState([]);
-  const [proProfile, setProProfile] = useState([]);
 
   //State to store the review data
   const [review, setReview] = useState({
@@ -82,18 +82,18 @@ const RatingScreen = () => {
   };
 
   //Fetch reviews base pro id
-  const fetchProsReviews = async (id) => {
-    setProProfile(data);
-    const res = await getProReviews(id);
+  const fetchProsReviews = async () => {
+    const res = await getProReviews(data.userId);
     setProsReviews(res);
   };
+
   //Function to upload review
   const uploadReview = async () => {
     //API post method to upload the image
     const res = await insertReview(review);
 
     if (res) {
-      fetchProsReviews(data.userId);
+      fetchProsReviews();
     } else {
       showSnackbar("משהו השתבש בעת העלאת הביקורת", 3000);
       return;
@@ -101,7 +101,7 @@ const RatingScreen = () => {
   };
 
   useEffect(() => {
-    fetchProsReviews(data.userId);
+    fetchProsReviews();
   }, []);
 
   return (
@@ -113,7 +113,7 @@ const RatingScreen = () => {
           }}
         />
         <View>
-          <RegularTextBold text={`${proProfile.displayName}`} />
+          <RegularTextBold text={`${data.displayName}`} />
         </View>
       </View>
 
@@ -127,12 +127,12 @@ const RatingScreen = () => {
         >
           <RegularText
             color={"white"}
-            text={`דרגו את ${proProfile.displayName} (1 לא מומלץ - 5 מצוין)`}
+            text={`דרגו את ${data.displayName} (1 לא מומלץ - 5 מצוין)`}
           />
           <TouchableOpacity style={styles.avatarContainer}>
             <Image
               source={{
-                uri: proProfile.profileImage,
+                uri: data.profileImage,
               }}
               style={styles.avatar}
             />
@@ -158,7 +158,9 @@ const RatingScreen = () => {
           </View>
           <AddReview onPress={uploadReview} />
         </View>
-        {prosReviews.length > 0 && <ReviewSlider arr={prosReviews} />}
+        {prosReviews.length > 0 && (
+          <ReviewSlider arr={prosReviews} onImgPress={() => {}} />
+        )}
       </ScrollView>
       <View style={styles.snackbar}>
         <Snackbar

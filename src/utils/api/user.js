@@ -175,7 +175,7 @@ export const deleteProfile = async (token) => {
   try {
     const apiUrl = `${userUrl}/DeleteProfile/${token}`;
     const response = await fetch(apiUrl, {
-      method: "PUT",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json; charset=UTF-8",
       },

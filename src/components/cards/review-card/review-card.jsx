@@ -12,6 +12,9 @@ import { AntDesign } from "@expo/vector-icons";
 // Import the time handlers
 import { calculateTimeAgo } from "../../../utils/scripts/time-handler";
 
+//
+import { deleteReview } from "../../../utils/api/review";
+
 //Custom Components
 import RegularTextBold from "../../texts/regular-text/regular-text-bold";
 import RegularText from "../../texts/regular-text/regular-text";

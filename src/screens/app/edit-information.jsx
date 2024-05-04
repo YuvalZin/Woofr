@@ -240,7 +240,9 @@ const EditInformation = () => {
               >
                 <RegularButtonSmall
                   text={
-                    myUser.type === null ? "הפוך לפרופיל עסקי" : "עדכן את העסק"
+                    myUser.type === "user"
+                      ? "הפוך לפרופיל עסקי"
+                      : "עדכן את העסק"
                   }
                   style={styles.button}
                   color={colorPalate.primaryLight}

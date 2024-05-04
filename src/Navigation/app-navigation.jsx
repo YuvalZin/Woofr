@@ -5,8 +5,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 //Stack navigation
-import chatStack from "./chat-stack";
 import HomeStack from "./home-stack";
+import chatStack from "./chat-stack";
 import ProfileStack from "./profile-stack";
 import SearchStack from "./search-stack";
 
@@ -18,7 +18,6 @@ const TabNavigation = () => {
 
   return (
     <Tab.Navigator
-    
       initialRouteName="home-stack"
       screenOptions={{
         headerShown: false,

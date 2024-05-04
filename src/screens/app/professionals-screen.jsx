@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, SafeAreaView, ScrollView, View } from "react-native";
+
+//Import navigation handler
 import { useNavigation } from "@react-navigation/native";
 
 //Redux state management
@@ -31,6 +33,7 @@ const ProfessionalsScreen = () => {
   // Initialize state for storing the user's posts
   const [pros, setPros] = useState([]);
 
+  //Show filter state
   const [showFilters, setShowFilters] = useState(true);
 
   // State for filtering results based on various criteria

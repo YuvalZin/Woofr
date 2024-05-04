@@ -7,6 +7,8 @@ import { features } from "../../utils/data/features";
 
 //Navigation handler
 import { useNavigation } from "@react-navigation/native";
+
+//Import app color palate
 import { colorPalate } from "../../utils/ui/colors";
 
 //Custom components

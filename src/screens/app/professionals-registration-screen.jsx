@@ -41,11 +41,12 @@ import RegularButton from "../../components/buttons/regular-button/regular-butto
 import CustomTextInput from "../../components/inputs/custom-text-input/custom-text-input";
 import SmallText from "../../components/texts/small-text/small-text";
 import DropDownPicker from "react-native-dropdown-picker";
+import RegularButtonSmall from "../../components/buttons/regular-button/regular-button-small";
 
 const ProfessionalsRegistrationScreen = () => {
   // Use useSelector to access the Redux store state
   const auth = useSelector(selectAuth);
-  const myUser = JSON.parse(auth.user);
+  const myUser = auth.user ? JSON.parse(auth.user) : null;
   const dispatch = useDispatch();
 
   //Navigation handler
@@ -66,18 +67,16 @@ const ProfessionalsRegistrationScreen = () => {
     displayName: "",
     address: "",
     phone: "",
-    profileImage: myUser.profilePictureUrl,
     description: "",
-    type: "",
-    ratingScore: 0,
-    availability24_7: true,
-    sellsProducts: true,
-    toHome: true,
-    notes: "",
-    verificationStatus: "verified",
-    activeWoofr: true,
     City: "",
+    type: "",
+    availability24_7: false,
+    sellsProducts: false,
+    toHome: false,
+    notes: "",
+    ProfileImage: "",
     userId: myUser.id,
+    verificationStatus: "verified",
   });
 
   //Width for the form
@@ -130,12 +129,26 @@ const ProfessionalsRegistrationScreen = () => {
     }
   };
 
+  //Function to delete professional
+  const deletePro = async () => {
+    const res = true;
+    if (res) {
+      let newUser = { ...myUser, type: "user" };
+      dispatch(login(JSON.stringify(newUser)));
+      navigation.goBack();
+    } else {
+      showSnackbar("הייתה בעיה במחיקה", 3000);
+    }
+  };
+
   // Fetch data when component mounts
   useEffect(() => {
     if (myUser.type !== null) {
       const fetchData = async () => {
         const res = await getProById(myUser.id);
-        setProfessional(res);
+        if (res) {
+          setProfessional({ ...res, City: res.city });
+        }
       };
 
       fetchData();
@@ -144,15 +157,14 @@ const ProfessionalsRegistrationScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ alignItems: "flex-end" }}>
+      <View style={{ alignItems: "flex-end" }}></View>
+
+      <ScrollView>
         <GoBackButton
           onPress={() => {
             navigation.goBack();
           }}
         />
-      </View>
-
-      <ScrollView>
         <View style={styles.container}>
           <View style={styles.header}>
             <BigText text={"תן לנו לקדם את העסק שלך"} />
@@ -293,12 +305,23 @@ const ProfessionalsRegistrationScreen = () => {
           <View style={{ width: 200, marginTop: 10 }}>
             <RegularButton
               loading={buttonLoading}
-              text={"פתח וופר עסקי"}
+              text={myUser.type === "user" ? "פתח וופר עסקי" : "עדכן את העסק"}
               onPress={handleSubmit}
               color={colorPalate.primary}
               iconName={"business-outline"}
             />
           </View>
+
+          {myUser.type !== "user" && (
+            <View style={{ width: 200, marginTop: 10 }}>
+              <RegularButtonSmall
+                loading={buttonLoading}
+                text={"מחק את העסק"}
+                onPress={deletePro}
+                color={colorPalate.grey}
+              />
+            </View>
+          )}
         </View>
       </ScrollView>
 

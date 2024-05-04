@@ -72,11 +72,11 @@ const SignupScreen = () => {
   // State object to manage user data
   const [userData, setUserData] = useState({
     id: uuid.v4().toString(),
-    firstName: "בני",
-    lastName: "חנונוב",
+    firstName: "בנימין",
+    lastName: "נתניהו",
     gender: "male",
     birthday: new Date(),
-    email: "beny@gmail.com",
+    email: "bibi12@gmail.com",
     password: "Aa123456",
     confirm: "Aa123456",
     type: "",

@@ -7,7 +7,7 @@ export const professionalValidate = (form) => {
     return { isValid: false, errorMessage: "חייב לבחור תחום שירות" };
   }
 
-  if (form.city.length < 3) {
+  if (form.City.length < 3) {
     return { isValid: false, errorMessage: "עיר חייבת להחיל לפחות 3 תווים" };
   }
 
