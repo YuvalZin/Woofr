@@ -162,7 +162,7 @@ const Post = ({ data, onImgPress, setRender }) => {
             onPress={() => likeHandle(data.id, myUser.id)}
           />
         </View>
-        <View style={styles.buttonContainer}>
+        <View style={[styles.buttonContainer,{marginRight:20}]}>
           <SmallText text={`${likes.length} ` + "לייקים"} />
         </View>
       </View>
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#fff",
     padding: 8,
-
+    paddingBottom:25,
     marginBottom: 15,
   },
   deleteIcon: {

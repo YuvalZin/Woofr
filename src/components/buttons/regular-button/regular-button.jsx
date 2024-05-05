@@ -29,7 +29,7 @@ const RegularButton = ({ text, onPress, color, iconName, loading = false }) => {
       {!loading ? (
         <>
           <Text style={styles.text}>{text}</Text>
-          {iconName && <Ionicons name={iconName} size={24} color="white" />}
+          {iconName && <Ionicons name={iconName} size={20} color="white" />}
         </>
       ) : (
         <ActivityIndicator color={colorPalate.white} size={32} />

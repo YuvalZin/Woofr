@@ -62,16 +62,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cardBackground: {
-    borderRadius: 8,
+    borderRadius: 20, // This borderRadius applies to the entire card
     alignItems: "center",
     elevation: 3,
-    borderRadius: 20,
+    overflow: "hidden", // Ensure that the borderRadius is visible
   },
   img: {
     width: 320,
     height: 320,
     resizeMode: "cover",
-    borderRadius: 20,
+    borderRadius: 20, // This borderRadius applies to the image inside the card
   },
   header: {
     position: "absolute",
@@ -95,7 +95,6 @@ const styles = StyleSheet.create({
   title: {
     color: colorPalate.white,
     fontSize: 18,
-
     fontWeight: "bold",
     padding: 3,
     textAlign: "left",
@@ -107,5 +106,6 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
 });
+
 
 export default ExploreCard;

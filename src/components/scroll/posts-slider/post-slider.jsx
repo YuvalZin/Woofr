@@ -30,7 +30,7 @@ const PostSlider = ({ arr, onImgPress, setRender }) => {
             showsHorizontalScrollIndicator={false}
           />
         ) : (
-          <EmptyCard text={"אין פוסטים שניתן להציג כרגע..."} iconName="bug" />
+          <EmptyCard text={"אין פוסטים שניתן להציג כרגע..."} iconName="sad-outline" />
         )}
       </View>
     </View>

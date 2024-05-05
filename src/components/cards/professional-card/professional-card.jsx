@@ -59,7 +59,7 @@ const ProfessionalCard = ({ data, onCardPress, onRatingPress }) => {
           />
           <RegularText text={`${proData.type}`} style={styles.bottomText} />
           <SmallText
-            text={`${proData.address}, ${proData.phone}`}
+            text={`${proData.city}, ${proData.address} ${proData.phone}`}
             style={styles.infoText}
           />
         </View>

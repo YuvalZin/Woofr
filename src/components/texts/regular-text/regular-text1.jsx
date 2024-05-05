@@ -8,9 +8,9 @@ import {
   Assistant_700Bold,
 } from "@expo-google-fonts/assistant";
 
-const SmallTextBold = ({fSize, color ,text, align }) => {
-  const textAlign = !align ? "left" : align;
-  const size = !fSize? 18 : fSize;
+const RegularText1 = ({ text, english = false, color, onPress }) => {
+  const textAlign = "center";
+
   const [fontsLoaded] = useFonts({
     Assistant_400Regular,
     Assistant_700Bold,
@@ -21,7 +21,17 @@ const SmallTextBold = ({fSize, color ,text, align }) => {
   }
 
   return (
-    <Text style={[styles.text, { fontSize:size, color: color,textAlign:textAlign, fontFamily: "Assistant_700Bold" }]}>
+    <Text
+      onPress={onPress}
+      style={[
+        styles.text,
+        {
+          color: color,
+          textAlign: textAlign,
+          fontFamily: "Assistant_400Regular",
+        },
+      ]}
+    >
       {text}
     </Text>
   );
@@ -29,9 +39,9 @@ const SmallTextBold = ({fSize, color ,text, align }) => {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 18,
-    fontWeight: "normal",
+    fontSize: 16,
+    padding: 4,
   },
 });
 
-export default SmallTextBold;
+export default RegularText1;

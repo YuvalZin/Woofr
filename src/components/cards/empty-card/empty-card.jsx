@@ -4,12 +4,13 @@ import { Ionicons } from "@expo/vector-icons";
 
 // Custom components
 import BigText from "../../texts/big-text/big-text";
+import RegularText from "../../texts/regular-text/regular-text";
 
 const EmptyCard = ({ text, iconName }) => {
   return (
     <View style={styles.container}>
-      <Ionicons name={iconName} size={62} color="black" />
-      <BigText text={text} />
+      <Ionicons name={iconName} size={32} color="black" />
+      <RegularText text={text} />
     </View>
   );
 };

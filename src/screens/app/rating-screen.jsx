@@ -34,6 +34,7 @@ import GoBackButton from "../../components/buttons/go-back/go-back-button";
 import ReviewSlider from "../../components/scroll/review-slider/review-slider";
 import RegularText from "../../components/texts/regular-text/regular-text";
 import AddReview from "../../components/buttons/add-review/add-review";
+import SmallText from "../../components/texts/small-text/small-text";
 
 const RatingScreen = () => {
   //Importing the useNavigation hook from React Navigation to access navigation prop
@@ -50,6 +51,7 @@ const RatingScreen = () => {
   // State for storing text to be displayed in the and visibility of the snackbar
   const [snackBarText, setSnackBarText] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [isMyProfile, setIsMyProfile] = useState(false);
 
   // Function to handle Snackbar
   const showSnackbar = (message, duration) => {
@@ -64,6 +66,13 @@ const RatingScreen = () => {
 
   //State to hold reviews
   const [prosReviews, setProsReviews] = useState([]);
+  
+
+  const setRender = () => {
+    setProsReviews([]);
+    fetchProsReviews();
+
+  };
 
   //State to store the review data
   const [review, setReview] = useState({
@@ -101,6 +110,8 @@ const RatingScreen = () => {
   };
 
   useEffect(() => {
+
+    if (data.userId === myUser.id) setIsMyProfile(true);
     fetchProsReviews();
   }, []);
 
@@ -118,48 +129,53 @@ const RatingScreen = () => {
       </View>
 
       <ScrollView style={styles.container} nestedScrollEnabled={true}>
-        <View
-          style={{
-            alignItems: "center",
-            paddingVertical: 30,
-            backgroundColor: colorPalate.primary,
-          }}
-        >
-          <RegularText
-            color={"white"}
-            text={`דרגו את ${data.displayName} (1 לא מומלץ - 5 מצוין)`}
-          />
-          <TouchableOpacity style={styles.avatarContainer}>
-            <Image
-              source={{
-                uri: data.profileImage,
-              }}
-              style={styles.avatar}
+        {!isMyProfile &&
+          <View
+            style={{
+              alignItems: "center",
+              paddingVertical: 30,
+              backgroundColor: colorPalate.primary,
+            }}
+          >
+            <RegularText
+              color={"white"}
+              text={`דרגו את ${data.displayName} (1 לא מומלץ - 5 מצוין)`}
             />
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.avatarContainer}>
+              <Image
+                source={{
+                  uri: data.profileImage !== '' ? data.profileImage : 'defaultImageUri',
+                }}
+                style={styles.avatar}
+              />
+            </TouchableOpacity>
 
-          <View style={{ paddingBottom: 20 }}>
-            <RatingBar
-              disabled={false}
-              rating={0}
-              onFinishRating={handleRating}
-            />
+            <View style={{ paddingBottom: 20 }}>
+              <RatingBar
+                disabled={false}
+                rating={0}
+                onFinishRating={handleRating}
+              />
+            </View>
+            <View style={styles.textInputContainer}>
+              <TextInput
+                style={styles.textInput}
+                multiline
+                placeholder="הזינו כאן את הביקורת שלכם"
+                value={review.reviewText}
+                onChangeText={(value) =>
+                  setReview({ ...review, reviewText: value })
+                }
+              />
+            </View>
+            <AddReview onPress={uploadReview} />
+          </View>}
+        {prosReviews.length > 0 ? (
+          <ReviewSlider arr={prosReviews} setRender={setRender}  onImgPress={() => { }} />
+        ) : (
+          <View style={{ alignItems: "center", marginTop: 25 }}>
+            <RegularText text={"אין עדיין ביקורות"} />
           </View>
-          <View style={styles.textInputContainer}>
-            <TextInput
-              style={styles.textInput}
-              multiline
-              placeholder="הזינו כאן את הביקורת שלכם"
-              value={review.reviewText}
-              onChangeText={(value) =>
-                setReview({ ...review, reviewText: value })
-              }
-            />
-          </View>
-          <AddReview onPress={uploadReview} />
-        </View>
-        {prosReviews.length > 0 && (
-          <ReviewSlider arr={prosReviews} onImgPress={() => {}} />
         )}
       </ScrollView>
       <View style={styles.snackbar}>

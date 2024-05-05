@@ -8,8 +8,8 @@ export const types = [
     value: "מזון וציוד לחיות מחמד",
     color: colorPalate.primary,
   },
-  { label: "פנסיונים", value: "פנסיונים", color: colorPalate.warning },
-  { label: "מספרות", value: "מספרות", color: colorPalate.secondary },
+  { label: "פנסיוןן", value: "פנסיון", color: colorPalate.warning },
+  { label: "מספרה", value: "מספרה", color: colorPalate.secondary },
   { label: "אילוף וייעוץ", value: "אילוף וייעוץ", color: colorPalate.grey },
   { label: "דוג ווקר", value: "דוג ווקר", color: colorPalate.accent },
 ];

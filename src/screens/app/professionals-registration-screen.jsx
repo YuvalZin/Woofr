@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View, Image, Platform } from "react-native";
 
 //Redux state management
 import { useDispatch, useSelector } from "react-redux";
@@ -13,15 +13,19 @@ import { colorPalate } from "../../utils/ui/colors";
 
 //Importing the Snackbar component from the react-native-paper library
 import { Snackbar } from "react-native-paper";
+import { KeyboardAvoidingView } from "react-native";
 
 //Navigation handler
 import { useNavigation } from "@react-navigation/native";
+
+import headingImage from "../../utils/images/semi-heading.png";
 
 // Importing Checkbox component from expo-checkbox
 import Checkbox from "expo-checkbox";
 
 //Import api files
 import {
+  deleteProfessional,
   getProById,
   insertProfessional,
   updateProfessional,
@@ -42,6 +46,9 @@ import CustomTextInput from "../../components/inputs/custom-text-input/custom-te
 import SmallText from "../../components/texts/small-text/small-text";
 import DropDownPicker from "react-native-dropdown-picker";
 import RegularButtonSmall from "../../components/buttons/regular-button/regular-button-small";
+import SmallTextBold from "../../components/texts/small-text/small-text-bold";
+import RegularText1 from "../../components/texts/regular-text/regular-text1";
+import RegularButtonFullW from "../../components/buttons/regular-button/regular-button-full";
 
 const ProfessionalsRegistrationScreen = () => {
   // Use useSelector to access the Redux store state
@@ -131,7 +138,7 @@ const ProfessionalsRegistrationScreen = () => {
 
   //Function to delete professional
   const deletePro = async () => {
-    const res = true;
+    const res = await deleteProfessional(myUser.token);
     if (res) {
       let newUser = { ...myUser, type: "user" };
       dispatch(login(JSON.stringify(newUser)));
@@ -158,176 +165,184 @@ const ProfessionalsRegistrationScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ alignItems: "flex-end" }}></View>
-
-      <ScrollView>
+      <View style={styles.header}>
         <GoBackButton
           onPress={() => {
             navigation.goBack();
           }}
         />
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <BigText text={"תן לנו לקדם את העסק שלך"} />
-            <RegularText
-              text={
-                "עם וופר אתה יכול להשיג המון לקוחות חדשים שאוהבים בעלי חיים בדיוק כמוך!"
-              }
-            />
-          </View>
+        <Image source={headingImage} style={styles.heading} />
+      </View>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={"padding"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 100} // Adjust the offset as needed
+      >
+        <ScrollView
+        >
+          <View style={styles.container}>
+            <View style={styles.header1}>
+              <SmallTextBold fSize={22} align={"center"} color={colorPalate.primary} text={"ביתם של אנשי המקצוע בתחום חיות המחמד"} />
+            </View>
 
-          <View
-            style={{
-              width: formWidth,
-              marginBottom: openDropdown ? 200 : 0,
-              alignItems: "left",
-            }}
-          >
-            <DropDownPicker
-              open={openDropdown}
-              value={professional.type ? professional.type : null}
-              items={types}
-              setOpen={setOpenDropdown}
-              placeholder="בחר מקצוע"
-              dropDownDirection="BOTTOM"
-              listMode="SCROLLVIEW"
-              onSelectItem={(item) => {
-                setProfessional({
-                  ...professional,
-                  type: item.value,
-                });
+            <View
+              style={{
+                width: formWidth,
+                marginBottom: openDropdown ? 200 : 0,
+                alignItems: "left",
               }}
-            />
-          </View>
-
-          <View>
-            <CustomTextInput
-              value={professional.displayName}
-              placeholder="שם העסק"
-              style={styles.input}
-              width={formWidth}
-              onChangeText={(value) => {
-                setProfessional({ ...professional, displayName: value });
-              }}
-            />
-
-            <CustomTextInput
-              value={professional.City}
-              placeholder="עיר"
-              style={styles.input}
-              width={formWidth}
-              onChangeText={(value) => {
-                setProfessional({ ...professional, City: value });
-              }}
-            />
-            <CustomTextInput
-              value={professional.address}
-              placeholder="כתובת"
-              style={styles.input}
-              width={formWidth}
-              onChangeText={(value) => {
-                setProfessional({ ...professional, address: value });
-              }}
-            />
-
-            <CustomTextInput
-              value={professional.phone}
-              placeholder="מספר טלפון"
-              style={styles.input}
-              width={formWidth}
-              onChangeText={(value) => {
-                setProfessional({ ...professional, phone: value });
-              }}
-            />
-            <CustomTextInput
-              value={professional.description}
-              placeholder="תיאור"
-              style={styles.input}
-              width={formWidth}
-              onChangeText={(value) => {
-                setProfessional({ ...professional, description: value });
-              }}
-            />
-            <CustomTextInput
-              value={professional.notes}
-              placeholder="הערות"
-              style={styles.input}
-              width={formWidth}
-              onChangeText={(value) => {
-                setProfessional({ ...professional, notes: value });
-              }}
-            />
-          </View>
-
-          <View style={styles.sectionRow}>
-            <View style={styles.section}>
-              <Checkbox
-                style={styles.checkbox}
-                value={professional.availability24_7}
-                onValueChange={() => {
+            >
+              <DropDownPicker
+                open={openDropdown}
+                value={professional.type ? professional.type : null}
+                items={types}
+                setOpen={setOpenDropdown}
+                placeholder="בחר מקצוע"
+                dropDownDirection="BOTTOM"
+                listMode="SCROLLVIEW"
+                onSelectItem={(item) => {
                   setProfessional({
                     ...professional,
-                    availability24_7: !professional.availability24_7,
+                    type: item.value,
                   });
                 }}
               />
-              <SmallText text={"זמינות 7\\24"} />
             </View>
 
-            <View style={styles.section}>
-              <Checkbox
-                style={styles.checkbox}
-                value={professional.sellsProducts}
-                onValueChange={() => {
-                  setProfessional({
-                    ...professional,
-                    sellsProducts: !professional.sellsProducts,
-                  });
+            <View>
+              <CustomTextInput
+                value={professional.displayName}
+                placeholder="שם העסק"
+                style={styles.input}
+                width={formWidth}
+                onChangeText={(value) => {
+                  setProfessional({ ...professional, displayName: value });
                 }}
               />
-              <SmallText text={"מוכר מוצרים"} />
-            </View>
 
-            <View style={styles.section}>
-              <Checkbox
-                style={styles.checkbox}
-                value={professional.toHome}
-                onValueChange={() => {
-                  setProfessional({
-                    ...professional,
-                    toHome: !professional.toHome,
-                  });
+              <CustomTextInput
+                value={professional.City}
+                placeholder="עיר"
+                style={styles.input}
+                width={formWidth}
+                onChangeText={(value) => {
+                  setProfessional({ ...professional, City: value });
                 }}
               />
-              <SmallText text={"מגיע עד הבית"} />
+              <CustomTextInput
+                value={professional.address}
+                placeholder="כתובת"
+                style={styles.input}
+                width={formWidth}
+                onChangeText={(value) => {
+                  setProfessional({ ...professional, address: value });
+                }}
+              />
+
+              <CustomTextInput
+                value={professional.phone}
+                placeholder="מספר טלפון"
+                style={styles.input}
+                width={formWidth}
+                onChangeText={(value) => {
+                  setProfessional({ ...professional, phone: value });
+                }}
+              />
+              <CustomTextInput
+                value={professional.description}
+                placeholder="תיאור"
+                style={styles.input}
+                width={formWidth}
+                onChangeText={(value) => {
+                  setProfessional({ ...professional, description: value });
+                }}
+              />
+              <CustomTextInput
+                value={professional.notes}
+                placeholder="הערות"
+                style={styles.input}
+                width={formWidth}
+                onChangeText={(value) => {
+                  setProfessional({ ...professional, notes: value });
+                }}
+              />
             </View>
-          </View>
 
-          <View style={{ width: 200, marginTop: 10 }}>
-            <RegularButton
-              loading={buttonLoading}
-              text={myUser.type === "user" ? "פתח וופר עסקי" : "עדכן את העסק"}
-              onPress={handleSubmit}
-              color={colorPalate.primary}
-              iconName={"business-outline"}
-            />
-          </View>
+            <View style={styles.sectionRow}>
+              <View style={styles.section}>
+                <Checkbox
+                  color={colorPalate.primary}
+                  style={styles.checkbox}
+                  value={professional.availability24_7}
+                  onValueChange={() => {
+                    setProfessional({
+                      ...professional,
+                      availability24_7: !professional.availability24_7,
+                    });
+                  }}
+                />
+                <SmallText text={"זמינות 7\\24"} />
+              </View>
 
-          {myUser.type !== "user" && (
-            <View style={{ width: 200, marginTop: 10 }}>
-              <RegularButtonSmall
+              <View style={styles.section}>
+                <Checkbox
+                  color={colorPalate.primary}
+                  style={styles.checkbox}
+                  value={professional.sellsProducts}
+                  onValueChange={() => {
+                    setProfessional({
+                      ...professional,
+                      sellsProducts: !professional.sellsProducts,
+                    });
+                  }}
+                />
+                <SmallText text={"מוכר מוצרים"} />
+              </View>
+
+              <View style={styles.section}>
+                <Checkbox
+                  color={colorPalate.primary}
+                  style={styles.checkbox}
+                  value={professional.toHome}
+                  onValueChange={() => {
+                    setProfessional({
+                      ...professional,
+                      toHome: !professional.toHome,
+                    });
+                  }}
+                />
+                <SmallText text={"מגיע עד הבית"} />
+              </View>
+            </View>
+
+            <View style={{ width: 200, marginTop: 30 }}>
+              <RegularButtonFullW
                 loading={buttonLoading}
-                text={"מחק את העסק"}
-                onPress={deletePro}
-                color={colorPalate.grey}
+                text={myUser.type === "user" ? "הצטרפו ל woofr pro" : "עדכון פרופיל עסקי"}
+                onPress={handleSubmit}
+                color={colorPalate.primary}
+                iconName={"business-outline"}
+                textColor="white"
               />
             </View>
-          )}
-        </View>
-      </ScrollView>
+
+            {myUser.type !== "user" && (
+              <View style={{ width: 200, marginTop: 10, marginBottom: 50 }}>
+                <RegularButtonSmall
+                  loading={buttonLoading}
+                  text={"מחק את העסק"}
+                  onPress={deletePro}
+                  color={colorPalate.grey}
+                />
+              </View>
+            )}
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
 
       <Snackbar
         visible={snackbarOpen}
-        onDismiss={() => {}}
+        onDismiss={() => { }}
         action={{
           label: "סגור",
           onPress: () => {
@@ -349,13 +364,30 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
   },
+  scrollViewContent: {
+    flexGrow: 1,
+  },
+  heading: {
+    marginLeft: 10,
+    width: 220,
+    height: 70,
+    resizeMode: "contain",
+  },
   header: {
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-    direction: "rtl",
-    textAlign: "left",
-    paddingRight: 20,
-    paddingBottom: 20,
+    flexDirection: "row-reverse",
+    justifyContent: "space-between",
+    padding: 8,
+    width: "100%",
+    alignItems: "center",
+    borderBottomWidth:1,
+    borderBottomColor:colorPalate.lightGrey,
+  },
+  header1: {
+    paddingVertical: 10,
+    paddingHorizontal: 50,
+    gap: 8,
+    marginBottom: 15,
+    alignItems: "center",
   },
   sectionRow: {
     flexDirection: "row",

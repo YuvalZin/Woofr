@@ -8,6 +8,7 @@ import {
   Image,
   Keyboard,
   TouchableWithoutFeedback,
+  Alert
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -64,6 +65,56 @@ const NewPostScreen = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const pickImage = async () => {
+
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      alert("יש לאפשר גישה לגלריה כדי לבחור תמונות.");
+      return;
+    }
+  
+    Alert.alert(
+      "בחר מקור תמונה",
+      "אנא בחר מקור תמונה:",
+      [
+        {
+          text: "צלם תמונה",
+          onPress: () => takePhoto(),
+        },
+        {
+          text: "בחר מגלריה",
+          onPress: () => launchImageLibrary(),
+        },
+        {
+          text: "ביטול",
+          style: "cancel",
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+  
+  const takePhoto = async () => {
+    const { status: cameraStatus } = await ImagePicker.requestCameraPermissionsAsync();
+    if (cameraStatus !== 'granted') {
+      alert('יש לאפשר גישה למצלמה כדי לצלם תמונות.');
+      return;
+    }
+  
+    const result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+  
+    if (!result.cancelled) {
+      setSelectedImage(result.assets[0].uri);
+    }
+  };
+  
+
+
+  const launchImageLibrary = async () => {
     // Launch the image library and await the result
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,

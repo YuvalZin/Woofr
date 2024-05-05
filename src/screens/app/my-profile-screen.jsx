@@ -26,7 +26,8 @@ import { getUserPosts } from "../../utils/api/posts";
 
 //App color palate
 import { colorPalate } from "../../utils/ui/colors";
-
+import { getProById } from "../../utils/api/pro";
+import ProfessionalProfile from "../../components/cards/professional-profile/professional-profile"
 //Custom components
 import RegularButtonSmall from "../../components/buttons/regular-button/regular-button-small";
 import EmptyCard from "../../components/cards/empty-card/empty-card";
@@ -51,6 +52,8 @@ const ProfileScreen = () => {
   // Initialize state for storing the user's posts
   const [myPosts, setMyPosts] = useState([]);
 
+  const [proData, setProData] = useState([]);
+
   // Initialize state for handling the refreshing state of the posts (e.g., when pulling down to refresh)
   const [refreshing, setRefreshing] = useState(false);
 
@@ -74,6 +77,9 @@ const ProfileScreen = () => {
     // Retrieve user follower data and set the values
     const fetchFollowers = await getUserFollowers(myUser.id);
     setFollower(fetchFollowers);
+
+    const proData = await getProById(myUser.id);
+    setProData(proData);
   };
 
   // Execute the provided callback when the component gains focus
@@ -83,6 +89,10 @@ const ProfileScreen = () => {
       fetchUserData();
     }, [refreshing])
   );
+
+  const moveToRating = (id) => {
+      navigation.navigate("home-rating", { data: proData});
+  };
 
   // Function to handle the refresh action
   const onRefresh = () => {
@@ -175,6 +185,11 @@ const ProfileScreen = () => {
                 />
               </View>
             </View>
+            {proData &&( 
+            <ProfessionalProfile
+              data={proData}
+              onRatingPress={moveToRating}
+            />)}
             <AddPost
               onPress={() => {
                 navigation.navigate("profile-post");
@@ -203,7 +218,7 @@ const ProfileScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 8,
+    marginTop: 1,
     flex: 1,
   },
   postsArea: {
@@ -238,7 +253,7 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: "row",
-    marginBottom: 2,
+    marginBottom: 15,
     paddingHorizontal: 29,
   },
   buttonView: {

@@ -36,7 +36,6 @@ const CustomSearchBar = ({ onPressSearch }) => {
         />
         <View style={styles.button}>
           <TouchableOpacity
-            onPress={() => deletePostById(data.id)}
           >
             <FontAwesome5 name="search" size={21} color={'#A9A9A9'} />
           </TouchableOpacity>

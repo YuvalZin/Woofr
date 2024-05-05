@@ -34,7 +34,7 @@ const ProfessionalsScreen = () => {
   const [pros, setPros] = useState([]);
 
   //Show filter state
-  const [showFilters, setShowFilters] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
 
   // State for filtering results based on various criteria
   const [resultsFilter, setResultsFilter] = useState({

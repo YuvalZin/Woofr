@@ -6,6 +6,9 @@ import { SearchUser } from "../../utils/api/user";
 
 //Navigation handler
 import { useNavigation } from "@react-navigation/native";
+//Redux state management
+import { useDispatch, useSelector } from "react-redux";
+import { login, selectAuth } from "../../redux/authSlice";
 
 //Custom components
 import CustomSearchBar from "../../components/inputs/search-bar/custom-search-bar";
@@ -14,6 +17,10 @@ import SearchList from "../../components/scroll/search-list/search-list";
 const SearchScreen = () => {
   // Define state variable 'users' using the 'useState' hook, initialized as an empty array
   const [users, setUsers] = useState([]);
+
+  const auth = useSelector(selectAuth);
+  const myUser = auth.user ? JSON.parse(auth.user) : null;
+  const dispatch = useDispatch();
 
   //Importing the useNavigation hook from React Navigation to access navigation prop
   const navigation = useNavigation();
@@ -32,7 +39,10 @@ const SearchScreen = () => {
 
   // Navigates to the user profile screen with the specified 'id'.
   const moveToUserProfile = (id) => {
-    navigation.navigate("search-profile", { id: id });
+    if(id === myUser.id){
+      navigation.navigate("profile-index");
+    }
+    else navigation.navigate("search-profile", { id: id });
   };
 
   return (

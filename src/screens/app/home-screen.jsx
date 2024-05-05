@@ -103,10 +103,6 @@ const HomeScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.header}>
         <Image source={LogoImage} style={styles.logo} />
-        <RegularText
-          text={`היי ${myUser.firstName} שמחים לראות שחזרת`}
-          english={true}
-        />
       </View>
       <ScrollView
         nestedScrollEnabled={true}
@@ -123,7 +119,7 @@ const HomeScreen = () => {
           <Ionicons name="caret-back-outline" size={24} color={"black"} />
         </TouchableOpacity>
 
-        <ExploreSlider arr={pros} onPress={moveToProfile} />
+        <ExploreSlider arr={pros} onPress={moveToProfile}  />
 
         <View
           style={styles.touchableContainer}

@@ -9,29 +9,26 @@ import HomeStack from "./home-stack";
 import chatStack from "./chat-stack";
 import ProfileStack from "./profile-stack";
 import SearchStack from "./search-stack";
+import { colorPalate } from "../utils/ui/colors";
 
 //Create Bottom tab navigation
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
   const iconSize = 26;
-
   return (
     <Tab.Navigator
       initialRouteName="home-stack"
       screenOptions={{
         headerShown: false,
-        tabBarLabelStyle: {
-          color: "black",
-          fontSize: 15,
-        },
+        tabBarShowLabel: false, // Hide labels for all screens
+        tabBarActiveTintColor: colorPalate.primary, // Change active color
       }}
     >
       <Tab.Screen
         name="home-stack"
         component={HomeStack}
         options={{
-          tabBarLabel: "בית",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" size={iconSize} color={color} />
           ),
@@ -42,7 +39,6 @@ const TabNavigation = () => {
         name="chat-stack"
         component={chatStack}
         options={{
-          tabBarLabel: "שיחות",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="message"
@@ -57,10 +53,9 @@ const TabNavigation = () => {
         name="search-stack"
         component={SearchStack}
         options={{
-          tabBarLabel: "חיפוש",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
-              name="search-web"
+              name="magnify"
               size={iconSize}
               color={color}
             />
@@ -72,7 +67,6 @@ const TabNavigation = () => {
         name="profile-stack"
         component={ProfileStack}
         options={{
-          tabBarLabel: "פרופיל",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="account"

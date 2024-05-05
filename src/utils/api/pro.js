@@ -44,6 +44,27 @@ export const updateProfessional = async (proData) => {
   }
 };
 
+export const deleteProfessional = async (token) => {
+  try {
+    const apiUrl = `${proUrl}/${token}`;
+    const response = await fetch(apiUrl, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to delete professional profile");
+    }
+    if (response) {
+      return true;
+    }
+  } catch (error) {
+    console.error("Error occurred while deleting professional profile:", error);
+  }
+};
+
 export const getPros = async (filters) => {
   try {
     const apiUrl = `${proUrl}/GetVerifiedProfessionals`;
